@@ -140,7 +140,7 @@ This unit will introduce you (gently!) to
 
 1. computer programming with R, a language for [statistical computing](https://en.wikipedia.org/wiki/Computational_statistics).
 
-2. concepts for data analysis and its practice with R.
+2. concepts for data analysis and its practice using R.
 
 ## Learning goal in a nutshell
 
@@ -151,6 +151,20 @@ To analyse data to
 2. Explain; 
 
 3. Predict.
+
+---
+
+# How to learn coding
+
+* The challenge in this unit is that on top of learning data analysis concepts, you also need to learn to code with R... 
+
+* but this is an opportunity:<sup>1</sup> data analysis concepts are always and immediately applied to data using R.
+
+.center[<img src="../img/coding-with-fire.gif" style="width: 60%" />]
+
+.footnote[
+[1] Of course, it is! This is very much a *feature* of the unit, not a *bug*!
+]
 
 ---
 
