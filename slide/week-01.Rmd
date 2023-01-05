@@ -26,6 +26,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE,
 
 library(tidyverse)
 library(sf)
+library(DiagrammeR)
 
 ```
 
@@ -154,7 +155,7 @@ To analyse data to
 
 ---
 
-# How to learn coding
+# How to learn data analysis + coding (1/2)
 
 * The challenge in this unit is that on top of learning data analysis concepts, you also need to learn to code with R... 
 
@@ -165,6 +166,51 @@ To analyse data to
 .footnote[
 [1] Of course, it is! This is very much a *feature* of the unit, not a *bug*!
 ]
+
+---
+
+# How to learn data analysis + coding (2/2)
+
+Focus on 
+
+1. understanding (and communicating your understanding) of all the data analysis concepts;
+
+2. understanding how to apply these concepts to your data working with R;
+
+3. working with R but not on understanding everything you work with in R. 
+
+<center>
+
+```{r, echo = F, results = 'asis'}
+
+DiagrammeR::grViz("digraph {
+  graph []
+  
+  node [shape = oval]        
+  nod1 [label = 'Deep\\nunderstanding']
+  nod2 [label = 'Functional\\nunderstanding']
+  nod3 [label =  'Communicating\\nand reporting']
+  
+  node [shape = egg]        
+  nod4 [label = 'Data analysis\\nconcepts']
+  nod5 [label = 'R']
+  
+  node [shape = diamond]  
+  nod6 [label = 'Data']
+  
+  
+  # edge definitions with the node IDs
+  nod1 -> nod4
+  nod2 -> nod5
+  nod4 -> nod6
+  nod5 -> nod6
+  nod6 -> nod3
+  }",
+  height = 300)
+
+```
+
+</center>
 
 ---
 

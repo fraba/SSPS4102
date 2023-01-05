@@ -7,6 +7,10 @@
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+    <script src="libs/viz/viz.js"></script>
+    <link href="libs/DiagrammeR-styles/styles.css" rel="stylesheet" />
+    <script src="libs/grViz-binding/grViz.js"></script>
   </head>
   <body>
     <textarea id="source">
@@ -161,7 +165,7 @@ To analyse data to
 
 ---
 
-# How to learn coding
+# How to learn data analysis + coding (1/2)
 
 * The challenge in this unit is that on top of learning data analysis concepts, you also need to learn to code with R... 
 
@@ -172,6 +176,25 @@ To analyse data to
 .footnote[
 [1] Of course, it is! This is very much a *feature* of the unit, not a *bug*!
 ]
+
+---
+
+# How to learn data analysis + coding (2/2)
+
+Focus on 
+
+1. understanding (and communicating your understanding) of all the data analysis concepts;
+
+2. understanding how to apply these concepts to your data working with R;
+
+3. working with R but not on understanding everything you work with in R. 
+
+&lt;center&gt;
+
+<div id="htmlwidget-e9257077eaf8e8f00ace" style="width:45%;height:300px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e9257077eaf8e8f00ace">{"x":{"diagram":"digraph {\n  graph []\n  \n  node [shape = oval]        \n  nod1 [label = \"Deep\\nunderstanding\"]\n  nod2 [label = \"Functional\\nunderstanding\"]\n  nod3 [label =  \"Communicating\\nand reporting\"]\n  \n  node [shape = egg]        \n  nod4 [label = \"Data analysis\\nconcepts\"]\n  nod5 [label = \"R\"]\n  \n  node [shape = diamond]  \n  nod6 [label = \"Data\"]\n  \n  \n  # edge definitions with the node IDs\n  nod1 -> nod4\n  nod2 -> nod5\n  nod4 -> nod6\n  nod5 -> nod6\n  nod6 -> nod3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+&lt;/center&gt;
 
 ---
 
@@ -221,7 +244,7 @@ ggplot(fit, aes(x = Sepal.Width, y = Sepal.Length)) +
   geom_smooth(method = "lm")
 ```
 
-&lt;img src="week-01_files/figure-html/unnamed-chunk-2-1.svg" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="week-01_files/figure-html/unnamed-chunk-3-1.svg" width="50%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -238,7 +261,7 @@ ggplot() +
   scale_fill_distiller(palette = "YlGnBu")
 ```
 
-&lt;img src="week-01_files/figure-html/unnamed-chunk-4-1.svg" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="week-01_files/figure-html/unnamed-chunk-5-1.svg" width="100%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -293,7 +316,7 @@ class: inverse, center, middle
 # No-code / low-code software alternatives for data analysis (1/2)
 
 * **Spreadsheet (Excel et al)**: Easy to access (likely your university or employer will give you access to it) and effective and intuitive for manipulating tabular data but limited in 
-  * the type of analysis and visualisation they allow (e.g., no out-of-the-box linear regression 😿);
+  * the type of analysis and visualisation they allow (e.g., no out-of-the-box linear regression 😢);
   * the "shape" of data they can read: it can only be a table with rows and columns (i.e, no [API](https://en.wikipedia.org/wiki/API) data);
   * the size of the data they can read.
   
