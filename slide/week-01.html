@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>SSPS4102Data Analytics in the Social Sciences</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Francesco Bailo" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# SSPS4102</br>Data Analytics in the Social Sciences
+]
+.subtitle[
+## Week 01</br>Introduction and overview
+]
+.author[
+### Francesco Bailo
+]
+.institute[
+### The University of Sydney
+]
+.date[
+### Semester 1, 2023 (updated: 2023-01-05)
+]
+
+---
+
+
+background-image: url(https://upload.wikimedia.org/wikipedia/en/6/6a/Logo_of_the_University_of_Sydney.svg)
+background-size: 95%
+
+
+
+---
+class: inverse, center, middle
+
+# Get started with SSPS4102
+
+---
+
+# What you need to take this unit
+
+* No prior knowledge of statistics
+
+--
+
+* No coding experience
+
+--
+
+* Minimal maths background
+
+--
+
+* Install &lt;img src="https://www.r-project.org/logo/Rlogo.svg" style="width: 8%" /&gt;
+  * 👉 https://rstudio-education.github.io/hopr/starting.html
+
+--
+
+* Install &lt;img src="https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-flat.svg" style="width: 18%" /&gt; 
+  * also 👉 https://rstudio-education.github.io/hopr/starting.html
+
+--
+
+* Bring your laptop to class
+
+--
+
+* Come to class, complete readings and tasks **every week**
+
+---
+
+# Some tips
+
+
+* Ask questions sooner than later.
+
+--
+
+* All seminar slides are available here:
+
+  * Keep them open on your laptop in class to 
+
+      * copy/paste code in RStudio; and
+
+      * follow links.
+
+---
+
+# Textbook
+
+* Llaudet, E., &amp; Imai, K. (2022). _Data analysis for social science: A friendly and practical introduction_. Princeton University Press. https://press.princeton.edu/books/hardcover/9780691199429/data-analysis-for-social-science (DASS) 
+
+  * This book is highly accessible and will introduce you to both R and important concepts for data analysis. It is a lighter version of Imai's _Quantitative social science: An introduction_ (we will refer to two chapters if QSS in this unit). 
+
+  * Suggestion: Get the soft copy (PDF or Kindle) so to copy/paste the code... 
+
+.center[&lt;img src="https://pup-assets.imgix.net/onix/images/9780691199429.jpg" style="width: 20%" /&gt;]
+
+  
+---
+
+# Other texts (1/2)
+
+* Cairo, A. (2012). _The Functional Art: An introduction to information graphics and visualization_. New Riders. https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ (FA)
+  * Publicly and fully available online: NO
+  * Library access: YES [link](https://sydney.primo.exlibrisgroup.com/permalink/61USYD_INST/1c0ug48/alma991031515966205106)
+    * Online access: YES [link](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/?ar=)
+    * Hard Copy: YES
+
+* James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2013). _An introduction to statistical learning: With applications in R_. Springer. https://www.statlearning.com/ (I2SL)
+  * Publicly and fully available online: YES [link](https://www.statlearning.com/)
+
+* Grolemund, G. (2014). _Hands-on programming with R_. O'Reilly. https://rstudio-education.github.io/hopr/ (HOPR)
+  * Publicly and fully available online: YES [link](https://rstudio-education.github.io/hopr/)
+  
+---
+
+# Other texts (2/2)
+
+* Imai, K. (2017). _Quantitative social science: An introduction_. Princeton University Press. https://press.princeton.edu/books/paperback/9780691175461/quantitative-social-science (QSS)
+  * Publicly and fully available online: NO
+  * Library access: NO
+
+* Silge, J., &amp; Robinson, D. (2017). _Text mining with R: A tidy approach_. O’Reilly. https://www.tidytextmining.com/ (TMWR)
+  * Publicly and fully available online: YES [link](https://www.tidytextmining.com/)
+
+* Wickham, H., &amp; Grolemund, G. (2017). _R for data science_. O'Reilly. https://r4ds.had.co.nz/ (R4DS)
+  * Publicly and fully available online: YES [link](https://r4ds.had.co.nz/)
+
+---
+
+class: inverse, center, middle
+
+# Content
+
+---
+
+# Content
+
+This unit will introduce you (gently!) to 
+
+1. computer programming with R, a language for [statistical computing](https://en.wikipedia.org/wiki/Computational_statistics).
+
+2. concepts for data analysis and its practice with R.
+
+## Learning goal in a nutshell
+
+To analyse data to
+
+1. Measure;
+
+2. Explain; 
+
+3. Predict.
+
+---
+
+# Learning outcome in a nutshell (1/4)
+
+
+
+```r
+fit &lt;- 
+  lm(Sepal.Length ~ Sepal.Width + Species, data = iris) 
+
+summary(fit)
+```
+
+```
+## 
+## Call:
+## lm(formula = Sepal.Length ~ Sepal.Width + Species, data = iris)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.30711 -0.25713 -0.05325  0.19542  1.41253 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)         2.2514     0.3698   6.089 9.57e-09 ***
+## Sepal.Width         0.8036     0.1063   7.557 4.19e-12 ***
+## Speciesversicolor   1.4587     0.1121  13.012  &lt; 2e-16 ***
+## Speciesvirginica    1.9468     0.1000  19.465  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.438 on 146 degrees of freedom
+## Multiple R-squared:  0.7259,	Adjusted R-squared:  0.7203 
+## F-statistic: 128.9 on 3 and 146 DF,  p-value: &lt; 2.2e-16
+```
+
+
+---
+
+# Learning outcome in a nutshell (2/4)
+
+
+```r
+ggplot(fit, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+&lt;img src="week-01_files/figure-html/unnamed-chunk-2-1.svg" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Learning outcome in a nutshell (3/4)
+
+
+
+
+
+```r
+ggplot() + 
+  geom_sf(data = nc, aes(fill = BIR74)) + 
+  scale_y_continuous(breaks = 34:36) +
+  scale_fill_distiller(palette = "YlGnBu")
+```
+
+&lt;img src="week-01_files/figure-html/unnamed-chunk-4-1.svg" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Weekly schedule
+
+| Week |  Topic | Reading | Extra reading |
+| :---: | --- | --- | --- | --- |
+|01 | Introduction and overview | DASS Ch1.3-7 | HOPR [Ch1](https://rstudio-education.github.io/hopr/project-1-weighted-dice.html), [Ch2](https://rstudio-education.github.io/hopr/basics.html), [Ch3](https://rstudio-education.github.io/hopr/packages.html) | 
+|02 | Measuring and summarising data | DASS Ch1.8 | HOPR [Ch5](https://rstudio-education.github.io/hopr/r-objects.html), [Ch6](https://rstudio-education.github.io/hopr/r-notation.html) | 
+|03 | Data visualisation | R4DS [Ch3](https://r4ds.had.co.nz/data-visualisation.html) | FA [Ch1](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ch01.html), [Ch2](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ch02.html) | 
+|04 | Data collection and manipulation | R4DS [Ch5](https://r4ds.had.co.nz/transform.html) | HOPR [Ch7](https://rstudio-education.github.io/hopr/modify.html), [Ch8](https://rstudio-education.github.io/hopr/environments.html) | 
+|05 | Bivariate association and causality | DASS Ch2 | | 
+|06 | Dimension reduction | I2SL Ch6.3 | | 
+
+---
+
+# Weekly schedule
+
+| Week |  Topic | Reading | Extra reading |
+| :---: | --- | --- | --- | --- |
+|07 | Conducting reproducible research | DASS Ch3 | | 
+|08 | Normal curve &amp; confidence intervals | DASS Ch6 | | 
+|09 | Hypothesis testing | DASS Ch7 | | 
+|10 | Simple regression | DASS Ch4 | |
+|11 | Multiple regression | DASS Ch5 | | 
+|12 | Logistic regression and advanced topics | I2SL Ch4.1-3; QSS Ch5.2-3 |  
+|13 | Computational text analysis | QSS Ch5.1 | TMWR [Ch1](https://www.tidytextmining.com/tidytext.html), [Ch2](https://www.tidytextmining.com/sentiment.html), [Ch3](https://www.tidytextmining.com/tfidf.html) |
+
+---
+
+class: inverse, center, middle
+
+# Why R?
+
+---
+
+# Why R?
+
+* Along with Python, R is the most popular language for data manipulation, analysis and reporting. 
+
+* R is more popular with *social* scientists while Python is more popular with *computer* scientists.
+
+* R is open-source [free software](https://en.wikipedia.org/wiki/Free_software). Everybody can use it and modify it. Its community is huge and constantly contributing new packages, features and documentation to the software. Likely, there is at least one package and a vignette to facilitate what you plan to do with your data. 
+
+* RStudio, an excellent [integrated development environment (IDE)](https://en.wikipedia.org/wiki/Integrated_development_environment) for R, is also free. 
+
+* R deals well with large, complex data sets.
+
+---
+
+# No-code / low-code software alternatives for data analysis (1/2)
+
+* **Spreadsheet (Excel et al)**: Easy to access (likely your university or employer will give you access to it) and effective and intuitive for manipulating tabular data but limited in 
+  * the type of analysis and visualisation they allow (e.g., no out-of-the-box linear regression 😭);
+  * the "shape" of data they can read: it can only be a table with rows and columns (i.e, no [API](https://en.wikipedia.org/wiki/API) data);
+  * the size of the data they can read.
+  
+---
+
+# No-code / low-code software alternatives for data analysis (2/2)
+  
+* **SPSS**: Sophisticated and easy to learn (yet, not that easy) but expensive. It is virtually only used in academia. Some limitation in terms of analytical tool (e.g. network and text analysis with additionally purchased software) 
+
+* **Tableau**: Mostly focused on data visualisation. Very popular in the industry for business intelligence. Relatively expensive and limited in terms of analytical tool (e.g. no network or text analysis).
+
+* **Power BI**: Mostly focused on data visualisation. Popular in the industry for business intelligence but less popular than Tableau. Relatively expensive and limited in terms of analytical tool (e.g. no network or text analysis). 
+  
+---
+
+class: inverse, center, middle
+
+# Getting started with R (and RStudio)
+
+---
+
+# What is the relation between R and RStudio?
+
+**R** is the computer language that we use to set the instructions (our *code*). For example,
+
+
+```r
+x &lt;- 42
+```
+
+is the R syntax to tell the computer to assign (`&lt;-`) the numerical *value* `42` to the (variable) name `x`. The result of this line of code is either to change the value of `x` to `42` or to create a new variable in the current *environment*, name it `x` and assign to it the value `42`. 
+
+**RStudio** is an [integrated development environment (IDE)](https://en.wikipedia.org/wiki/Integrated_development_environment) to facilitate (among other tasks)
+
+* writing and debug code, 
+* run it,
+* keep an eye on the objects (i.e. *data* and *values*) in my *environment*,
+* import dataset,
+* visualise plots,
+* navigate local files,
+* install packages.
+
+---
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
