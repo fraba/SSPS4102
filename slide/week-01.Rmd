@@ -300,6 +300,25 @@ is the R syntax to tell the computer to assign (`<-`) the numerical *value* `42`
 
 ---
 
+# RStudio
+
+.pull-left[
+
+After launching RStudio, you should see four windows. Each windows has a number of tabs (like in a web browser). The most important tabs are:
+
+]
+
+.pull-right[
+
+.center[<img src="../img/rstudio-ui.svg" style="width: 100%" />]
+
+]
+
+1. **Upper-left window**: Your *code*. Each code file you have open appears in a different tab. 
+2. **Upper-right window**: All the objects - *data* (e.g. dataframes), *values* (of your *variables*) and *functions* loaded in your environment are listed here. 
+3. **Lower-right window**: Your local *files* and *plots* can be accessed from here. 
+4. **Lower-left window**:  The *console*. Your R code will execute here. Code output (including errors and messages) is visualised here.
 
 ---
+
 
