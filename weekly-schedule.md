@@ -8,7 +8,7 @@
 |04 | Data collection and manipulation | R4DS [Ch5](https://r4ds.had.co.nz/transform.html) | HOPR [Ch7](https://rstudio-education.github.io/hopr/modify.html), [Ch8](https://rstudio-education.github.io/hopr/environments.html); R4DS [Ch18](https://r4ds.had.co.nz/pipes.html) | 
 |05 | Bivariate association and causality | DASS Ch2 | | 
 |06 | Dimension reduction | I2SL [Ch12.2](https://link.springer.com/chapter/10.1007/978-1-0716-1418-1_12) | RMD [Ch1](https://bookdown.org/yihui/rmarkdown/installation.html), [Ch2](https://bookdown.org/yihui/rmarkdown/basics.html), [Ch3](https://bookdown.org/yihui/rmarkdown/documents.html) | 
-|07 | Conducting reproducible research | DASS Ch3 | | 
+|07 | Conducting reproducible research | DASS Ch3; Kitchin  | boyd & Crawford; Floridi | 
 |08 | Normal curve & confidence intervals | DASS Ch6 | | 
 |09 | Hypothesis testing | DASS Ch7 | | 
 |10 | Simple regression | DASS Ch4 | |
@@ -25,17 +25,27 @@ Text book:
 
 Other texts: 
 
+* boyd,  danah, & Crawford, K. (2012). Critical questions for big data. _Information, Communication & Society_, 15(5), 662–679. https://doi.org/10.1080/1369118X.2012.678878
+  * Publicly and fully available online: NO
+  * Online access through library: YES [link](https://sydney.primo.exlibrisgroup.com/permalink/61USYD_INST/2rsddf/cdi_proquest_miscellaneous_1315867033)
+
 * Cairo, A. (2012). _The Functional Art: An introduction to information graphics and visualization_. New Riders. https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ (FA)
   * Publicly and fully available online: NO
   * Library access: YES [link](https://sydney.primo.exlibrisgroup.com/permalink/61USYD_INST/1c0ug48/alma991031515966205106)
     * Online access: YES [link](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/?ar=)
     * Hard Copy: YES
-
-* James, G., Witten, D., Hastie, T., & Tibshirani, R. (2021). _An introduction to statistical learning: With applications in R_. Springer. https://www.statlearning.com/ (I2SL)
-  * Publicly and fully available online: YES [link](https://link.springer.com/book/10.1007/978-1-0716-1418-1)
+    
+Floridi, L. (2012). Big data and their epistemological challenge. Philosophy & Technology, 25(4), 435–437. https://doi.org/10.1007/s13347-012-0093-4
+  * Publicly and fully available online: YES [link](https://doi.org/10.1007/s13347-012-0093-4)
 
 * Grolemund, G. (2014). _Hands-on programming with R_. O'Reilly. https://rstudio-education.github.io/hopr/ (HOPR)
   * Publicly and fully available online: YES [link](https://rstudio-education.github.io/hopr/)
+
+* James, G., Witten, D., Hastie, T., & Tibshirani, R. (2021). _An introduction to statistical learning: With applications in R_. Springer. https://www.statlearning.com/ (I2SL)
+  * Publicly and fully available online: YES [link](https://link.springer.com/book/10.1007/978-1-0716-1418-1)
+  
+* Kitchin, R. (2014). Big Data, new epistemologies and paradigm shifts. _Big Data & Society_, 1(1). https://doi.org/10.1177/2053951714528481
+  * Publicly and fully available online: YES [link](https://doi.org/10.1177/2053951714528481)
 
 * Imai, K. (2017). _Quantitative social science: An introduction_. Princeton University Press. https://press.princeton.edu/books/paperback/9780691175461/quantitative-social-science (QSS)
   * Publicly and fully available online: NO

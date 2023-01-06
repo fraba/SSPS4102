@@ -76,13 +76,13 @@
 
 - [ ] Subsetting variables
 
+- [ ] Reporting with R Markdown
+
 ## Week 6
 
 - [ ] Performing principal component analysis
 
 - [ ] Performing t-SNE analysis  
-
-- [ ] Reporting with R Markdown
 
 ## Week 7
 
