@@ -7,14 +7,14 @@
 |03 | Data visualisation | R4DS [Ch3](https://r4ds.had.co.nz/data-visualisation.html) | FA [Ch1](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ch01.html), [Ch2](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ch02.html) | 
 |04 | Data collection and manipulation | R4DS [Ch5](https://r4ds.had.co.nz/transform.html) | HOPR [Ch7](https://rstudio-education.github.io/hopr/modify.html), [Ch8](https://rstudio-education.github.io/hopr/environments.html); R4DS [Ch18](https://r4ds.had.co.nz/pipes.html) | 
 |05 | Bivariate association and causality | DASS Ch2 | | 
-|06 | Dimension reduction | I2SL Ch6.3 | | 
+|06 | Dimension reduction | I2SL [Ch12.2](https://link.springer.com/chapter/10.1007/978-1-0716-1418-1_12) | | 
 |07 | Conducting reproducible research | DASS Ch3 | | 
 |08 | Normal curve & confidence intervals | DASS Ch6 | | 
 |09 | Hypothesis testing | DASS Ch7 | | 
 |10 | Simple regression | DASS Ch4 | |
 |11 | Multiple regression | DASS Ch5 | | 
-|12 | Logistic regression and advanced topics | I2SL Ch4.1-3; QSS Ch5.2-3 |  
-|13 | Computational text analysis | QSS Ch5.1 | TMWR [Ch1](https://www.tidytextmining.com/tidytext.html), [Ch2](https://www.tidytextmining.com/sentiment.html), [Ch3](https://www.tidytextmining.com/tfidf.html) |
+|12 | Logistic regression and advanced topics | I2SL [Ch4.1-3](https://link.springer.com/chapter/10.1007/978-1-0716-1418-1_4); QSS Ch5.2-3 |  
+|13 | Computational text analysis | TMWR [Ch1](https://www.tidytextmining.com/tidytext.html), [Ch2](https://www.tidytextmining.com/sentiment.html), [Ch3](https://www.tidytextmining.com/tfidf.html), [Ch4](https://www.tidytextmining.com/ngrams.html), [Ch6](https://www.tidytextmining.com/topicmodeling.html) | QSS Ch5.1 |
 
 Text book:
 
@@ -31,8 +31,8 @@ Other texts:
     * Online access: YES [link](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/?ar=)
     * Hard Copy: YES
 
-* James, G., Witten, D., Hastie, T., & Tibshirani, R. (2013). _An introduction to statistical learning: With applications in R_. Springer. https://www.statlearning.com/ (I2SL)
-  * Publicly and fully available online: YES [link](https://www.statlearning.com/)
+* James, G., Witten, D., Hastie, T., & Tibshirani, R. (2021). _An introduction to statistical learning: With applications in R_. Springer. https://www.statlearning.com/ (I2SL)
+  * Publicly and fully available online: YES [link](https://link.springer.com/book/10.1007/978-1-0716-1418-1)
 
 * Grolemund, G. (2014). _Hands-on programming with R_. O'Reilly. https://rstudio-education.github.io/hopr/ (HOPR)
   * Publicly and fully available online: YES [link](https://rstudio-education.github.io/hopr/)
