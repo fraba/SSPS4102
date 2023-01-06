@@ -82,6 +82,8 @@
 
 - [ ] Performing t-SNE analysis  
 
+- [ ] Reporting with R Markdown
+
 ## Week 7
 
 - [ ] Creating frequency tables
