@@ -29,7 +29,7 @@ class: center, middle, inverse, title-slide
 ### The University of Sydney
 ]
 .date[
-### Semester 1, 2023 (updated: 2023-01-05)
+### Semester 1, 2023 (updated: 2023-01-06)
 ]
 
 ---
@@ -181,30 +181,31 @@ To analyse data to
 
 # How to learn data analysis + coding (2/2)
 
-Focus on 
+Focus on
 
 1. understanding (and communicating your understanding) of all the data analysis concepts;
 
-2. understanding how to apply these concepts to your data working with R;
+2. understanding how to apply these concepts to your data with R;
 
-3. working with R but not on understanding everything you work with in R. 
+3. developing a *functional* understanding of R - don' try to understand everything R does (or does not) for you! 
 
 &lt;center&gt;
 
-<div id="htmlwidget-e5c4db79d228dc8585de" style="width:45%;height:300px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e5c4db79d228dc8585de">{"x":{"diagram":"digraph {\n  graph []\n  \n  node [shape = oval]        \n  nod1 [label = \"Deep\\nunderstanding\"]\n  nod2 [label = \"Functional\\nunderstanding\"]\n  nod3 [label =  \"Communicating\\nand reporting\"]\n  \n  node [shape = egg]        \n  nod4 [label = \"Data analysis\\nconcepts\"]\n  nod5 [label = \"R\"]\n  \n  node [shape = diamond]  \n  nod6 [label = \"Data\"]\n  \n  \n  # edge definitions with the node IDs\n  nod1 -> nod4\n  nod2 -> nod5\n  nod4 -> nod6\n  nod5 -> nod6\n  nod6 -> nod3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-10b5887cbaca8e70d67e" style="width:800px;height:300px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-10b5887cbaca8e70d67e">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR] \n  \n  node [shape = oval]        \n  nod1 [label = \"Deep\\nunderstanding\"]\n  nod2 [label = \"Functional\\nunderstanding\"]\n  nod3 [label =  \"Communicating\\nand reporting\"]\n  \n  node [shape = egg]        \n  nod4 [label = \"Data analysis\\nconcepts\"]\n  nod5 [label = \"R\"]\n  \n  node [shape = diamond]  \n  nod6 [label = \"Data\"]\n  \n  \n  # edge definitions with the node IDs\n  nod1 -> nod4\n  nod2 -> nod5\n  nod4 -> nod6\n  nod5 -> nod6\n  nod6 -> nod3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 &lt;/center&gt;
 
 ---
 
-# Learning outcome in a nutshell (1/4)
+# Learning outcomes in a nutshell (1/4)
 
+Statistical analysis
 
 
 ```r
 fit &lt;- 
-  lm(Sepal.Length ~ Sepal.Width + Species, data = iris) 
+  lm(speed ~ dist, data = cars) 
 
 summary(fit)
 ```
@@ -212,24 +213,22 @@ summary(fit)
 ```
 ## 
 ## Call:
-## lm(formula = Sepal.Length ~ Sepal.Width + Species, data = iris)
+## lm(formula = speed ~ dist, data = cars)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -1.30711 -0.25713 -0.05325  0.19542  1.41253 
+##     Min      1Q  Median      3Q     Max 
+## -7.5293 -2.1550  0.3615  2.4377  6.4179 
 ## 
 ## Coefficients:
-##                   Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)         2.2514     0.3698   6.089 9.57e-09 ***
-## Sepal.Width         0.8036     0.1063   7.557 4.19e-12 ***
-## Speciesversicolor   1.4587     0.1121  13.012  &lt; 2e-16 ***
-## Speciesvirginica    1.9468     0.1000  19.465  &lt; 2e-16 ***
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  8.28391    0.87438   9.474 1.44e-12 ***
+## dist         0.16557    0.01749   9.464 1.49e-12 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.438 on 146 degrees of freedom
-## Multiple R-squared:  0.7259,	Adjusted R-squared:  0.7203 
-## F-statistic: 128.9 on 3 and 146 DF,  p-value: &lt; 2.2e-16
+## Residual standard error: 3.156 on 48 degrees of freedom
+## Multiple R-squared:  0.6511,	Adjusted R-squared:  0.6438 
+## F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12
 ```
 
 
@@ -237,9 +236,11 @@ summary(fit)
 
 # Learning outcome in a nutshell (2/4)
 
+Data visualisation
+
 
 ```r
-ggplot(fit, aes(x = Sepal.Width, y = Sepal.Length)) +
+ggplot(cars, aes(x = dist, y = speed)) +
   geom_point() +
   geom_smooth(method = "lm")
 ```
@@ -249,6 +250,8 @@ ggplot(fit, aes(x = Sepal.Width, y = Sepal.Length)) +
 ---
 
 # Learning outcome in a nutshell (3/4)
+
+Data visualisation
 
 
 
@@ -263,6 +266,13 @@ ggplot() +
 
 &lt;img src="week-01_files/figure-html/unnamed-chunk-5-1.svg" width="100%" style="display: block; margin: auto;" /&gt;
 
+---
+
+# Learning outcome in a nutshell (3/4)
+
+Reporting 
+
+.center[&lt;img src="https://d33wubrfki0l68.cloudfront.net/3215c7166555d2ac02ef678fd025c171f90db23c/4e60a/images/bandone.png" style="width: 100%" /&gt;]
 
 ---
 
@@ -316,7 +326,7 @@ class: inverse, center, middle
 # No-code / low-code software alternatives for data analysis (1/2)
 
 * **Spreadsheet (Excel et al)**: Easy to access (likely your university or employer will give you access to it) and effective and intuitive for manipulating tabular data but limited in 
-  * the type of analysis and visualisation they allow (e.g., no out-of-the-box linear regression 😿);
+  * the type of analysis and visualisation they allow (e.g., no out-of-the-box linear regression 😞);
   * the "shape" of data they can read: it can only be a table with rows and columns (i.e, no [API](https://en.wikipedia.org/wiki/API) data);
   * the size of the data they can read.
   

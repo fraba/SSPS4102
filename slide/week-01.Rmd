@@ -171,20 +171,20 @@ To analyse data to
 
 # How to learn data analysis + coding (2/2)
 
-Focus on 
+Focus on
 
 1. understanding (and communicating your understanding) of all the data analysis concepts;
 
-2. understanding how to apply these concepts to your data working with R;
+2. understanding how to apply these concepts to your data with R;
 
-3. working with R but not on understanding everything you work with in R. 
+3. developing a *functional* understanding of R - don' try to understand everything R does (or does not) for you! 
 
 <center>
 
-```{r, echo = F, results = 'asis'}
+```{r, echo = F}
 
 DiagrammeR::grViz("digraph {
-  graph []
+  graph [layout = dot, rankdir = LR] 
   
   node [shape = oval]        
   nod1 [label = 'Deep\\nunderstanding']
@@ -205,8 +205,8 @@ DiagrammeR::grViz("digraph {
   nod4 -> nod6
   nod5 -> nod6
   nod6 -> nod3
-  }",
-  height = 300)
+  }", 
+  width = 800, height = 300)
 
 ```
 
@@ -214,13 +214,14 @@ DiagrammeR::grViz("digraph {
 
 ---
 
-# Learning outcome in a nutshell (1/4)
+# Learning outcomes in a nutshell (1/4)
 
+Statistical analysis
 
 ```{r}
 
 fit <- 
-  lm(Sepal.Length ~ Sepal.Width + Species, data = iris) 
+  lm(speed ~ dist, data = cars) 
 
 summary(fit)
 
@@ -231,9 +232,11 @@ summary(fit)
 
 # Learning outcome in a nutshell (2/4)
 
+Data visualisation
+
 ```{r fig.height = 6, out.width = "50%"}
 
-ggplot(fit, aes(x = Sepal.Width, y = Sepal.Length)) +
+ggplot(cars, aes(x = dist, y = speed)) +
   geom_point() +
   geom_smooth(method = "lm")
 
@@ -242,6 +245,8 @@ ggplot(fit, aes(x = Sepal.Width, y = Sepal.Length)) +
 ---
 
 # Learning outcome in a nutshell (3/4)
+
+Data visualisation
 
 ```{r echo = F}
 
@@ -263,6 +268,13 @@ ggplot() +
 
 ```
 
+---
+
+# Learning outcome in a nutshell (4/4)
+
+Reporting 
+
+.center[<img src="https://d33wubrfki0l68.cloudfront.net/3215c7166555d2ac02ef678fd025c171f90db23c/4e60a/images/bandone.png" style="width: 100%" />]
 
 ---
 
