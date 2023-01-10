@@ -2,157 +2,165 @@
 
 ## Week 1
 
-- [ ] Launching RStudio
+* Launching RStudio
 
-- [ ] Installing and loading packages
+* Installing packages
 
-- [ ] Running simple calculations
-
-- [ ] Creating objects
-
-- [ ] Using functions
-
-- [ ] Loading data
-
-- [ ] Making sense of data (and dataframes)
-
-  - [ ] Identifying types of variables
+  * `r install.packages(pkgs)`
   
-  - [ ] Identifying number of observations
+* Loading packages
+
+  * `r library(package)` or `r require(package)`
+
+* Running simple calculations
+
+  * `r 1 + 2` or `r 2 - 3` or `r 3 * 4` or `r 4 / 5`     
+
+* Creating objects
+
+* Using functions
+
+* Loading data
+
+* Making sense of data (and dataframes)
+
+  * Identifying types of variables
+  
+  * Identifying number of observations
 
 ## Week 2
 
-- [ ] Accessing variables inside dataframes
+* Accessing variables inside dataframes
 
-- [ ] Computing means
+* Computing means
 
 ## Week 3
 
-- [ ] Creating a ggplot
+* Creating a ggplot
 
-- [ ] Using aesthetic mappings
+* Using aesthetic mappings
 
-- [ ] Choosing and using different geoms
+* Choosing and using different geoms
 
-  - [ ] Using geom_density
+  * Using geom_density
  
-  - [ ] Using geom_histogram
+  * Using geom_histogram
  
-  - [ ] Using geom_bar
+  * Using geom_bar
 
-  - [ ] Using geom_point
+  * Using geom_point
 
-  - [ ] Using geom_smooth
+  * Using geom_smooth
   
-  - [ ] Using geom_boxplot
+  * Using geom_boxplot
   
-  - [ ] Using geom_line
+  * Using geom_line
   
-  - [ ] Using scales
+  * Using scales
   
-  - [ ] Using facets
+  * Using facets
   
 ## Week 4
 
-- [ ] Using pipes
+* Using pipes
 
-- [ ] Manipulating dataframes with dplyr
+* Manipulating dataframes with dplyr
 
-  - [ ] Filtering observations
+  * Filtering observations
   
-  - [ ] Selecting variables
+  * Selecting variables
   
-  - [ ] Creating new variables
+  * Creating new variables
   
-  - [ ] Grouping observation
+  * Grouping observation
   
-  - [ ] Summarising variables
+  * Summarising variables
   
 ## Week 5
 
-- [ ] Using relational operators
+* Using relational operators
 
-- [ ] Creating variables with ifelse
+* Creating variables with ifelse
 
-- [ ] Subsetting variables
+* Subsetting variables
 
-- [ ] Reporting with R Markdown
+* Reporting with R Markdown
 
 ## Week 6
 
-- [ ] Performing principal component analysis
+* Performing principal component analysis
 
-- [ ] Performing t-SNE analysis  
+* Performing t-SNE analysis  
 
 ## Week 7
 
-- [ ] Creating frequency tables
+* Creating frequency tables
 
-- [ ] Creating tables of proportions
+* Creating tables of proportions
 
-- [ ] Handling missing values
+* Handling missing values
 
-- [ ] Creating two-way frequency tables
+* Creating two-way frequency tables
 
-- [ ] Creating two-way tables of proportions
+* Creating two-way tables of proportions
 
-- [ ] Computing correlations
+* Computing correlations
 
 ## Week 8
 
-- [ ] Taking a random sample
+* Taking a random sample
 
-- [ ] Computing variance
+* Computing variance
 
-- [ ] Taking a random sample from a normal distribution
+* Taking a random sample from a normal distribution
 
-- [ ] Computing probability of normal random variables
+* Computing probability of normal random variables
 
-- [ ] Using for loops
+* Using for loops
 
 ## Week 9
 
-- [ ] Computing confidence interval for sample means
+* Computing confidence interval for sample means
 
-- [ ] Computing confidence interval for difference-in-means estimators
+* Computing confidence interval for difference-in-means estimators
 
-- [ ] Hypothesis testing with the difference-in-means estimators
+* Hypothesis testing with the difference-in-means estimators
 
 ## Week 10
 
-- [ ] Fitting simple linear regression models
+* Fitting simple linear regression models
 
-- [ ] Using natural logarithmic transformations
+* Using natural logarithmic transformations
 
-- [ ] Computing confidence interval for predicted outcomes
+* Computing confidence interval for predicted outcomes
 
-- [ ] Hypothesis testing with estimated regression coefficients
+* Hypothesis testing with estimated regression coefficients
 
-- [ ] Reporting linear model results
+* Reporting linear model results
 
 ## Week 11
 
-- [ ] Fitting multiple linear regression models
+* Fitting multiple linear regression models
 
-- [ ] Predicting using regression model results
+* Predicting using regression model results
 
 
 ## Week 12
 
-- [ ] Fitting logistic regression models
+* Fitting logistic regression models
 
-- [ ] Analysing network data
+* Analysing network data
 
-- [ ] Analysing spatial data
+* Analysing spatial data
 
 ## Week 13
 
-- [ ] Tidying text data
+* Tidying text data
 
-- [ ] Analysing word frequencies
+* Analysing word frequencies
 
-- [ ] Analysing sentiment of texts
+* Analysing sentiment of texts
 
-- [ ] Analysing relationships between words
+* Analysing relationships between words
 
-- [ ] Identifying topics in texts
+* Identifying topics in texts
