@@ -6,15 +6,15 @@
 
 * Installing packages
 
-  * `r install.packages(pkgs)`
+  * `{r} install.packages(pkgs)`
   
 * Loading packages
 
-  * `r library(package)` or `r require(package)`
+  * `{r} library(package)` or `r require(package)`
 
 * Running simple calculations
 
-  * `r 1 + 2` or `r 2 - 3` or `r 3 * 4` or `r 4 / 5`     
+  * `{r} 1 + 2` or `{r} 2 - 3` or `{r} 3 * 4` or `{r} 4 / 5`     
 
 * Creating objects
 
