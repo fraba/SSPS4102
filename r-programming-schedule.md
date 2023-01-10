@@ -6,7 +6,7 @@
 
 * Installing packages
 
-  * `install.packages(pkgs)`
+  * `install.packages(packages)`
   
 * Loading packages
 
@@ -32,21 +32,21 @@
 
   * Identifying types of variables
   
-    * `class(x)` 
+    * `class(object)` 
   
   * Identifying number of observations
   
-    * `dim(x)`
+    * `dim(object)`
 
 ## Week 2
 
 * Accessing variables inside dataframes
 
-  * `x$var`
+  * `dataframe$var`
 
 * Computing means
 
-  * `mean(x)`
+  * `mean(numbers)`
 
 ## Week 3
 
@@ -54,31 +54,45 @@
 
   * Using aesthetic mappings
   
-    * `ggplot2::ggplot(x, aes(x = var_1, y = var_2))`
+    * `ggplot2::ggplot(dataframe, aes(x = numbers, y = factors))`
 
   * Choosing and using different geoms
 
     * Using geom_density
     
-      * `ggplot2::ggplot(x, aes(x = var_1)) + ggplot2::geom_density()`
+      * `ggplot2::ggplot(dataframe, aes(numbers)) + ggplot2::geom_density()`
  
     * Using geom_histogram
     
-      * `ggplot2::ggplot(x, aes(x = var_1)) + ggplot2::geom_histogram()`
+      * `ggplot2::ggplot(dataframe, aes(numbers)) + ggplot2::geom_histogram()`
  
     * Using geom_bar
+    
+      * `ggplot2::ggplot(dataframe, aes(x = factors, y = numbers)) + ggplot2::geom_bar()`
 
     * Using geom_point
+    
+      * `ggplot2::ggplot(dataframe, aes(x = numbers, y = numbers)) + ggplot2::geom_point()`
 
     * Using geom_smooth
+    
+      * `ggplot2::ggplot(dataframe, aes(x = numbers, y = numbers)) + ggplot2::geom_smooth()`
   
     * Using geom_boxplot
+    
+      * `ggplot2::ggplot(dataframe, aes(x = factors, y = numbers)) + ggplot2::geom_boxplot()`
   
     * Using geom_line
+    
+      * `ggplot2::ggplot(dataframe, aes(x = numbers, y = numbers)) + ggplot2::geom_boxplot()`
   
   * Using scales
   
+    * `ggplot2::ggplot(dataframe, aes(x = numbers, y = numbers)) + ggplot2::scale_y_continous()`
+  
   * Using facets
+  
+    `ggplot2::ggplot(dataframe, aes(x = numbers, y = numbers)) + ggplot2::facet_grid()`
   
 ## Week 4
 
