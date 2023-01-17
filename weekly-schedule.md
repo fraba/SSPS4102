@@ -35,7 +35,7 @@ Other texts:
     * Online access: YES [link](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/?ar=)
     * Hard Copy: YES
     
-Floridi, L. (2012). Big data and their epistemological challenge. Philosophy & Technology, 25(4), 435–437. https://doi.org/10.1007/s13347-012-0093-4
+* Floridi, L. (2012). Big data and their epistemological challenge. Philosophy & Technology, 25(4), 435–437. https://doi.org/10.1007/s13347-012-0093-4
   * Publicly and fully available online: YES [link](https://doi.org/10.1007/s13347-012-0093-4)
 
 * Grolemund, G. (2014). _Hands-on programming with R_. O'Reilly. https://rstudio-education.github.io/hopr/ (HOPR)
