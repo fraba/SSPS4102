@@ -7,8 +7,7 @@
 |03 | Data visualisation | R4DS [Ch3](https://r4ds.had.co.nz/data-visualisation.html) | FA [Ch1](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ch01.html), [Ch2](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ch02.html) | 
 |04 | Data collection and manipulation | R4DS [Ch5](https://r4ds.had.co.nz/transform.html) | HOPR [Ch7](https://rstudio-education.github.io/hopr/modify.html), [Ch8](https://rstudio-education.github.io/hopr/environments.html); R4DS [Ch18](https://r4ds.had.co.nz/pipes.html) | 
 |05 | Bivariate association and causality | DASS Ch2 | | 
-|06 | Dimension reduction | I2SL [Ch12.2](https://link.springer.com/chapter/10.1007/978-1-0716-1418-1_12); Wattenberg, Viégas & Johnson
- | RMD [Ch1](https://bookdown.org/yihui/rmarkdown/installation.html), [Ch2](https://bookdown.org/yihui/rmarkdown/basics.html), [Ch3](https://bookdown.org/yihui/rmarkdown/documents.html) | 
+|06 | Dimension reduction | I2SL [Ch12.2](https://link.springer.com/chapter/10.1007/978-1-0716-1418-1_12); Wattenberg, Viégas & Johnson | RMD [Ch1](https://bookdown.org/yihui/rmarkdown/installation.html), [Ch2](https://bookdown.org/yihui/rmarkdown/basics.html), [Ch3](https://bookdown.org/yihui/rmarkdown/documents.html) | 
 |07 | Conducting reproducible research | DASS Ch3; Kitchin  | boyd & Crawford; Floridi | 
 |08 | Normal curve & confidence intervals | DASS Ch6 | | 
 |09 | Hypothesis testing | DASS Ch7 | | 
