@@ -23,6 +23,8 @@
 * Using functions
 
   * `function_name(arguments)`
+    
+  * `package::function_name(arguments)`
 
 * Loading data
 
@@ -72,11 +74,11 @@
 
     * Using geom_point
     
-      * `ggplot2::ggplot(dataframe, aes(x = numbers, y = numbers)) + ggplot2::geom_point()`
+      * `ggplot2::ggplot(dataframe, aes(x = numbers, y = other_numbers)) + ggplot2::geom_point()`
 
     * Using geom_smooth
     
-      * `ggplot2::ggplot(dataframe, aes(x = numbers, y = numbers)) + ggplot2::geom_smooth()`
+      * `ggplot2::ggplot(dataframe, aes(x = numbers, y = other_numbers)) + ggplot2::geom_smooth()`
   
     * Using geom_boxplot
     
@@ -84,39 +86,57 @@
   
     * Using geom_line
     
-      * `ggplot2::ggplot(dataframe, aes(x = numbers, y = numbers)) + ggplot2::geom_boxplot()`
+      * `ggplot2::ggplot(dataframe, aes(x = numbers, y = other_numbers)) + ggplot2::geom_boxplot()`
   
   * Using scales
   
-    * `ggplot2::ggplot(dataframe, aes(x = numbers, y = numbers)) + ggplot2::scale_y_continous()`
+    * `ggplot2::ggplot(dataframe, aes(x = numbers, y = other_numbers)) + ggplot2::scale_y_continous()`
   
   * Using facets
   
-    `ggplot2::ggplot(dataframe, aes(x = numbers, y = numbers)) + ggplot2::facet_grid()`
+    `ggplot2::ggplot(dataframe, aes(x = numbers, y = other_numbers)) + ggplot2::facet_grid()`
   
 ## Week 4
 
-* Using pipes
+* Using pipes (%>%)
+
+  * `diamonds %>% dplyr::mutate(price_per_carat = price / carat)`
 
 * Manipulating dataframes with dplyr
 
   * Filtering observations
   
+    * `dplyr::filter(flights, month == 1, day == 1)`
+  
   * Selecting variables
+  
+    * `dplyr::select(flights, year, month, day)`
   
   * Creating new variables
   
+    * `dplyr::mutate(flights_sml, gain = dep_delay - arr_delay)`
+  
   * Grouping observation
   
+    * `dplyr::group_by(flights, year, month, day)`
+  
   * Summarising variables
+  
+    * `summarise(daily, flights = n())`
   
 ## Week 5
 
 * Using relational operators
 
+  * `3 == 3` or `TRUE != FALSE` 
+
 * Creating variables with ifelse
 
+  * `ifelse(var == "red", 1, 0)`
+
 * Subsetting variables
+
+  * `var[var == "red"]`
 
 * Reporting with R Markdown
 
@@ -124,33 +144,77 @@
 
 * Performing principal component analysis
 
+  * `prcomp(USArrests, scale = TRUE)`
+
 * Performing t-SNE analysis  
+
+  * `Rtsne::Rtsne(USArrests, perplexity = 10)`
 
 ## Week 7
 
 * Creating frequency tables
 
+  * `table(factors)`
+
 * Creating tables of proportions
+
+  * `prop.table(table(factors))`
+  
+* Understanding missing values
+
+  * `is.na(object)` OR is.null(object) 
 
 * Handling missing values
 
+  * `table(factors, exclude = NULL)` or `na.omit(var)`
+
 * Creating two-way frequency tables
+
+  * `table(factors, other_factors)`
 
 * Creating two-way tables of proportions
 
+  * `prop.table(table(factors, other_factors))`
+  
+* Computing descriptive statistics
+
+  * Mean
+  
+    * `mean(numbers)
+    
+  * Median 
+  
+    * `median(numbers)`
+    
+  * Standard deviation
+  
+    * `sd(numbers)`
+    
+  * Variance
+  
+    * `var(numbers)`
+
 * Computing correlations
+
+  * `cor(numbers, other_numbers)`
 
 ## Week 8
 
 * Taking a random sample
 
-* Computing variance
+  * sample(numbers, size = 10)
 
 * Taking a random sample from a normal distribution
 
+  * `rnorm(10)`
+
 * Computing probability of normal random variables
 
+  * `pnorm(-1.96)`
+
 * Using for loops
+
+  * `for(i in 1:10) {print(i)}`
 
 ## Week 9
 
