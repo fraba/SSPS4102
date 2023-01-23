@@ -7,7 +7,7 @@
 |03 | Data visualisation | R4DS [Ch3](https://r4ds.had.co.nz/data-visualisation.html) | FA [Ch1](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ch01.html), [Ch2](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ch02.html) | 
 |04 | Data collection and manipulation | R4DS [Ch5](https://r4ds.had.co.nz/transform.html) | HOPR [Ch7](https://rstudio-education.github.io/hopr/modify.html), [Ch8](https://rstudio-education.github.io/hopr/environments.html); R4DS [Ch18](https://r4ds.had.co.nz/pipes.html) | 
 |05 | Bivariate association and causality | DASS Ch2 | | 
-|06 | Dimension reduction | I2SL [Ch12.2](https://link.springer.com/chapter/10.1007/978-1-0716-1418-1_12) | RMD [Ch1](https://bookdown.org/yihui/rmarkdown/installation.html), [Ch2](https://bookdown.org/yihui/rmarkdown/basics.html), [Ch3](https://bookdown.org/yihui/rmarkdown/documents.html) | 
+|06 | Dimension reduction | I2SL [Ch12.2](https://link.springer.com/chapter/10.1007/978-1-0716-1418-1_12); Wattenberg, Viégas & Johnson | RMD [Ch1](https://bookdown.org/yihui/rmarkdown/installation.html), [Ch2](https://bookdown.org/yihui/rmarkdown/basics.html), [Ch3](https://bookdown.org/yihui/rmarkdown/documents.html) | 
 |07 | Conducting reproducible research | DASS Ch3; Kitchin  | boyd & Crawford; Floridi | 
 |08 | Normal curve & confidence intervals | DASS Ch6 | | 
 |09 | Hypothesis testing | DASS Ch7 | | 
@@ -35,7 +35,7 @@ Other texts:
     * Online access: YES [link](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/?ar=)
     * Hard Copy: YES
     
-Floridi, L. (2012). Big data and their epistemological challenge. Philosophy & Technology, 25(4), 435–437. https://doi.org/10.1007/s13347-012-0093-4
+* Floridi, L. (2012). Big data and their epistemological challenge. Philosophy & Technology, 25(4), 435–437. https://doi.org/10.1007/s13347-012-0093-4
   * Publicly and fully available online: YES [link](https://doi.org/10.1007/s13347-012-0093-4)
 
 * Grolemund, G. (2014). _Hands-on programming with R_. O'Reilly. https://rstudio-education.github.io/hopr/ (HOPR)
@@ -60,4 +60,6 @@ Floridi, L. (2012). Big data and their epistemological challenge. Philosophy & T
 * Wickham, H., & Grolemund, G. (2017). _R for data science_. O'Reilly. https://r4ds.had.co.nz/ (R4DS)
   * Publicly and fully available online: YES [link](https://r4ds.had.co.nz/)
 
+* Wattenberg, M., Viégas, F., & Johnson, I. (2016). How to use t-SNE effectively. Distill, 1(10), e2. https://doi.org/10.23915/distill.00002
+  * Publicly and fully available online: YES [link](https://doi.org/10.23915/distill.00002)
 
