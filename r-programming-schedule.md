@@ -220,9 +220,9 @@
 
 * Computing 95% confidence interval for sample means 
 
-  * $[\bar{Y} - 1.96 \times \sqrt{\frac{var(Y)}{n}}]$
-
-  * `mean(numbers) - 1.96 * sqrt(var(numbers) / length(numbers))` and `mean(numbers) + 1.96 * sqrt(var(numbers) / length(numbers))`
+  * `mean(numbers) - 1.96 * sqrt(var(numbers) / length(numbers))` and 
+  
+  * `mean(numbers) + 1.96 * sqrt(var(numbers) / length(numbers))`
 
 * Computing confidence interval for difference-in-means estimators
 
