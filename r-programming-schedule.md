@@ -38,7 +38,7 @@
   
   * Identifying number of observations
   
-    * `dim(object)`
+    * `dim(object)` or `nrow(dataframe)` or `length(var)`
 
 ## Week 2
 
@@ -100,29 +100,29 @@
 
 * Using pipes (%>%)
 
-  * `diamonds %>% dplyr::mutate(price_per_carat = price / carat)`
+  * `dataframe %>% dplyr::mutate(price_per_carat = price / carat)`
 
 * Manipulating dataframes with dplyr
 
   * Filtering observations
   
-    * `dplyr::filter(flights, month == 1, day == 1)`
+    * `dplyr::filter(dataframe, month == 1, day == 1)`
   
   * Selecting variables
   
-    * `dplyr::select(flights, year, month, day)`
+    * `dplyr::select(dataframe, year, month, day)`
   
   * Creating new variables
   
-    * `dplyr::mutate(flights_sml, gain = dep_delay - arr_delay)`
+    * `dplyr::mutate(dataframe, gain = dep_delay - arr_delay)`
   
   * Grouping observation
   
-    * `dplyr::group_by(flights, year, month, day)`
+    * `dplyr::group_by(dataframe, year, month, day)`
   
   * Summarising variables
   
-    * `summarise(daily, flights = n())`
+    * `dplyr::summarise(dataframe, flights = n())`
   
 ## Week 5
 
@@ -144,11 +144,11 @@
 
 * Performing principal component analysis
 
-  * `prcomp(USArrests, scale = TRUE)`
+  * `prcomp(matrix, scale = TRUE)`
 
 * Performing t-SNE analysis  
 
-  * `Rtsne::Rtsne(USArrests, perplexity = 10)`
+  * `Rtsne::Rtsne(matrix, perplexity = 10)`
 
 ## Week 7
 
@@ -218,17 +218,29 @@
 
 ## Week 9
 
-* Computing confidence interval for sample means
+* Computing 95% confidence interval for sample means 
+
+  * $[\bar{Y} - 1.96 \times \sqrt{\frac{var(Y)}{n}}]$
+
+  * `mean(numbers) - 1.96 * sqrt(var(numbers) / length(numbers))` and `mean(numbers) + 1.96 * sqrt(var(numbers) / length(numbers))`
 
 * Computing confidence interval for difference-in-means estimators
 
+  * ``
+
 * Hypothesis testing with the difference-in-means estimators
+
+  * ``
 
 ## Week 10
 
 * Fitting simple linear regression models
 
+  * `lm(income ~ education)`
+
 * Using natural logarithmic transformations
+
+    * `log(numbers)`
 
 * Computing confidence interval for predicted outcomes
 
@@ -236,16 +248,23 @@
 
 * Reporting linear model results
 
+    * `summary(object)`
+
 ## Week 11
 
 * Fitting multiple linear regression models
 
+  * `lm(income ~ education + parents_income)`
+
 * Predicting using regression model results
 
+  * `predict(object, newdata)`
 
 ## Week 12
 
 * Fitting logistic regression models
+
+  * `glm(binary ~ education + parents_income, family = 'binomial')`
 
 * Analysing network data
 
