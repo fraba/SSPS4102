@@ -308,48 +308,62 @@ lapply(packages, require, character.only = TRUE)
 
 * Fitting simple linear regression models
 
-  * `lm(income ~ education)`
+  * `fit <- lm(numbers ~ other_numbers, data = dataframe)`
 
 * Using natural logarithmic transformations
 
-    * `log(numbers)`
-
-* Computing confidence interval for predicted outcomes
+    * `log(numbers)` or
+    
+    * `lm(log(numbers) ~ other_numbers, data = dataframe)` or
 
 * Hypothesis testing with estimated regression coefficients
 
+  * `summary(fit)$coef`
+
 * Reporting linear model results
 
-    * `summary(object)`
+  * `summary(fit)`
 
 ## Week 11
 
 * Fitting multiple linear regression models
 
-  * `lm(income ~ education + parents_income)`
+  * `lm(numbers ~ other_numbers + factors + other_factors)`
 
-* Predicting using regression model results
+* Computing confidence interval for predicted outcomes
 
-  * `predict(object, newdata)`
+  * `predict(fit, newdata = data.frame(other_numbers = 100), interval = "confidence")`
 
 ## Week 12
 
 * Fitting logistic regression models
 
-  * `glm(binary ~ education + parents_income, family = 'binomial')`
+  * `glm(factors ~ numbers + other_numbers, family = 'binomial')`
+  
+## Advanced topics (Week 12 and 13)
 
 * Analysing network data
 
+  * Loading network data and creating networks
+  
+  * Visualising networks
+  
+  * Computing network statistics
+
 * Analysing spatial data
 
-## Week 13
+  * Loading spatial data
+  
+  * Visualising spatial data 
 
-* Tidying text data
+* Analysing text data
 
-* Analysing word frequencies
+  * Tidying text data
 
-* Analysing sentiment of texts
+  * Analysing word frequencies
 
-* Analysing relationships between words
+  * Analysing sentiment of texts
 
-* Identifying topics in texts
+  * Analysing relationships between words
+
+  * Identifying topics in texts
