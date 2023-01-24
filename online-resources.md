@@ -5,3 +5,5 @@
 * https://github.com/erikgahner/awesome-ggplot2
 
 * https://github.com/erikgahner/PolData 
+
+* https://eehh-stanford.github.io/SNA-workshop/
