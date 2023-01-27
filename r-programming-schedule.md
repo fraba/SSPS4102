@@ -4,7 +4,7 @@ If not otherwise indicated, you can run each command below in R by creating thes
 
 ```
 
-packages <- c("tidyverse", "Rtsne", "igraph", "tidytext", "sp")
+packages <- c("tidyverse", "Rtsne", "igraph", "tidytext", "sf")
 
 package <- sample(packages, 1)
   
@@ -19,6 +19,10 @@ other_factors <- factor(sample(c("green","yellow"), 100, replace = T))
 dataframe <- data.frame(numbers, other_numbers, factors, other_factors)
   
 matrix <- cbind(numbers, other_numbers)
+
+adjmatrix <- matrix(rbinom(100, 1, prob = .5), ncol = 10)
+
+edglist <- matrix(sample(1:10, 100, replace = T), ncol = 2)
 
 ```
 
@@ -197,6 +201,12 @@ lapply(packages, require, character.only = TRUE)
 * Subsetting variables
 
   * `numbers[numbers > 50]`
+  
+* Subsetting data frames
+
+  * `dataframe[1,]` or
+  
+  * `dataframe[,1]` or
 
 * Reporting with R Markdown
 
@@ -340,21 +350,59 @@ lapply(packages, require, character.only = TRUE)
 
   * `glm(factors ~ numbers + other_numbers, family = 'binomial')`
   
-## Advanced topics (Week 12 and 13)
+## Week 12 & 13 (advanced topics)
 
 * Analysing network data
 
-  * Loading network data and creating networks
+  * Creating networks
+  
+    * `g <- igraph::graph_from_adjacency_matrix(adjmatrix)`
+  
+    * `g <- igraph::graph_from_edgelist(edglist)`
   
   * Visualising networks
   
+    * `plot(g)`
+  
   * Computing network statistics
+  
+    * Size (global)
+    
+      * `igraph::vcount(g)` and
+      
+      * `igraph::ecount(g)`
+  
+    * Degree (local)
+      
+      * `igraph::degree(g)`
+    
+    * Closeness (local)
+    
+      * `igraph::closeness(g)`
+      
+    * Betweenness (local)
+    
+      * `igraph::betweenness(g)`
+    
+  * Computing network communities
+  
+    * `igraph::cluster_optimal(g)`
 
 * Analysing spatial data
 
   * Loading spatial data
   
+    * `data.sf <- sf::read_sf(file)` [don't run]
+  
   * Visualising spatial data 
+  
+    * `leaflet::leaflet(sf) + leaflet::addTiles()` [don't run] or
+    
+    * `ggplot2::ggplot(sf) + geom_sf()` [don't run]
+    
+  * Manipulating spatial data
+  
+    * 
 
 * Analysing text data
 

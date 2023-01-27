@@ -13,7 +13,7 @@
 |09 | Hypothesis testing | DASS Ch7 | | 
 |10 | Simple regression | DASS Ch4 | |
 |11 | Multiple regression | DASS Ch5 | | 
-|12 | Logistic regression and advanced topics | I2SL [Ch4.1-3](https://link.springer.com/chapter/10.1007/978-1-0716-1418-1_4); QSS Ch5.2-3 |  
+|12 | Logistic regression and advanced topics | I2SL [Ch4.1-3](https://link.springer.com/chapter/10.1007/978-1-0716-1418-1_4); QSS Ch5.2-3.1 |  
 |13 | Computational text analysis | TMWR [Ch1](https://www.tidytextmining.com/tidytext.html), [Ch2](https://www.tidytextmining.com/sentiment.html), [Ch3](https://www.tidytextmining.com/tfidf.html), [Ch4](https://www.tidytextmining.com/ngrams.html), [Ch6](https://www.tidytextmining.com/topicmodeling.html) | QSS Ch5.1 |
 
 Text book:

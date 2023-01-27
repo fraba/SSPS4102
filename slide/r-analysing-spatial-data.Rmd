@@ -1,0 +1,621 @@
+---
+title: "SSPS4102</br>Data Analytics in the Social Sciences"
+subtitle: "Analysing spatial data"
+author: "Francesco Bailo"
+institute: "The University of Sydney"
+date: "Semester 1, 2023 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+background-image: url(https://upload.wikimedia.org/wikipedia/en/6/6a/Logo_of_the_University_of_Sydney.svg)
+background-size: 95%
+
+```{r setup, include=FALSE}
+
+options(htmltools.dir.version = FALSE)
+
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, 
+                      dev = 'svg', out.width = "45%", fig.width = 6,
+                      fig.align="center")
+
+```
+
+---
+
+# What is GIS
+
+---
+class: inverse, center, middle
+
+# Spatial data 
+
+---
+
+## Vector and raster data
+
+![](http://www.eo4geo.eu/wp-content/uploads/2020/11/GEOF_Basic-GIS-knowledge-vector-and-raster-data.png) 
+*Source: Marijan Grgic, University of Zagreb, Faculty of Geodesy.*
+
+---
+
+## Vector
+
+---
+
+## Point
+
+---
+
+## Polygon
+
+---
+
+## Raster
+
+---
+
+## Projection
+
+---
+
+## Scale
+
+---
+
+# GIS software
+
+ArcGIS (pro) and QGIS (free)
+
+---
+class: inverse, center, middle
+
+# Lab
+
+---
+
+## Simple Features
+
+> **Simple Features** ... is a set of standards that specify a common storage and access model of geographic feature made of mostly two-dimensional geometries (point, line, polygon, multi-point, multi-line, etc.) used by geographic information systems. (Source: [Wikipedia](https://en.wikipedia.org/wiki/Simple_Features)).
+
+In other words, you find the same functions across different implementations.
+
+### The sf package for R
+
+.pull-left[
+
+.center[<img src="https://user-images.githubusercontent.com/520851/34887433-ce1d130e-f7c6-11e7-83fc-d60ad4fae6bd.gif"/>]
+
+.center[https://r-spatial.github.io/sf/]
+
+]
+
+.pull-right[
+
+* Represents simple features as records in a `data.frame` with a geometry list-column.
+* Extensive access to functions for *confirmation* (e.g. `st_contains`), *operations* (e.g. `st_buffer`) and creation (e.g. `st_point`).
+* Excellent integration with ggplot2 using `geom_sf`...
+
+]
+
+---
+
+## The sf integration with ggplot: geom_sf
+
+```{r echo = F}
+require(ggplot2)
+
+require(sf)
+
+nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"), quiet = TRUE)
+```
+
+
+```{r out.width="100%", fig.height=3, fig.width=10}
+
+ggplot(nc) +
+  geom_sf(aes(fill = AREA))
+
+```
+
+---
+
+## John Snow and the 1854 London's cholera outbreak
+
+.center[<img src="https://upload.wikimedia.org/wikipedia/en/3/30/Jon_Snow_Season_8.png"/ width="20%">]
+
+.center[(Not this Jon Snow)]
+
+---
+
+## John Snow and the 1854 London's cholera outbreak
+
+.center[<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Snow-cholera-map-1.jpg/1092px-Snow-cholera-map-1.jpg" width="520"/>]
+
+*Original map made by John Snow in 1854. Source: [Wikipedia](https://commons.wikimedia.org/wiki/File:Snow-cholera-map-1.jpg)*
+
+---
+
+## Load data
+
+Data files are in [this folder](https://github.com/fraba/SSPS4102/tree/master/data/SnowGIS). To download the entire folder as a compressed archived [click here](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/fraba/SSPS4102/tree/master/data/SnowGIS) for the compressed folder.
+
+```{r}
+
+# Load the required packages
+
+require(tidyverse)
+
+require(sf)
+
+require(leaflet)
+
+# Path might be different on your computer! #<<
+
+Cholera_Deaths <- 
+  sf::read_sf("../data/SnowGIS/Cholera_Deaths.shp")
+
+# Same here #<<
+
+Pumps <- 
+  sf::read_sf("../data/SnowGIS/Pumps.shp")
+
+```
+
+---
+
+Let's check the class of these two simple features (sf) spatial objects...
+
+```{r}
+
+class(Cholera_Deaths)
+
+class(Pumps)
+
+```
+
+---
+
+
+```{r eval = F, tidy=FALSE}
+
+head(Cholera_Deaths)
+
+## Simple feature collection with 6 features and 2 fields #<<
+## Geometry type: POINT #<<
+## Dimension:     XY
+## Bounding box:  xmin: 529308.7 ymin: 181006 xmax: 529336.7 ymax: 181031.4
+## Projected CRS: OSGB36 / British National Grid
+## # A tibble: 6 × 3
+##      Id Count            geometry #<<
+##   <int> <int>         <POINT [m]>
+## 1     0     3 (529308.7 181031.4)
+## 2     0     2 (529312.2 181025.2)
+## 3     0     1 (529314.4 181020.3)
+## 4     0     1 (529317.4 181014.3)
+## 5     0     4 (529320.7 181007.9)
+## 6     0     2   (529336.7 181006)
+```
+
+
+The simple feature (sf) object contains 6 features of type `POINT` with 2 data fields (`ID` and `Count`). 
+
+Records can have multiple fields since they are geometric/geographic features combined with a `data.frame`.
+
+---
+
+```{r eval = F, tidy=FALSE}
+
+head(Cholera_Deaths)
+
+## Simple feature collection with 6 features and 2 fields 
+## Geometry type: POINT
+## Dimension:     XY
+## Bounding box:  xmin: 529308.7 ymin: 181006 xmax: 529336.7 ymax: 181031.4 
+## Projected CRS: OSGB36 / British National Grid #<<
+## # A tibble: 6 × 3
+##      Id Count            geometry
+##   <int> <int>         <POINT [m]>
+## 1     0     3 (529308.7 181031.4)
+## 2     0     2 (529312.2 181025.2)
+## 3     0     1 (529314.4 181020.3)
+## 4     0     1 (529317.4 181014.3)
+## 5     0     4 (529320.7 181007.9)
+## 6     0     2   (529336.7 181006)
+
+```
+
+Also important to notice is the projection. 98% of the times if something doesn't work or look right with your spatial analysis mapping is because of the projection of one of your records. 
+
+In this case the data (being about London) is projected using the Coordinate Reference System (CRS) [OSGB36](https://epsg.io/27700) - which corresponds to the code 27700 in [EPSG registry](https://epsg.org/home.html). EPSG codes are particularly useful to know if you need to change the projection of your features with `sf::st_transform()`.  
+
+---
+
+You can quickly interactively visualise your data with [Leaflet for R](https://rstudio.github.io/leaflet/).
+
+```{r, out.width = "100%", out.height = "400px"}
+
+leaflet::leaflet(Cholera_Deaths %>%
+                   sf::st_transform(4326)) %>%
+  leaflet::addTiles() %>%
+  leaflet::addCircles(radius = ~sqrt(Count) * 5)
+
+```
+
+---
+
+Note, the transformation to [EPSG:4326](https://epsg.io/4326) which is the reference/coordinate system (a.k.a *WGS-84*) used by GPS, which is therefore used by most web mapping application like **Google Maps** or **OpenStreetMap** (which we are using here...)
+
+```{r eval = F}
+
+leaflet::leaflet(Cholera_Deaths %>%
+                   sf::st_transform(4326)) %>% #<<
+  leaflet::addTiles() %>%
+  leaflet::addCircles(radius = ~sqrt(Count) * 5)
+
+```
+
+
+---
+
+`leaflet::addTiles()` add a background tile. By default it will use an OSM tile (this is why you need to transform your features to EPSG:4326). 
+
+```{r eval = F}
+
+leaflet::leaflet(Cholera_Deaths %>%
+                   sf::st_transform(4326)) %>% 
+  leaflet::addTiles() %>% #<<
+  leaflet::addCircles(radius = ~sqrt(Count) * 5)
+
+```
+
+But there is a long list of different third-party tiles you can use for your maps (free of charge). A complete list is available [here](http://leaflet-extras.github.io/leaflet-providers/preview/index.html). 
+
+For example replacing `addTiles()` with `addProviderTiles(providers$CartoDB.PositronNoLabels)` will produce 
+
+```{r echo = F, out.width = "100%", out.height = "200px"}
+
+leaflet::leaflet(Cholera_Deaths %>%
+                   sf::st_transform(4326)) %>% 
+  addProviderTiles(providers$CartoDB.PositronNoLabels) %>%
+  leaflet::addCircles(radius = ~sqrt(Count) * 5)
+
+```
+
+---
+
+With `leaflet::addCircles()`, we add circles to the map. The features we are mapping are of course the features contained in the sf `Cholera_Deaths`. 
+
+Specifically, `leaflet::leaflet(data)`, will create our map and the pipe `%>%` will pass it down to the other functions, so that we can progressively (back-to-top) add new layers and new data. 
+
+With  `radius` we specify the radius of the circles. Here, we are mapping the value from the column `Count` contained in the `data.frame` of `Cholera_Deaths` (this is similar to what happens in ggplot2's `aes()`).
+
+```{r eval = F}
+
+leaflet::leaflet(Cholera_Deaths %>%
+                   sf::st_transform(4326)) %>% 
+  leaflet::addTiles() %>%
+  leaflet::addCircles(radius = ~sqrt(Count) * 5)  #<<
+
+```
+
+---
+
+Let's now add the pumps features. In this situation, I simply add a layer with `addMarkers()`. This of course is very much like how we add layers in ggplot2 `r emo::ji("smile")`. 
+
+```{r out.width = "100%", out.height = "300px"}
+
+leaflet::leaflet(Cholera_Deaths %>%
+                   sf::st_transform(4326)) %>% 
+  addProviderTiles(providers$Stamen.TonerLite) %>%
+  leaflet::addCircles(radius = ~sqrt(Count) * 5) %>%
+  leaflet::addMarkers(data = Pumps %>%
+                   sf::st_transform(4326))
+
+```
+
+---
+
+Let's leave leaflet now, and do some **spatial analysis**!
+
+.center[<img src="https://media.giphy.com/media/chzz1FQgqhytWRWbp3/giphy.gif" style="width: 75%" />]
+
+---
+
+## Visualising sf with ggplot2 and geom_sf
+
+Visualising your features is relatively simple using ggplot2. As simple as...
+
+```{r}
+
+ggplot() +
+  geom_sf(data = Cholera_Deaths, colour = 'blue') +
+  geom_sf(data = Pumps, colour = 'orange')
+
+```
+
+---
+
+## Visualising sf with ggplot2 and geom_sf
+
+`geom_sf()` will draw different geometric objects - points, lines, or polygons - depending on the type of your sf. `geom_sf()` adds `coord_sf()`. You can use `coord_sf()` for zooming in into your map. 
+
+```{r, eval = F}
+
+ggplot() +
+  geom_sf(data = Cholera_Deaths, colour = 'blue') +
+  geom_sf(data = Pumps, colour = 'orange') +
+  coord_sf(xlim = c(529209.9, 529606.3), 
+           ylim = c(180902.7, 181261.4))
+
+```
+
+.pull-left[
+
+```{r echo = F, out.width = "55%", fig.width = 5, fig.height = 5}
+
+ggplot() +
+  geom_sf(data = Cholera_Deaths, colour = 'blue') +
+  geom_sf(data = Pumps, colour = 'orange') +
+  geom_sf(data =  st_as_sfc(list(st_polygon(list(rbind(c(529209.9, 180902.7),
+                                       c(529606.3, 180902.7),
+                                       c(529606.3, 181261.4),
+                                       c(529209.9, 181261.4),
+                                       c(529209.9, 180902.7))))),
+                      crs = 27700),
+          alpha = .25, fill = 'gray') #<<
+
+```
+
+  
+]
+
+.pull.right[
+
+```{r, echo = F, out.width = "30%", fig.width = 5, fig.height = 5}
+
+ggplot() +
+  geom_sf(data = Cholera_Deaths, colour = 'blue') +
+  geom_sf(data = Pumps, colour = 'orange') +
+  coord_sf(xlim = c(529209.9, 529606.3), ylim = c(180902.7, 181261.4))
+
+```
+
+]
+
+Visualising a simple map is straightforward, making it exactly as you want of course require time!  
+
+---
+
+## Computing cases within distance from each pump 
+
+A simple visual analysis of the maps we have created so far is probably sufficient for suspecting a connection between cholera deaths and the water pump in Broadwick Street (formerly Broad Street). But let's say we want to somehow formalise this by calculating the number of deaths within a 150 meter radius from each pump. 
+
+This is what we need to do:
+
+1. Create an circular area centered on each pump;
+
+2. Intersect cases (point) with areas (polygons);
+
+3. Count how many deaths within each area. 
+
+---
+
+### Create an circular area with a radius of 150 m centered on each pump
+
+```{r fig.height=5, fig.width=5, out.width="45%"}
+
+Pumps.buffer <- 
+  Pumps %>%
+  st_buffer(150) #<<
+
+ggplot() +
+  geom_sf(data = Cholera_Deaths, colour = 'blue') +
+  geom_sf(data = Pumps, colour = 'orange') +
+  geom_sf(data = Pumps.buffer, colour = 'orange', alpha = .5)
+
+```
+
+---
+
+### Create an circular area with a radius of 150 m centered on each pump
+
+We are lucky that the unit of the CRS of `Pumps` (OSGB36 or EPSG:27700) is the meter. Other CRS have different units. For example, the unit of EPSG:4326 is the degree - so calculating distances or areas in meters requires a transformation.   
+
+---
+
+### Counting how many deaths within each area
+
+Let's create a `matrix` with one row for each record in `Cholera_Deaths` and one column for each pump. 
+
+```{r}
+
+m <- 
+  matrix(nrow = nrow(Cholera_Deaths), ncol = nrow(Pumps.buffer))
+
+dim(m)
+
+head(m)
+
+```
+
+---
+
+#### Intersecting points with polygons
+
+Then in a for-loop, we geographically intersect with (`st_intersect`) each point (`Cholera_Deaths`) with alternatively with different pump...
+
+```{r}
+
+for (j in 1:nrow(Pumps.buffer)) {
+  
+  m[,j] <- 
+    lengths(
+      st_intersects(x = Cholera_Deaths, 
+                    y = Pumps.buffer[j,]) #<<
+      ) > 0
+
+}
+
+```
+
+`st_intersects()` returns a list where for each feature in `x` (points, lines or polygons) it indicates the indices of the intersecting `y` features. 
+
+But our `y` contains only a single feature (we are considering a single pump for each iteration of the for-loop). So if the length of the vector containing the indices of the intersecting feature will be `0` if `x`-`y` do not intersect while `>0` (i.e. `1`) if they do intersect. 
+
+---
+
+#### Intersecting points with polygons
+
+This is what our `matrix` `m` now looks like, with all the results...
+
+```{r}
+
+head(m)
+
+```
+
+
+Note that by design a single record from `Cholera_Deaths` can intersect with more than one pump. But this is of course clear in the previous visualisations. Our buffers do partially overlap.
+
+---
+
+#### Intersecting points with polygons
+
+Let's now visualise which records intersect with each pump.
+
+First, we want to create a base map, `base_map` visualising all the records in the data set. 
+
+```{r}
+
+base_map <-
+  ggplot()  +
+  geom_sf(data = Pumps.buffer, 
+          colour = 'lightgray', alpha = .2) +
+  geom_sf(data = Cholera_Deaths,
+          colour = 'lightgray')
+
+```
+
+Conveniently, `base_map` can be add as firt layer in other spational visualisations.
+
+
+---
+
+```{r out.width = "100%", fig.width = 7, fig.height = 4}
+
+base_map
+
+```
+
+---
+
+#### Intersecting points with polygons
+
+An now we add to `base_map` the record intersecting with the first pump (`Pumps.buffer[1,]`) and with the second (`Pumps.buffer[2,]`).
+
+```{r eval = F}
+
+base_map +
+  geom_sf(data = Cholera_Deaths[m[,1],], 
+          colour = 'blue') +
+  geom_sf(data = Pumps.buffer[1,], 
+          colour = 'orange', alpha = .5),
+
+```
+
+```{r echo = F, out.width = "100%", fig.width = 14, fig.height = 7}
+
+cowplot::plot_grid(
+
+base_map +
+  geom_sf(data = Cholera_Deaths[m[,1],], 
+          colour = 'blue') +
+  geom_sf(data = Pumps.buffer[1,], 
+          colour = 'orange', alpha = .5),
+
+base_map +
+  geom_sf(data = Cholera_Deaths[m[,2],], 
+          colour = 'blue') +
+  geom_sf(data = Pumps.buffer[2,], 
+          colour = 'orange', alpha = .5),
+
+labels = c("Pumps.buffer[1,]", "Pumps.buffer[2,]")
+
+)
+
+```
+
+---
+
+## Counting how many deaths within each area
+
+Now that we have all the results, we can associate the number of deaths to each pump.
+
+Let's first create a new variable `Count` where to store that information (while initially setting the `Count` to `NA`).
+
+```{r}
+
+Pumps$Count <- NA
+
+```
+
+Then we can again loop over each pump and make the sum of cases, and finally compute the percentage of all cases reported.
+
+```{r}
+
+for (i in 1:nrow(Pumps)) {
+  
+  Pumps$Count[i] <-
+    sum(Cholera_Deaths$Count[m[,i]]) #<<
+  
+}
+  
+Pumps$perc <- Pumps$Count / sum(Cholera_Deaths$Count) #<<
+  
+```
+
+---
+
+## Counting how many deaths within each area
+
+```{r echo = F}
+
+require(knitr)
+
+Pumps %>%
+  kable()
+  
+```
+
+We can now conclude that **68.5%** of all cases reported were located within 150 meters of the same pump. 
+
+---
+
+## Counting how many deaths within each area
+
+```{r out.width = "100%", out.height = "350px"}
+
+leaflet(Pumps %>%
+                   sf::st_transform(4326)) %>% 
+  addProviderTiles(providers$Stamen.TonerLite) %>%
+  addMarkers() %>%
+  addCircles(radius = ~sqrt(perc) * 200)
+
+```
+
+
+---
+
+
+
+
+
+
+
+
