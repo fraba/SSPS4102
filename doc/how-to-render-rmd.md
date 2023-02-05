@@ -18,11 +18,11 @@ Once you have completed the installation, you can open any .Rmd file (like the f
 
 #### Markdown
 
-A **[markdown](https://en.wikipedia.org/wiki/Markdown) document** (.md) uses a simple, lightweight, syntax for rendering parts of the document (e.g. headings, lists, tables). Markdown is incredibly popular - it is used for example by Github and its 100 million users.
+A **[markdown]**(https://en.wikipedia.org/wiki/Markdown) document (.md) uses a simple, lightweight, syntax for rendering parts of the document (e.g. headings, lists, tables). Markdown is incredibly popular - it is used for example by Github and its 100 million users.
 
 #### R Markdown
 
-An **R Markdown document** (.Rmd) can include code chunks that run to produce some output (e.g. a figure) which will then be included in the rendered document.
+An **R Markdown** document (.Rmd) can include code chunks that run to produce some output (e.g. a figure) which will then be included in the rendered document.
 
 #### Rendering
 
@@ -66,8 +66,13 @@ b <- c(4,5,6)
 ```
 ```
 
+If your document is an *R* Markdown document (.Rmd) instead of a simple markdown document (.md) your R code chunks will actually run (i.e. be *evaluated*) when you rend the document. An R code chunks will need to be defined like this:
 
-
-
+```
+```{r}
+a <- c(1,2,3)
+b <- c(4,5,6)
+```
+```
 
 If you want to know more, begin [here](https://rmarkdown.rstudio.com/lesson-1.html).
