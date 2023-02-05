@@ -8,7 +8,7 @@ install.packages('rmarkdown')
 install.packages('tinytex')
 
 tinytex::install_tinytex()
-```{r}
+```
 
 Once you have completed the installation, you can open any .Rmd file (like the files used for the weekly problem sets) you only need to use the "Knit" button in the RStudio.
 
