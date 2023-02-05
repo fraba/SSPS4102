@@ -57,22 +57,22 @@ When you click the **Knit** button a document will be generated that includes bo
 
 Note for example `## R Markdown` indicating a header (H2) or `**Knit**`, which will be rendered as **Knit**. 
 
-3. **Code snippets** Some part of the document will be dedicated to code chunks. In markdown, the syntax to define a a code chunk is this
+3. **Code snippets** Some part of the document will be dedicated to code chunks. In markdown, the syntax to define a code chunk is this
 
+````
 ```
-\`\`\`
 a <- c(1,2,3)
-b <- c(4,5,6)
-\`\`\`
+b <- c(4,5,6) 
 ```
+````
 
 If your document is an *R* Markdown document (.Rmd) instead of a simple markdown document (.md) your R code chunks will actually run (i.e. be *evaluated*) when you rend the document. An R code chunks will need to be defined like this:
 
-```
-`\`\`{r}
+````
+```{r}
 a <- c(1,2,3)
 b <- c(4,5,6)
-`\`\`
 ```
+````
 
 If you want to know more, begin [here](https://rmarkdown.rstudio.com/lesson-1.html).
