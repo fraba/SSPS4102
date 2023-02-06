@@ -37,7 +37,7 @@ lapply(packages, require, character.only = TRUE)
 ```
 
 
-## Week 1
+## Week 01
 
 * Launching RStudio
 
@@ -74,6 +74,8 @@ lapply(packages, require, character.only = TRUE)
 * Loading data
 
   * `read.csv(file)` [don't run]
+  
+  * `load(file)` [don't run]
 
 * Making sense of data (and data *vector*, *matrices*, *data frames*)
 
@@ -98,7 +100,7 @@ lapply(packages, require, character.only = TRUE)
     * `dim(matrix)`
     
 
-## Week 2
+## Week 02
 
 * Accessing variables inside dataframes
 
@@ -108,7 +110,7 @@ lapply(packages, require, character.only = TRUE)
 
   * `mean(numbers)`
 
-## Week 3
+## Week 03
 
 * Creating a ggplot with ggplot2
 
@@ -154,7 +156,7 @@ lapply(packages, require, character.only = TRUE)
   
     `ggplot(dataframe, aes(x = numbers, y = other_numbers)) + facet_grid()`
   
-## Week 4
+## Week 04
 
 * Using pipes (%>%)
 
@@ -182,7 +184,7 @@ lapply(packages, require, character.only = TRUE)
   
     * `dplyr::summarise(dataframe, n = n())`
   
-## Week 5
+## Week 05
 
 * Using relational operators
 
@@ -210,7 +212,7 @@ lapply(packages, require, character.only = TRUE)
 
 * Reporting with R Markdown
 
-## Week 6
+## Week 06
 
 * Performing principal component analysis
 
@@ -220,7 +222,7 @@ lapply(packages, require, character.only = TRUE)
 
   * `Rtsne::Rtsne(matrix, perplexity = 10)`
 
-## Week 7
+## Week 07
 
 * Creating frequency tables
 
@@ -272,7 +274,7 @@ lapply(packages, require, character.only = TRUE)
 
   * `cor(numbers, other_numbers)`
 
-## Week 8
+## Week 08
 
 * Taking a random sample
 
@@ -294,7 +296,7 @@ lapply(packages, require, character.only = TRUE)
 
   * `abs(-10)`
 
-## Week 9
+## Week 09
 
 * Computing 95% confidence interval for sample means 
 
