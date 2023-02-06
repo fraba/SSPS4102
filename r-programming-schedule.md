@@ -4,7 +4,7 @@ If not otherwise indicated, you can run each command below in R by creating thes
 
 ```
 
-packages <- c("tidyverse", "Rtsne", "igraph", "tidytext", "sf")
+packages <- c("tidyverse", "Rtsne", "igraph", "tidytext", "sf", "topicmodels")
 
 package <- sample(packages, 1)
   
@@ -404,16 +404,34 @@ lapply(packages, require, character.only = TRUE)
     
   * Manipulating spatial data
   
-    * 
+    * `sf::st_buffer(sf, dist = 150)` [don't run]
+    
+    * `sf::st_intersects(sf)` [don't run]
+    
+  * Getting spatial features from OpenStreetMap
+  
+    * `query <- osmdata::opq(bbox = c(13.30,45.89,13.31,45.91))`
+    
+    * `osm_feature <- osmdata::add_osm_feature(query, key = 'building')`
+    
+    * `sf <- osmdata::osmdata_sf(osm_feature)`
 
 * Analysing text data
 
   * Tidying text data
 
   * Analysing word frequencies
+  
+    `text_df %>% unnest_tokens(word, text)` [don't run]
+    
+    `tidy_df %>% anti_join(stop_words)` [don't run]
 
   * Analysing sentiment of texts
+  
+    `tidy_books %>% dplyr::inner_join(tidytext::get_sentiments("bing"))`  [don't run]
 
   * Analysing relationships between words
 
   * Identifying topics in texts
+  
+    `topicmodels::LDA(dtm, k = 10)` [don't run]
