@@ -1,7 +1,8 @@
 ---
-title: "SSPS4102 A1 template"
-author: "[STUDENT NAME]"
-output: pdf_document
+title: "[SSPS4102 A1 template: Replace with meaningful title]"
+author: "[STUDENT NAME: Replace with your name]"
+output:
+  bookdown::pdf_document2: default
 date: "`r Sys.Date()`"
 ---
 
@@ -11,4 +12,19 @@ knitr::opts_chunk$set(echo = TRUE) # Echo all your chunks in final the PDF.
 
 ```
 
+<!-- Delete from this line until the end of the document before submitting --> 
 
+## How do I format and reference my figures?
+
+See Figure \@ref(fig:cars-plot).
+
+```{r cars-plot, fig.cap="This is your caption"}
+par(mar = c(4, 4, .2, .1))
+plot(cars)  # a scatterplot
+```
+
+Note: 
+
+* `cars-plot` is the label of your chunk and of the figure produced by the chunk. You reference it from anywhere in the text with `\@ref(fig:cars-plot)` (of course you can/must replace `cars-plot` with something else)
+
+* `fig.cap="This is your caption"` defines your caption. Always caption your figures and tables.

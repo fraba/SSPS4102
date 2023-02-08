@@ -5,6 +5,8 @@ Before you can do this you need to install two R packages with this code:
 ```{r}
 install.packages('rmarkdown')
 
+install.packages('bookdown')
+
 install.packages('tinytex')
 
 tinytex::install_tinytex()

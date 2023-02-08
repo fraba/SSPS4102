@@ -120,3 +120,5 @@ For this assignment your are expected to submit:
 * **Data file** [r7_merged_data_34ctry.release.sav](r7_merged_data_34ctry.release.sav)
 
 * **Codebook** [r7_merged.codebook_final_14dec20-1.pdf](r7_merged.codebook_final_14dec20-1.pdf)
+
+* **R Markdown template** [a1-template](a1-template.Rmd)
