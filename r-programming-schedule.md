@@ -99,7 +99,6 @@ lapply(packages, require, character.only = TRUE)
     
     * `dim(matrix)`
     
-
 ## Week 02
 
 * Accessing variables inside dataframes
@@ -183,6 +182,10 @@ lapply(packages, require, character.only = TRUE)
   * Summarising variables
   
     * `dplyr::summarise(dataframe, n = n())`
+  
+  * Row-wise operations
+  
+    * `dataframe %>% dplyr::rowwise() %>% dplyr::mutate(m = mean(c(numbers, other_numbers)))`
   
 ## Week 05
 

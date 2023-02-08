@@ -1,0 +1,14 @@
+---
+title: "SSPS4102 A1 template"
+author: "[STUDENT NAME]"
+output: pdf_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup}
+
+knitr::opts_chunk$set(echo = TRUE) # Echo all your chunks in final the PDF.
+
+```
+
+
