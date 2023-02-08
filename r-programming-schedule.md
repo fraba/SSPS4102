@@ -174,6 +174,10 @@ lapply(packages, require, character.only = TRUE)
   * Creating new variables
   
     * `dplyr::mutate(dataframe, division = numbers / other_numbers)`
+    
+  * Recoding a variable
+  
+    * `dplyr::recode(numbers, `-1` = 2, `0` = 1)`
   
   * Grouping observation
   

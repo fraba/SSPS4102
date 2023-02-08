@@ -1,3 +1,8 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
 # SSPS4102 Assignment 1: Data visualisation and communication exercise
 
 * **Data file** [r7_merged_data_34ctry.release.sav](r7_merged_data_34ctry.release.sav)
@@ -40,21 +45,23 @@ For each index,
 
 * Identify, list and discuss the variables that made up the index. 
 
+* (If necessary) recode the variable before creating your indices.
+
 * Construct two different versions of the indices by 
 
     * averaging your variables (in your code `support_demo_index.avg` and `confidence_govt_index.avg`); and
     
-    * applying PCA to the same variables and using the same transformation (in your code `support_demo_index.pca` and `confidence_govt_index.pca`).
+    * applying PCA to the same variables (in your code `support_demo_index.pca` and `confidence_govt_index.pca`).
 
 ## Report
 
-1. Describe  the raw  variables  used  for  making  your indices  using  appropriate  descriptive  statistics  (min, mean, median, st.deviation, max, number of observations) and graphs
+1. Describe  the source variables  used  for  making  your indices  using  appropriate  descriptive  statistics  (min, mean, median, st.deviation, max, number of observations) and graphs
 
 2. Briefly  discuss  the  ideas  behind  the  two  approaches  (averaging  and  PCA)  to  index  construction. What do they have in common? How are they different?
 
 3. Discuss the types of the variables you are using in your indices (e.g. binary, categorical, continuous) and discuss any transformation you applied to the variables while constructing your indices.
 
-4. Describe (using plots and words) the distribution of the 
+4. Describe (using visuals and words) the distribution of the 
 
     3.1 support for democracy and 
     
@@ -66,26 +73,43 @@ For each index,
 
 ### R programming tips
 
-To import the  SPSS data files (.sav) in your R session you can do
+#### Reading an SPSS data file
 
-```
+Survey responses are stored in an SPSS data files (.sav). To import then in your R session you can do
+
+```{r}
 library(haven)
-r7_merged_data_34ctry_release <- read_sav("assessment/r7_merged_data_34ctry.release.sav")
+r7_merged_data_34ctry_release <- 
+  # Change path accordingly
+  read_sav("r7_merged_data_34ctry.release.sav") 
 ```
 
-To remove all the records with missing values (`NA`) you can do
+#### Labelled variables
 
-```
-library(tidyverse)
-a1_data <- 
-  a1_data %>% tidyr::drop_na()
-  
+Most of the variables are `double` (numerical) and `labelled`.
+
+```{r}
+class(r7_merged_data_34ctry_release$Q43D)
 ```
 
-For row-wise operations
+Before using any variable, you need to check the mapping between numerical values and labels. Use `haven::print_labels()` on any variable to check the `value`-`label` mapping.
 
+```{r}
+haven::print_labels(r7_merged_data_34ctry_release$Q43D)
 ```
-dataframe %>%  
-  dplyr::rowwise() %>% 
-  dplyr::mutate(index = mean(c(x, y, z)))
+
+* If you want to **recode a labelled numerical variable into a factor variable** where numeric values are replaced by character values, you can use `haven::as_factor()`.
+
+So,
+
+```{r}
+r7_merged_data_34ctry_release$Q43D[1:10]
 ```
+
+becomes...
+
+```{r}
+haven::as_factor(r7_merged_data_34ctry_release$Q43D[1:10])
+```
+
+* If you want to **use a labelled numerical variable as a quantitative discrete variable** to get some descriptive statistics (e.g. the mean), you might still need to recode it (e.g. with `dplyr::recode()`) - again do `haven::print_labels()` on the variable - as likley not every response should be included in your quantitative analysis. 
