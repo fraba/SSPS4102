@@ -1,29 +1,12 @@
 ---
+title: "Data visualisation and communication exercise"
 output:
-  html_document: default
+  html_document:
+    toc: true
+    toc_depth: 2
   pdf_document: default
+  
 ---
-# SSPS4102 Assignment 1: Data visualisation and communication exercise
-
-* **Data file** [r7_merged_data_34ctry.release.sav](r7_merged_data_34ctry.release.sav)
-
-* **Codebook** [r7_merged.codebook_final_14dec20-1.pdf](r7_merged.codebook_final_14dec20-1.pdf)
-
-## Submission guidelines
-
-Produce a PDF report based on your analysis using the R markdown document (.Rmd) template provided. 
-
-For this assignment your are expected to submit:
-
-1. **Your report** Render your report from the source .Rmd document. 
-
-2. **Your R project folder** Compress your project folder, which is expected to include:
-
-    2.1. **Your .Rmd document**;
-  
-    2.2. **The data file**;
-  
-    2.3. **Your .Rproj file**.
 
 ## General task 
 
@@ -71,9 +54,9 @@ For each index,
 
 6. Conclude with a general comment on support for democracy and confidence in institutions in these three countries. 
 
-### R programming tips
+## R programming tips
 
-#### Reading an SPSS data file
+### Reading an SPSS data file
 
 Survey responses are stored in an SPSS data files (.sav). To import then in your R session you can do
 
@@ -84,7 +67,7 @@ r7_merged_data_34ctry_release <-
   read_sav("r7_merged_data_34ctry.release.sav") 
 ```
 
-#### Labelled variables
+### Labelled variables
 
 Most of the variables are `double` (numerical) and `labelled`.
 
@@ -98,7 +81,7 @@ Before using any variable, you need to check the mapping between numerical value
 haven::print_labels(r7_merged_data_34ctry_release$Q43D)
 ```
 
-#### Recoding labelled variables
+### Recoding labelled variables
 
 If you want to **recode a labelled numerical variable into a factor variable** where numeric values are replaced by character values, you can use `haven::as_factor()`.
 
@@ -115,3 +98,25 @@ haven::as_factor(r7_merged_data_34ctry_release$Q43D[1:10])
 ```
 
 If you want to **use a labelled numerical variable as a quantitative discrete variable** to get some descriptive statistics (e.g. the mean), you might still need to recode it (e.g. with `dplyr::recode()`) - again do `haven::print_labels()` on the variable - as likley not every response should be included in your quantitative analysis. 
+
+## Submission guidelines
+
+Produce a PDF report based on your analysis using the R markdown document (.Rmd) template provided. 
+
+For this assignment your are expected to submit:
+
+1. **Your report** Render your report from the source .Rmd document. 
+
+2. **Your R project folder** Compress your project folder, which is expected to include:
+
+    2.1. **Your .Rmd document**;
+  
+    2.2. **The data file**;
+  
+    2.3. **Your .Rproj file**.
+
+## Files
+
+* **Data file** [r7_merged_data_34ctry.release.sav](r7_merged_data_34ctry.release.sav)
+
+* **Codebook** [r7_merged.codebook_final_14dec20-1.pdf](r7_merged.codebook_final_14dec20-1.pdf)
