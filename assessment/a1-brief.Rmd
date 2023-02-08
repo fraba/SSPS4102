@@ -9,14 +9,6 @@ output:
 
 * **Codebook** [r7_merged.codebook_final_14dec20-1.pdf](r7_merged.codebook_final_14dec20-1.pdf)
 
-## General task 
-
-Use survey data from 2019 Round 7 of the [Afrobarometer](https://www.afrobarometer.org/data/merged-data/) (34 countries) to study
-
-a. the support for democracy and 
-
-b. confidence in government institutions across Africa. 
-
 ## Submission guidelines
 
 Produce a PDF report based on your analysis using the R markdown document (.Rmd) template provided. 
@@ -33,7 +25,15 @@ For this assignment your are expected to submit:
   
     2.3. **Your .Rproj file**.
 
-### Subtasks
+## General task 
+
+Use survey data from 2019 Round 7 of the [Afrobarometer](https://www.afrobarometer.org/data/merged-data/) (34 countries) to study
+
+a. the support for democracy and 
+
+b. confidence in government institutions across Africa. 
+
+### Subtask
 
 Create two indices:
 
@@ -98,7 +98,9 @@ Before using any variable, you need to check the mapping between numerical value
 haven::print_labels(r7_merged_data_34ctry_release$Q43D)
 ```
 
-* If you want to **recode a labelled numerical variable into a factor variable** where numeric values are replaced by character values, you can use `haven::as_factor()`.
+#### Recoding labelled variables
+
+If you want to **recode a labelled numerical variable into a factor variable** where numeric values are replaced by character values, you can use `haven::as_factor()`.
 
 So,
 
@@ -112,4 +114,4 @@ becomes...
 haven::as_factor(r7_merged_data_34ctry_release$Q43D[1:10])
 ```
 
-* If you want to **use a labelled numerical variable as a quantitative discrete variable** to get some descriptive statistics (e.g. the mean), you might still need to recode it (e.g. with `dplyr::recode()`) - again do `haven::print_labels()` on the variable - as likley not every response should be included in your quantitative analysis. 
+If you want to **use a labelled numerical variable as a quantitative discrete variable** to get some descriptive statistics (e.g. the mean), you might still need to recode it (e.g. with `dplyr::recode()`) - again do `haven::print_labels()` on the variable - as likley not every response should be included in your quantitative analysis. 

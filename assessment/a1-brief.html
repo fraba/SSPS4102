@@ -359,15 +359,6 @@ exercise</h1>
 <li><p><strong>Data file</strong> <a href="r7_merged_data_34ctry.release.sav">r7_merged_data_34ctry.release.sav</a></p></li>
 <li><p><strong>Codebook</strong> <a href="r7_merged.codebook_final_14dec20-1.pdf">r7_merged.codebook_final_14dec20-1.pdf</a></p></li>
 </ul>
-<div id="general-task" class="section level2">
-<h2>General task</h2>
-<p>Use survey data from 2019 Round 7 of the <a href="https://www.afrobarometer.org/data/merged-data/">Afrobarometer</a>
-(34 countries) to study</p>
-<ol style="list-style-type: lower-alpha">
-<li><p>the support for democracy and</p></li>
-<li><p>confidence in government institutions across Africa.</p></li>
-</ol>
-</div>
 <div id="submission-guidelines" class="section level2">
 <h2>Submission guidelines</h2>
 <p>Produce a PDF report based on your analysis using the R markdown
@@ -382,8 +373,17 @@ folder, which is expected to include:</p>
 <p>2.2. <strong>The data file</strong>;</p>
 <p>2.3. <strong>Your .Rproj file</strong>.</p></li>
 </ol>
-<div id="subtasks" class="section level3">
-<h3>Subtasks</h3>
+</div>
+<div id="general-task" class="section level2">
+<h2>General task</h2>
+<p>Use survey data from 2019 Round 7 of the <a href="https://www.afrobarometer.org/data/merged-data/">Afrobarometer</a>
+(34 countries) to study</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>the support for democracy and</p></li>
+<li><p>confidence in government institutions across Africa.</p></li>
+</ol>
+<div id="subtask" class="section level3">
+<h3>Subtask</h3>
 <p>Create two indices:</p>
 <ol style="list-style-type: decimal">
 <li><p>A <em>support for democracy index</em> named in your code
@@ -461,11 +461,12 @@ mapping.</p>
 ##      3                           A lot
 ##      8                         Refused
 ##      9 Don’t know/Haven’t heard enough</code></pre>
-<ul>
-<li>If you want to <strong>recode a labelled numerical variable into a
+</div>
+<div id="recoding-labelled-variables" class="section level4">
+<h4>Recoding labelled variables</h4>
+<p>If you want to <strong>recode a labelled numerical variable into a
 factor variable</strong> where numeric values are replaced by character
-values, you can use <code>haven::as_factor()</code>.</li>
-</ul>
+values, you can use <code>haven::as_factor()</code>.</p>
 <p>So,</p>
 <pre class="r"><code>r7_merged_data_34ctry_release$Q43D[1:10]</code></pre>
 <pre><code>## &lt;labelled&lt;double&gt;[10]&gt;: Q43d. Trust your elected local government council
@@ -487,14 +488,12 @@ values, you can use <code>haven::as_factor()</code>.</li>
 ## attr(,&quot;label&quot;)
 ## [1] Q43d. Trust your elected local government council
 ## 7 Levels: Missing Not at all Just a little Somewhat A lot ... Don’t know/Haven’t heard enough</code></pre>
-<ul>
-<li>If you want to <strong>use a labelled numerical variable as a
+<p>If you want to <strong>use a labelled numerical variable as a
 quantitative discrete variable</strong> to get some descriptive
 statistics (e.g. the mean), you might still need to recode it (e.g. with
 <code>dplyr::recode()</code>) - again do
 <code>haven::print_labels()</code> on the variable - as likley not every
-response should be included in your quantitative analysis.</li>
-</ul>
+response should be included in your quantitative analysis.</p>
 </div>
 </div>
 </div>
