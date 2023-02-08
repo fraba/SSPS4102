@@ -38,40 +38,29 @@ Create two indices:
 
 For each index, 
 
-* Identify, list and discuss the variables that made up the index. In your discussion, mention the types of the variables you are using (e.g. binary, categorical, continuous) and discuss any transformation you applied to the variables while constructing your indices.
+* Identify, list and discuss the variables that made up the index. 
 
 * Construct two different versions of the indices by 
 
     * averaging your variables (in your code `support_demo_index.avg` and `confidence_govt_index.avg`); and
     
-    * applying PCA to the same variables and using the same transformation (in your code `support_demo_index.pca` and `confidence_govt_index.pca`)
-  
-3. Visualise your indices and their variation across countries? 
+    * applying PCA to the same variables and using the same transformation (in your code `support_demo_index.pca` and `confidence_govt_index.pca`).
 
 ## Report
 
-1. Describe  raw  variables  used  for  making  indices  using  appropriate  descriptive  statistics  (min, mean, median, st.deviation, max, number of observations) and graphs
+1. Describe  the raw  variables  used  for  making  your indices  using  appropriate  descriptive  statistics  (min, mean, median, st.deviation, max, number of observations) and graphs
 
-2. Briefly  describe  the  ideas  behind  the  two  approaches  (averaging  and  PCA)  to  index  construction. What do they have in common? How are they different?
+2. Briefly  discuss  the  ideas  behind  the  two  approaches  (averaging  and  PCA)  to  index  construction. What do they have in common? How are they different?
 
-3. Describe variable transformations you applied for constructing your indices via averaging. Describe (using plots and words) the distribution of the 
+3. Discuss the types of the variables you are using in your indices (e.g. binary, categorical, continuous) and discuss any transformation you applied to the variables while constructing your indices.
+
+4. Describe (using plots and words) the distribution of the 
 
     3.1 support for democracy and 
     
     3.2 confidence  in  social  institutions  –  for  each  country  separately.  
     
     Do  they  look  the  same  across countries? 
-
-4. Describe  the  quality  of  your  PCA  indices  using  correlations  between  the  index  and  the  original variables and the proportion of total variance explained. Use plots and words to describe  the  distribution  of  the  
-
-    4.1 support  for  democracy  and 
-    
-    4.2 confidence  in  social  institutions – for each country separately. 
-    
-    Do they look the same across countries?
-    
-    
-5. Comment  on  the  similarity/dissimilarity  of  the  data  analysis  results  depending  on  the choice of the index. Use the correlation coefficients between PCA and average indices to justify your comment.
 
 6. Conclude with a general comment on support for democracy and confidence in institutions in these three countries. 
 
