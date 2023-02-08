@@ -1,0 +1,34 @@
+
+# Short essay
+
+Choose an article of your interest from the list below and, after reading the article and its supplemental materials, write a short essay with the following questions. 
+
+1. Summarise its research question and data used. Specify the dependent and independent variables, and explain how they are measured (you can refer supplemental materials if relevant).
+
+2. Choose one set of tables or graphs that contains statistical inference results (i.e. reports p-values or confidence intervals). Use your own words to explain in detail what conclusions you can draw from the reported p-values or confidence intervals. NOTE: There are normally multiple sets of tables and figures in a journal article, and you may want to focus on the set of table or figures that show the final model or the main finding of the paper. (By set, I mean a group of table or figures that were put together under the same caption). When explaining the results, please do not forget mentioning which set of results you're focusing on.
+
+3. What have you learned from this paper?
+
+4. What did you like (or disliked) the most about the paper in terms of research design (e.g. hypothesis, data, operationalisation, analytic methods etc)?
+
+## Articles
+
+a. Chowdhury, Intifar Sadiq (2021) "Are young Australians turning away from democracy?" *Australian journal of political science*, pp.1-18. 
+
+    * [Link to the article](https://sydney.primo.exlibrisgroup.com/permalink/61USYD_INST/2rsddf/cdi_rmit_agispt_search_informit_org_doi_10_3316_agispt_20210709049607)
+    
+    * [Link to the supp. materials](https://www.tandfonline.com/doi/suppl/10.1080/10361146.2021.1899131?scroll=top&role=tab)
+    
+b. Pessin, Léa and Bruno Arpino (2018) "Navigating between two cultures: Immigrants' gender attitudes toward working women" *Demographic research*, Vol 38, pp.967-996.
+
+    * [Link to the article](Navigating between two cultures: Immigrants’ gender attitudes toward working women)
+    
+    * Supp. materials from page 997.
+
+c. Kosec Katrina and Tewodaj Mogues (2020) "Decentralization without Democracy" *World politics*, Vol.72(2), pp.165-213
+
+    * [Link to the article](https://sydney.primo.exlibrisgroup.com/permalink/61USYD_INST/2rsddf/cdi_proquest_journals_2390139095)
+    
+    * [Link to the supp. materials](https://www.cambridge.org/core/journals/world-politics/article/decentralization-without-democracy/3F1224DFF2B9BC87C047EC425E4C1E6F#supplementary-materials)
+
+d.  Your own choice of article (if you chose this option, contact me asap for approval). 
