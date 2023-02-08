@@ -4,7 +4,7 @@
 | :---: | --- | --- | --- |
 |01 | Introduction and overview | DASS Ch1.3-7 | HOPR [Ch1](https://rstudio-education.github.io/hopr/project-1-weighted-dice.html), [Ch2](https://rstudio-education.github.io/hopr/basics.html), [Ch3](https://rstudio-education.github.io/hopr/packages.html) | 
 |02 | Measuring and summarising data | DASS Ch1.8 | HOPR [Ch5](https://rstudio-education.github.io/hopr/r-objects.html), [Ch6](https://rstudio-education.github.io/hopr/r-notation.html) | 
-|03 | Data visualisation | R4DS [Ch3](https://r4ds.had.co.nz/data-visualisation.html) | FA [Ch1](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ch01.html), [Ch2](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ch02.html) | 
+|03 | Data visualisation | R4DS [Ch3](https://r4ds.had.co.nz/data-visualisation.html) | FA [Ch1](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ch01.html), [Ch2](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ch02.html), TA [Ch2](https://learning.oreilly.com/library/view/the-truthful-art/9780133440492/ch02.html) | 
 |04 | Data collection and manipulation | R4DS [Ch5](https://r4ds.had.co.nz/transform.html) | HOPR [Ch7](https://rstudio-education.github.io/hopr/modify.html), [Ch8](https://rstudio-education.github.io/hopr/environments.html); R4DS [Ch18](https://r4ds.had.co.nz/pipes.html) | 
 |05 | Bivariate association and causality | DASS Ch2 | | 
 |06 | Dimension reduction | I2SL [Ch12.2](https://link.springer.com/chapter/10.1007/978-1-0716-1418-1_12); Wattenberg, Viégas & Johnson | RMD [Ch1](https://bookdown.org/yihui/rmarkdown/installation.html), [Ch2](https://bookdown.org/yihui/rmarkdown/basics.html), [Ch3](https://bookdown.org/yihui/rmarkdown/documents.html) | 
@@ -32,8 +32,14 @@ Other texts:
 * Cairo, A. (2012). _The Functional Art: An introduction to information graphics and visualization_. New Riders. https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ (FA)
   * Publicly and fully available online: NO
   * Library access: YES [link](https://sydney.primo.exlibrisgroup.com/permalink/61USYD_INST/1c0ug48/alma991031515966205106)
-    * Online access: YES [link](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/?ar=)
+    * Online access: YES [link](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/)
     * Hard Copy: YES
+    
+* Cairo, A. (2016). _The Truthful Art: Data, Charts, and Maps for Communication_. Pearson Education. https://learning.oreilly.com/library/view/the-truthful-art/9780133440492 (TA)
+  * Publicly and fully available online: NO
+  * Library access: YES [link](https://sydney.primo.exlibrisgroup.com/permalink/61USYD_INST/1c0ug48/alma991031515966205106)
+    * Online access: YES [link](https://learning.oreilly.com/library/view/the-truthful-art/9780133440492/)
+    * Hard Copy: NO
     
 * Floridi, L. (2012). Big data and their epistemological challenge. Philosophy & Technology, 25(4), 435–437. https://doi.org/10.1007/s13347-012-0093-4
   * Publicly and fully available online: YES [link](https://doi.org/10.1007/s13347-012-0093-4)
