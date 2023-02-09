@@ -75,9 +75,9 @@ lapply(packages, require, character.only = TRUE)
 
 * Loading data
 
-  * `read.csv(file)` [don't run]
-  
   * `load(file)` [don't run]
+
+  * `read.csv(file)` [don't run]
 
 * Making sense of data (and data *vector*, *matrices*, *data frames*)
 
