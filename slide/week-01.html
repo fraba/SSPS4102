@@ -240,8 +240,8 @@ Focus on
 
 &lt;center&gt;
 
-<div id="htmlwidget-1af2329483bb0586ce23" style="width:800px;height:300px;" class="grViz html-widget "></div>
-<script type="application/json" data-for="htmlwidget-1af2329483bb0586ce23">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR] \n  \n  node [shape = oval]        \n  nod1 [label = \"Deep\\nunderstanding\"]\n  nod2 [label = \"Functional\\nunderstanding\"]\n  nod3 [label =  \"Communicating\\nand reporting\"]\n  \n  node [shape = egg]        \n  nod4 [label = \"Data analysis\\nconcepts\"]\n  nod5 [label = \"R\"]\n  \n  node [shape = diamond]  \n  nod6 [label = \"Data\"]\n  \n  \n  # edge definitions with the node IDs\n  nod1 -> nod4\n  nod2 -> nod5\n  nod4 -> nod6\n  nod5 -> nod6\n  nod6 -> nod3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4a97a0035b14cae393e3" style="width:800px;height:300px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-4a97a0035b14cae393e3">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR] \n  \n  node [shape = oval]        \n  nod1 [label = \"Deep\\nunderstanding\"]\n  nod2 [label = \"Functional\\nunderstanding\"]\n  nod3 [label =  \"Communicating\\nand reporting\"]\n  \n  node [shape = egg]        \n  nod4 [label = \"Data analysis\\nconcepts\"]\n  nod5 [label = \"R\"]\n  \n  node [shape = diamond]  \n  nod6 [label = \"Data\"]\n  \n  \n  # edge definitions with the node IDs\n  nod1 -> nod4\n  nod2 -> nod5\n  nod4 -> nod6\n  nod5 -> nod6\n  nod6 -> nod3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 &lt;/center&gt;
 
@@ -495,17 +495,80 @@ If you have succesfully installed R, you can start adding new packages to your R
 
 For example, if you want to install ggplot2 you can 
 
-```
+
+```r
 install.packages('ggplot2')
 ```
 
+Once you have installed your package you can load it with
 
+
+```r
+library(ggplot2)
+```
+
+Note: this time without quotes!
 
 ---
 
 class: inverse, center, middle
 
 # Let's start coding...
+
+---
+
+## Creating your first R object
+
+This R code
+
+
+```r
+hello &lt;- "hi"
+```
+
+will do two things. 
+
+1. It will create a new *object* called `hello`;
+
+2. and it will assign to that object the value `"hi"`.
+
+If you run it, well done! You just created your first variable. 
+
+.center[&lt;img src ="https://media.giphy.com/media/jJQC2puVZpTMO4vUs0/giphy.gif" width = '30%'&gt;&lt;/img&gt;]
+
+---
+
+## Objects? What objects?
+
+R is an object-oriented programming language. 
+
+So everything in R, code or data, is some type of object. When you have an object in your environment (check your top-right window in RStudio) you can ask R to specify what type of object with the function `class()`. 
+
+
+```r
+class(hello)
+```
+
+```
+## [1] "character"
+```
+
+---
+
+## Functions
+
+Another very common type of object in R is the **function**.
+
+Yes a function is also an object!
+
+
+```r
+class(class)
+```
+
+```
+## [1] "function"
+```
 
 ---
 

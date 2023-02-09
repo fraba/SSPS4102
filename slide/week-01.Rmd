@@ -496,17 +496,77 @@ If you have succesfully installed R, you can start adding new packages to your R
 
 For example, if you want to install ggplot2 you can 
 
-```
+```{r, eval = F}
 install.packages('ggplot2')
 ```
 
+Once you have installed your package you can load it with
 
+```{r, eval = F}
+library(ggplot2)
+```
+
+Note: this time without quotes!
 
 ---
 
 class: inverse, center, middle
 
 # Let's start coding...
+
+---
+
+## Creating your first R object
+
+This R code
+
+```{r}
+hello <- "hi"
+```
+
+will do two things. 
+
+1. It will create a new *object* called `hello`;
+
+2. and it will assign to that object the value `"hi"`.
+
+If you run it, well done! You just created your first variable. 
+
+.center[<img src ="https://media.giphy.com/media/jJQC2puVZpTMO4vUs0/giphy.gif" width = '30%'></img>]
+
+---
+
+## Objects? What objects?
+
+R is an object-oriented programming language. 
+
+So everything in R, code or data, is some type of object. When you have an object in your environment (check your top-right window in RStudio) you can ask R to specify what type of object with the function `class()`. 
+
+```{r}
+class(hello)
+```
+
+---
+
+## Functions
+
+Another very common type of object in R is the **function**.
+
+Yes, a function is also an object!
+
+```{r}
+class(class)
+```
+
+While programming in R, you will possibly create your own functions. More commonly you will use functions available in R base or in one of the packages you have loaded in your session.
+
+You can use a function with
+
+```{r eval = F}
+package::function_name(arguments) # Don't run this!
+```
+
+The `package::` prefix is optional and indicate the package defining the function you want to use.  
 
 ---
 
