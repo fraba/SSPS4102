@@ -548,9 +548,9 @@ class(hello)
 
 ---
 
-## Functions
+## Functions (1/2)
 
-Another very common type of object in R is the **function**.
+Another very common and important type of object in R is the **function**.
 
 Yes, a function is also an object!
 
@@ -558,7 +558,7 @@ Yes, a function is also an object!
 class(class)
 ```
 
-While programming in R, you will possibly create your own functions. More commonly you will use functions available in R base or in one of the packages you have loaded in your session.
+While programming in R, you will eventually create your own functions. More commonly you will use functions available in R base or in one of the packages you have loaded in your session.
 
 You can use a function with
 
@@ -566,7 +566,52 @@ You can use a function with
 package::function_name(arguments) # Don't run this!
 ```
 
-The `package::` prefix is optional and indicate the package defining the function you want to use.  
+---
+
+## Functions (1/2)
+
+```{r eval = F}
+package::function_name(arguments) # Don't run this!
+```
+
+* `package::` prefix is optional and names the package defining the function you want to use (essential only if you have functions from different packages sharing the same name, important to tell others which package they need to install to run the function).
+
+* `arguments` will of course varies depending on the function. Some arguments can be as default in the function definition so they are optional.
+
+A function may or may not produce an output. To store an output from a function 
+
+```{r eval = F}
+my_variable <- function_name(arguments) # Don't run this!
+```
+
+
+---
+
+## Loading data (1/2)
+
+R requires all data to be loaded in memory for processing. There are many way to load data and a number of packages offer functions to read in from virtually any format you will ever encounter - from the most common (.csv or .xls) to the rarest. 
+
+If your data was already stored as some collection of R objects, you will likely encounter a data file with the extension **.RData**. You load everything stored in a .RData file with the function `load("mydata.RData")`.<sup>1</sup>  
+
+Wait, why the quotation mark? The `load()` function requires a `character` value indicating the path to the file on your computer. Yet, when you load a package with `library(package_name)` you refer to an object of the R environment by its name - so no quotes!  
+
+
+.footnote[
+[1] Another less common data format is *.Rds* which instead stores a *single* R object. 
+]
+
+---
+
+## Loading data (2/2)
+
+Very often you will need to read data from a spreadsheet. If your data is in a *comma separated values* format, you can use the base function `read.csv("my-file.csv")` - notably your file can be on your computer but can also be somewhere on the Internet. 
+
+For example try this
+
+```{r}
+cities <- 
+  read.csv("https://people.sc.fsu.edu/~jburkardt/data/csv/cities.csv")
+```
 
 ---
 
