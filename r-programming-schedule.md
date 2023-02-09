@@ -4,7 +4,9 @@ If not otherwise indicated, you can run each command below in R by creating thes
 
 ```
 
-packages <- c("tidyverse", "Rtsne", "igraph", "tidytext", "sf", "topicmodels")
+packages <- 
+  c("tidyverse", "Rtsne", "igraph", "tidytext", "sf", "topicmodels",
+    "knitr")
 
 package <- sample(packages, 1)
   
@@ -218,6 +220,10 @@ lapply(packages, require, character.only = TRUE)
   * `dataframe[,1]` or
 
 * Reporting with R Markdown
+
+  * `knitr::kable(dataframe, caption = "My caption")`
+  
+  * `knitr::kable(dataframe, caption = "My caption")`
 
 ## Week 06
 

@@ -10,13 +10,13 @@ output:
 
 ## General task 
 
-Use survey data from 2019 Round 7 of the [Afrobarometer](https://www.afrobarometer.org/data/merged-data/) (34 countries) to study
+Use R and survey data from 2019 Round 7 of the [Afrobarometer](https://www.afrobarometer.org/data/merged-data/) (34 countries) to study
 
 a. the support for democracy and 
 
 b. confidence in government institutions across Africa. 
 
-### Subtask
+### Subtasks
 
 Create two indices:
 
@@ -52,7 +52,7 @@ For each index,
     
     Do  they  look  the  same  across countries? 
 
-6. Conclude with a general comment on support for democracy and confidence in institutions in these three countries. 
+5. Conclude with a general comment on support for democracy and confidence in institutions in these three countries. 
 
 ## R programming tips
 
@@ -105,7 +105,7 @@ Produce a PDF report based on your analysis using the R markdown document (.Rmd)
 
 For this assignment your are expected to submit:
 
-1. **Your report** Render your report from the source .Rmd document. 
+1. **Your report** Render your report into a PDF from the source .Rmd document. Make sure to `echo = TRUE` all your chunks in final the PDF, so that your code is directly visible in your PDF.
 
 2. **Your R project folder** Compress your project folder, which is expected to include:
 
@@ -121,4 +121,6 @@ For this assignment your are expected to submit:
 
 * **Codebook** [r7_merged.codebook_final_14dec20-1.pdf](r7_merged.codebook_final_14dec20-1.pdf)
 
-* **R Markdown template** [a1-template](a1-template.Rmd)
+* **R Markdown template (source)** [a1-template.Rmd](a1-template.Rmd)
+
+* **R Markdown template (rendered)** [a1-template.pdf](a1-template.pdf)

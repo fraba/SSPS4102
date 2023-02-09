@@ -1,0 +1,86 @@
+# Big data analysis exercise
+
+## General task
+
+Find one or more dataset of interest (see below), formulate an interesting research question and answer it through data analysis with R. 
+
+## Subtasks
+
+In your report, you should discuss
+
+1. **Justification**: What are you studying? Why is relevant? 
+
+2. **Research question**: Formulate a clear, single research question that you can answer through *hypothesis testing* (see Llaudet & Imai, 2022, Ch 7.3). Your research question should ideally begin with a Who, What, When or Where and not with a Why or How (you can discuss Whys and Hows in your concluding section, though).
+
+3. **Data collection**: How was the data collected? Since you are not expected to collect the data yourself, explain how others collected the data and whether that particular data collection process can introduce in terms of the validity of your results (remember: no data is perfect).
+
+<center>![](https://media.giphy.com/media/9RWcytIJi3uYo/giphy.gif)</center>
+
+4. **Data description, manipulation and selection**: You should present *selected* descriptive statistics of your variables and records. Focus on the variables that are important to you.  Also, did you tranform or reocode any variable? Which variables and records did you select from the original data set for your analysis? Why? Use all the tables and figures that you need. 
+
+    4.1 **Optional**: If you feel comfortable enough, you can describe your data using spatial, network or computational text analysis (which are introduced in the last two weeks - so plan ahead). 
+
+5. **Data analysis**: Presents the results of your hypothesis testing. Use all the tables and figures that you need. 
+
+6. **Concluding remarks**. Discuss your results and explain if you are able to answer your research question (note: you might conclude that you can't offer an answer given the data you have - and that's fine!)
+
+<center>![](https://media.giphy.com/media/5T06fayphNrPayKYak/giphy.gif)
+
+## Submission guidelines
+
+Produce a PDF report based on your analysis using the R markdown document (.Rmd) template provided. 
+
+For this assignment your are expected to submit:
+
+1. **Your report** Render your report into a PDF from the source .Rmd document. Make sure to `echo = TRUE` all your chunks in final the PDF, so that your code is directly visible in your PDF.
+
+2. **Your R project folder** Compress your project folder, which is expected to include:
+
+    2.1. **Your .Rmd document**;
+  
+    2.2. **The data file**;
+  
+    2.3. **Your .Rproj file**.
+
+## Datasets of datasets
+
+(Credits for the list: [Erik Gahner Larsen](https://github.com/erikgahner))
+
+- [A dataset with political datasets](https://github.com/erikgahner/PolData)
+- [Awesome Public Datasets](https://github.com/awesomedata/awesome-public-datasets)
+- [Bank for International Settlements](https://www.bis.org/statistics/index.htm)
+- [Catalog of Administrative Data Sets](https://www.povertyactionlab.org/catalog-administrative-data-sets)
+- [Charles Stewart's Congressional Data Page](http://web.mit.edu/17.251/www/data_page.html)
+- [Data Is Plural — Structured Archive](https://docs.google.com/spreadsheets/d/1wZhPLMCHKJvwOkP4juclhjFgqIY8fQFMemwKL2c64vk/edit#gid=0) (hundreds of datasets, political and non-political)
+- [Data Resources for Studies in Comparative Politics](https://docs.google.com/spreadsheets/d/1S-dMeDrg8kXElEvZyWelQfMANCmpmwpprbqGglYs4Ws/pubhtml?gid=325169251&single=true)
+- [Datasets and open source projects related to Climate Change](https://github.com/KKulma/climate-change-data)
+- [Datasets for development economists](http://devecondata.blogspot.com)
+- [Datasets for empirical development economists](https://sites.google.com/site/medevecon/development-economics/devecondata)
+- [Datasets with text data for use in Natural Language Processing](https://github.com/niderhoff/nlp-datasets)
+- [Economic Data freely available online](https://www.economicsnetwork.ac.uk/data_sets)
+- [Economic databases](https://ec.europa.eu/info/business-economy-euro/indicators-statistics/economic-databases_en)
+- [European Representative Democracy Data Archive](http://www.erdda.se/)
+- [Google Dataset Search](https://datasetsearch.research.google.com/)
+- [ILOSTAT](https://ilostat.ilo.org/)
+- [Inter-university Consortium for Political and Social Research](https://www.icpsr.umich.edu/icpsrweb/ICPSR/)
+- [International IDEA](https://www.idea.int/data-tools)
+- [International Monetary Fund](https://www.imf.org/en/Data)
+- [Investor Amnesia: Historical Data Library](https://investoramnesia.com/historical-data/) 
+- [Large datasets for social science, genomics and medicine](https://docs.google.com/spreadsheets/d/1ISYoRpx6A098m582lS4XDS2P9fdfKdAfA4ILjW44byY/edit)
+- [Max Planck Institute for Demographic Research: Online Databases](https://www.demogr.mpg.de/en/projects_publications/online_databases_1906/default.htm)
+- [Medieval and Early Modern Data Bank](https://memdb.libraries.rutgers.edu/)
+- [MIT Election Data and Science Lab](https://electionlab.mit.edu/data)
+- [Open datasets](https://docs.google.com/spreadsheets/d/1ejOJTNTL5ApCuGTUciV0REEEAqvhI2Rd2FCoj7afops/edit#gid=0)
+- [Oxford Supertracker: The Global Directory for COVID Policy Trackers](https://supertracker.spi.ox.ac.uk/policy-trackers/)
+- [Oxford Supertracker: The Global Directory for COVID Surveys](https://supertracker.spi.ox.ac.uk/surveys/)
+- [Paul Hensel's International Relations Data Site](http://www.paulhensel.org/data.html)
+- [Political Science Data](https://www.poliscidata.com/)
+- [Team Populism](http://populism.byu.edu/Pages/Data)
+- [Terrorism Events Data: An Inventory of Databases and Data Sets, 1968-2017](http://www.terrorismanalysts.com/pt/index.php/pot/article/view/622/html)
+- [Quantitative Social Science Data](https://f.briatte.org/teaching/quanti/data/)
+
+## Files 
+
+* **R Markdown template (source)** [a1-template.Rmd](a3-template.Rmd)
+
+* **R Markdown template (rendered)** [a1-template.pdf](a3-template.pdf)

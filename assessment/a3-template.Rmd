@@ -1,0 +1,78 @@
+---
+title: "[SSPS4102 A1 template: Replace with a meaningful title]"
+author: "[STUDENT NAME: Replace with your name]"
+output:
+  bookdown::pdf_document2: default
+date: "`r Sys.Date()`"
+---
+
+```{r setup}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+<!-- Delete from this line until the end of the document before submitting --> 
+
+## How do I create and reference my figures?
+
+See Figure \@ref(fig:cars-plot).
+
+```{r cars-plot, fig.cap="This is your figure's caption"}
+par(mar = c(4, 4, .2, .1))
+plot(cars)  # a scatterplot
+```
+
+Note: 
+
+* `cars-plot` is the label of your chunk and of the figure produced by the chunk. You reference it from anywhere in the text with `\@ref(fig:cars-plot)` (of course you can/must replace `cars-plot` with something else)
+
+* `fig.cap="This is your caption"` defines your caption. Always caption your figures and tables.
+
+## How do I create and reference my tables?
+
+To create tables for your PDF document you can use `knitr::kable(my_dataframe)`, where `my_dataframe` is any data frame you might have created and with the values you want to table.
+
+```{r my-table-1}
+
+my_dataframe <- 
+  data.frame("col1" = c(1, 2, 3),
+             "col2" = c("one", "two", "three"))
+
+knitr::kable(my_dataframe, caption = "This is your table's caption")
+
+```
+
+You can reference the tables you created by (for example, see Table \@ref(tab:my-table-1)) using `\@ref(tab:my-table-1)`.
+
+### How do I create regression tables?
+
+For regression tables, you have a at least two options. You can simply do this and get Table \@ref(tab:my-table-2).
+
+```{r my-table-2}
+
+fit <- lm(dist ~ speed, data = cars)
+
+knitr::kable(summary(fit)$coef, caption = "These are your coefficients")
+
+```
+
+Or instead, for a more "academic-styled" table like Table \@ref(tab:my-table-3) you can use the [modelsummary](https://vincentarelbundock.github.io/modelsummary/articles/modelsummary.html) package and its many options. Note that the first time you use `modelsummary::modelsummary`, the package will install some required software (without asking).
+
+```{r my-table-3}
+
+fit1 <- lm(dist ~ speed, data = cars)
+
+fit2 <- lm(speed ~ dist, data = cars)
+
+modelsummary::modelsummary(list("OLS 1" = fit1, 
+                                "OLS 2" = fit2), 
+                           output = "markdown", # This option is important
+                           stars = TRUE,
+                           title = 'This is my regression.')
+```
+
+## How can I include my bibliographic references?
+
+You are more than welcome to style your references manually and to add the full bibliographic reference at the end. Yet if you use a reference management software - something you should definitely consider doing - (e.g. Zotero, EndNote, etc.) and if you really want to master your R Markdown, have a look [here](https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html).  
+
