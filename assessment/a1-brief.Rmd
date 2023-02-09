@@ -44,11 +44,11 @@ For each index,
 
 3. Discuss the types of the variables you are using in your indices (e.g. binary, categorical, continuous) and discuss any transformation you applied to the variables while constructing your indices.
 
-4. Describe (using visuals and words) the distribution of the 
+4. Describe (using visuals and words) the distribution of 
 
-    4.1 support for democracy and 
+    4.1 `support_demo_index` and 
     
-    4.2 confidence  in  social  institutions  –  for  each  country  separately.  
+    4.2 `confidence_govt_index`  –  for  selected  countries  separately.  
     
     Do  they  look  the  same  across countries? 
 
