@@ -114,6 +114,8 @@ For this assignment your are expected to submit:
     2.2. **The data file**;
   
     2.3. **Your .Rproj file**.
+    
+**Length**: 1500wd (as measured in the R Markdown document)
 
 ## Files
 
