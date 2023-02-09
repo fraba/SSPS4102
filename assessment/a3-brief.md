@@ -14,7 +14,7 @@ In your report, you should discuss
 
 3. **Data collection**: How was the data collected? Since you are not expected to collect the data yourself, explain how others collected the data and whether that particular data collection process can introduce in terms of the validity of your results (remember: no data is perfect).
 
-<center>![](https://media.giphy.com/media/9RWcytIJi3uYo/giphy.gif)</center>
+[](https://media.giphy.com/media/9RWcytIJi3uYo/giphy.gif)
 
 4. **Data description, manipulation and selection**: You should present *selected* descriptive statistics of your variables and records. Focus on the variables that are important to you.  Also, did you tranform or reocode any variable? Which variables and records did you select from the original data set for your analysis? Why? Use all the tables and figures that you need. 
 
@@ -24,7 +24,7 @@ In your report, you should discuss
 
 6. **Concluding remarks**. Discuss your results and explain if you are able to answer your research question (note: you might conclude that you can't offer an answer given the data you have - and that's fine!)
 
-<center>![](https://media.giphy.com/media/5T06fayphNrPayKYak/giphy.gif)
+[](https://media.giphy.com/media/5T06fayphNrPayKYak/giphy.gif)
 
 ## Submission guidelines
 
