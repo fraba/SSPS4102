@@ -1,27 +1,27 @@
 # Weekly schedule
 
-| Week |  Topic | Reading | Extra reading |
-| :---: | --- | --- | --- |
-|01 | Introduction and overview | DASS Ch1.3-7 | HOPR [Ch1](https://rstudio-education.github.io/hopr/project-1-weighted-dice.html), [Ch2](https://rstudio-education.github.io/hopr/basics.html), [Ch3](https://rstudio-education.github.io/hopr/packages.html) | 
-|02 | Measuring and summarising data | DASS Ch1.8 | HOPR [Ch5](https://rstudio-education.github.io/hopr/r-objects.html), [Ch6](https://rstudio-education.github.io/hopr/r-notation.html) | 
-|03 | Data visualisation | R4DS [Ch3](https://r4ds.had.co.nz/data-visualisation.html) | FA [Ch1](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ch01.html), [Ch2](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ch02.html), TA [Ch2](https://learning.oreilly.com/library/view/the-truthful-art/9780133440492/ch02.html) | 
-|04 | Data collection and manipulation | R4DS [Ch5](https://r4ds.had.co.nz/transform.html) | HOPR [Ch7](https://rstudio-education.github.io/hopr/modify.html), [Ch8](https://rstudio-education.github.io/hopr/environments.html); R4DS [Ch18](https://r4ds.had.co.nz/pipes.html) | 
-|05 | Bivariate association and causality | DASS Ch2 | | 
-|06 | Dimension reduction | I2SL [Ch12.2](https://link.springer.com/chapter/10.1007/978-1-0716-1418-1_12); Wattenberg, Viégas & Johnson | RMD [Ch1](https://bookdown.org/yihui/rmarkdown/installation.html), [Ch2](https://bookdown.org/yihui/rmarkdown/basics.html), [Ch3](https://bookdown.org/yihui/rmarkdown/documents.html) | 
-|07 | Conducting reproducible research | DASS Ch3; Kitchin  | boyd & Crawford; Floridi | 
-|08 | Normal curve & confidence intervals | DASS Ch6 | | 
-|09 | Hypothesis testing | DASS Ch7 | | 
-|10 | Simple regression | DASS Ch4 | |
-|11 | Multiple regression | DASS Ch5 | | 
-|12 | Logistic regression and advanced topics | I2SL [Ch4.1-3](https://link.springer.com/chapter/10.1007/978-1-0716-1418-1_4); QSS Ch5.2-3.1 |  
-|13 | Computational text analysis | TMWR [Ch1](https://www.tidytextmining.com/tidytext.html), [Ch2](https://www.tidytextmining.com/sentiment.html), [Ch3](https://www.tidytextmining.com/tfidf.html), [Ch4](https://www.tidytextmining.com/ngrams.html), [Ch6](https://www.tidytextmining.com/topicmodeling.html) | QSS Ch5.1 |
+| Week |  Topic | Reading | Extra reading | In-class tasks
+| :---: | --- | --- | --- | --- |
+|01 | Introduction and overview | DASS Ch1.3-7 | HOPR [Ch1](https://rstudio-education.github.io/hopr/project-1-weighted-dice.html), [Ch2](https://rstudio-education.github.io/hopr/basics.html), [Ch3](https://rstudio-education.github.io/hopr/packages.html) | [Individual quiz](https://canvas.sydney.edu.au/courses/49127/assignments/436497); [Group problem set](https://canvas.sydney.edu.au/courses/49127/assignments/436498) |
+|02 | Measuring and summarising data | DASS Ch1.8 | HOPR [Ch5](https://rstudio-education.github.io/hopr/r-objects.html), [Ch6](https://rstudio-education.github.io/hopr/r-notation.html) | Individual quiz; Group problem set | 
+|03 | Data visualisation | R4DS [Ch3](https://r4ds.had.co.nz/data-visualisation.html) | FA [Ch1](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ch01.html), [Ch2](https://learning.oreilly.com/library/view/the-functional-art/9780133041187/ch02.html), TA [Ch2](https://learning.oreilly.com/library/view/the-truthful-art/9780133440492/ch02.html) | Individual quiz; Group problem set |
+|04 | Data collection and manipulation | R4DS [Ch5](https://r4ds.had.co.nz/transform.html) | HOPR [Ch7](https://rstudio-education.github.io/hopr/modify.html), [Ch8](https://rstudio-education.github.io/hopr/environments.html); R4DS [Ch18](https://r4ds.had.co.nz/pipes.html) | Individual quiz; Group problem set |
+|05 | Bivariate association and causality | DASS Ch2 | | Individual quiz; Group problem set |
+|06 | Dimension reduction | I2SL [Ch12.2](https://link.springer.com/chapter/10.1007/978-1-0716-1418-1_12); Wattenberg, Viégas & Johnson | RMD [Ch1](https://bookdown.org/yihui/rmarkdown/installation.html), [Ch2](https://bookdown.org/yihui/rmarkdown/basics.html), [Ch3](https://bookdown.org/yihui/rmarkdown/documents.html) | Individual quiz; Group problem set |
+|07 | Conducting reproducible research | DASS Ch3; Kitchin  | boyd & Crawford; Floridi | Individual quiz; Group problem set |
+|08 | Normal curve & confidence intervals | DASS Ch6 | | Individual quiz; Group problem set |
+|09 | Hypothesis testing | DASS Ch7 | | Individual quiz; Group problem set |
+|10 | Simple regression | DASS Ch4 | | Individual quiz; Group problem set |
+|11 | Multiple regression | DASS Ch5 | | Individual quiz; Group problem set |
+|12 | Logistic regression and advanced topics | I2SL [Ch4.1-3](https://link.springer.com/chapter/10.1007/978-1-0716-1418-1_4); QSS Ch5.2-3.1 | | Individual quiz; Group problem set | 
+|13 | Computational text analysis | TMWR [Ch1](https://www.tidytextmining.com/tidytext.html), [Ch2](https://www.tidytextmining.com/sentiment.html), [Ch3](https://www.tidytextmining.com/tfidf.html), [Ch4](https://www.tidytextmining.com/ngrams.html), [Ch6](https://www.tidytextmining.com/topicmodeling.html) | QSS Ch5.1 | Group problem set |
 
 Text book:
 
 * Llaudet, E., & Imai, K. (2022). _Data analysis for social science: A friendly and practical introduction_. Princeton University Press. https://press.princeton.edu/books/hardcover/9780691199429/data-analysis-for-social-science (DASS)
   * Publicly and fully available online: NO
   * Online access through library: NO
-  * Copy available through library: NO
+  * Copy available through library: YES
 
 Other texts: 
 
