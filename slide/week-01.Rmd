@@ -31,6 +31,17 @@ library(DiagrammeR)
 ```
 
 ---
+
+## Your teacher
+	
+Francesco Bailo (francesco.bailo@sydney.edu.au)
+
+I am a Lecturer in the School of Social and Political Sciences, University of Sydney. I am interested in researching forms of political engagement and political talk on social media. I researched the emergence and dynamics of online communities, the role between news organisations and social media, and the interdependence between social media activists and news organisations. I have engaged with and applied quantitative research methods developing expertise in quantitative text analysis (NLP) and network analysis.
+
+This year I am teaching GOVT6139 and SSPS4102.
+
+
+---
 class: inverse, center, middle
 
 # Get started with SSPS4102
@@ -568,7 +579,7 @@ package::function_name(arguments) # Don't run this!
 
 ---
 
-## Functions (1/2)
+## Functions (2/2)
 
 ```{r eval = F}
 package::function_name(arguments) # Don't run this!
@@ -610,10 +621,87 @@ For example try this
 
 ```{r}
 cities <- 
-  read.csv("https://people.sc.fsu.edu/~jburkardt/data/csv/cities.csv")
+  read.csv("https://raw.githubusercontent.com/fraba/SSPS4102/master/data/cities.csv")
 ```
 
 ---
 
-# TODO: Explain projects!
+## Making sense of data objects
+
+Data can come in many different *types* (or *classes*) of objects. Among the most common data "shapes" are *vectors* and *matrices*.
+
+Vectors are values of the same type (e.g. `numeric`, `character`) combined together (with `c()`) in a precise order
+
+```{r}
+#   [1]       [2].     [3]  #
+c("first", "second", "third")
+```
+
+If we *bind* vectors of the same type and of the same lenght, by columns with `cbind()` or by rows `rbind()`, we create a `matrix`. 
+
+A special type of matrix is the `data.frame` in which each column - we refer to a data frame column as *variables* - can be a vector of a different type (e.g. `character` and `numeric`).
+
+---
+
+## Measuring data objects (1/2)
+
+A vector is a one-dimensional data object: it only has a lenght! We measure the length of a vector with `length()`
+
+```{r}
+length(c("first", "second", "third"))
+```
+
+A `matrix` and its buddy the `data.frame` instead have two dimensions: *rows* and *columns*.
+
+Conveniently, the `read.csv()` function will import the data of spreadsheet into a `data.frame` object. If you run it before you should now able to get 
+
+```{r}
+class(cities)
+```
+
+---
+
+## Measuring data objects (2/2)
+
+To measure the size of a `matrix` or `data.frame`, you can use `dim()`, `nrow()` or `ncol`. 
+
+```{r}
+dim(cities)
+```
+
+will detail both dimensions at once while 
+
+```{r}
+ncol(cities)
+
+nrow(cities)
+```
+
+respectively the number of columns and the number of rows.
+
+---
+
+## RStudio project (1/2)
+
+(A more expansive documentation on RStudio project is available [here on Canvas](https://canvas.sydney.edu.au/courses/49127/modules/items/1865380).)
+
+To effectively complete your tasks (the three assignments but also the weekly problem sets) you want to familiarise yourself with **RStudio projects**.
+
+**RStudio projects** facilitate working with R code and data files. But they also greatly facilitate sharing your projects with others (when submitting your assignments, you are required to also upload the compressed folder of your project).
+
+![](http://www.rstudio.com/images/docs/projects_new.png)
+
+---
+
+## RStudio project (2/2)
+
+An RStudio project is located in a dedicated folder on your computer and that folder will also be the working directory, when you open a project in your *R session*. 
+
+There are two key files linked to your project and placed in your project folder:
+
+1. The file "[name-of-your-project].Rproj" contains the metadata about your project (this is a small file);
+
+2. The file ".RData" (no file name, just the extension ".RData") contains all the objects of your environment and is loaded/saved when you open/close your project. 
+    
+    
 

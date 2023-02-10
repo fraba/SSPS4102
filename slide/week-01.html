@@ -41,6 +41,17 @@ background-size: 95%
 
 
 ---
+
+## Your teacher
+	
+Francesco Bailo (francesco.bailo@sydney.edu.au)
+
+I am a Lecturer in the School of Social and Political Sciences, University of Sydney. I am interested in researching forms of political engagement and political talk on social media. I researched the emergence and dynamics of online communities, the role between news organisations and social media, and the interdependence between social media activists and news organisations. I have engaged with and applied quantitative research methods developing expertise in quantitative text analysis (NLP) and network analysis.
+
+This year I am teaching GOVT6139 and SSPS4102.
+
+
+---
 class: inverse, center, middle
 
 # Get started with SSPS4102
@@ -240,8 +251,8 @@ Focus on
 
 &lt;center&gt;
 
-<div id="htmlwidget-2d8e9977e3daf9cc343d" style="width:800px;height:300px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2d8e9977e3daf9cc343d">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR] \n  \n  node [shape = oval]        \n  nod1 [label = \"Deep\\nunderstanding\"]\n  nod2 [label = \"Functional\\nunderstanding\"]\n  nod3 [label =  \"Communicating\\nand reporting\"]\n  \n  node [shape = egg]        \n  nod4 [label = \"Data analysis\\nconcepts\"]\n  nod5 [label = \"R\"]\n  \n  node [shape = diamond]  \n  nod6 [label = \"Data\"]\n  \n  \n  # edge definitions with the node IDs\n  nod1 -> nod4\n  nod2 -> nod5\n  nod4 -> nod6\n  nod5 -> nod6\n  nod6 -> nod3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-fa4ffdfedc1a247309ab" style="width:800px;height:300px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-fa4ffdfedc1a247309ab">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR] \n  \n  node [shape = oval]        \n  nod1 [label = \"Deep\\nunderstanding\"]\n  nod2 [label = \"Functional\\nunderstanding\"]\n  nod3 [label =  \"Communicating\\nand reporting\"]\n  \n  node [shape = egg]        \n  nod4 [label = \"Data analysis\\nconcepts\"]\n  nod5 [label = \"R\"]\n  \n  node [shape = diamond]  \n  nod6 [label = \"Data\"]\n  \n  \n  # edge definitions with the node IDs\n  nod1 -> nod4\n  nod2 -> nod5\n  nod4 -> nod6\n  nod5 -> nod6\n  nod6 -> nod3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 &lt;/center&gt;
 
@@ -382,7 +393,7 @@ class: inverse, center, middle
 # No-code / low-code software alternatives for data analysis (1/2)
 
 * **Spreadsheet (Excel et al)**: Easy to access (likely your university or employer will give you access to it) and effective and intuitive for manipulating tabular data but limited in 
-  * the type of analysis and visualisation they allow (e.g., no out-of-the-box linear regression 😿);
+  * the type of analysis and visualisation they allow (e.g., no out-of-the-box linear regression 😢);
   * the "shape" of data they can read: it can only be a table with rows and columns (i.e, no [API](https://en.wikipedia.org/wiki/API) data);
   * the size of the data they can read.
   
@@ -581,7 +592,7 @@ package::function_name(arguments) # Don't run this!
 
 ---
 
-## Functions (1/2)
+## Functions (2/2)
 
 
 ```r
@@ -626,12 +637,120 @@ For example try this
 
 ```r
 cities &lt;- 
-  read.csv("https://people.sc.fsu.edu/~jburkardt/data/csv/cities.csv")
+  read.csv("https://raw.githubusercontent.com/fraba/SSPS4102/master/data/cities.csv")
 ```
 
 ---
 
-# TODO: Explain projects!
+## Making sense of data objects
+
+Data can come in many different *types* (or *classes*) of objects. Among the most common data "shapes" are *vectors* and *matrices*.
+
+Vectors are values of the same type (e.g. `numeric`, `character`) combined together (with `c()`) in a precise order
+
+
+```r
+#   [1]       [2].     [3]  #
+c("first", "second", "third")
+```
+
+```
+## [1] "first"  "second" "third"
+```
+
+If we *bind* vectors of the same type and of the same lenght, by columns with `cbind()` or by rows `rbind()`, we create a `matrix`. 
+
+A special type of matrix is the `data.frame` in which each column - we refer to a data frame column as *variables* - can be a vector of a different type (e.g. `character` and `numeric`).
+
+---
+
+## Measuring data objects (1/2)
+
+A vector is a one-dimensional data object: it only has a lenght! We measure the length of a vector with `length()`
+
+
+```r
+length(c("first", "second", "third"))
+```
+
+```
+## [1] 3
+```
+
+A `matrix` and its buddy the `data.frame` instead have two dimensions: *rows* and *columns*.
+
+Conveniently, the `read.csv()` function will import the data of spreadsheet into a `data.frame` object. If you run it before you should now able to get 
+
+
+```r
+class(cities)
+```
+
+```
+## [1] "data.frame"
+```
+
+---
+
+## Measuring data objects (2/2)
+
+To measure the size of a `matrix` or `data.frame`, you can use `dim()`, `nrow()` or `ncol`. 
+
+
+```r
+dim(cities)
+```
+
+```
+## [1] 128  10
+```
+
+will detail both dimensions at once while 
+
+
+```r
+ncol(cities)
+```
+
+```
+## [1] 10
+```
+
+```r
+nrow(cities)
+```
+
+```
+## [1] 128
+```
+
+respectively the number of columns and the number of rows.
+
+---
+
+## RStudio project (1/2)
+
+(A more expansive documentation on RStudio project is available [here on Canvas](https://canvas.sydney.edu.au/courses/49127/modules/items/1865380).)
+
+To effectively complete your tasks (the three assignments but also the weekly problem sets) you want to familiarise yourself with **RStudio projects**.
+
+**RStudio projects** facilitate working with R code and data files. But they also greatly facilitate sharing your projects with others (when submitting your assignments, you are required to also upload the compressed folder of your project).
+
+![](http://www.rstudio.com/images/docs/projects_new.png)
+
+---
+
+## RStudio project (2/2)
+
+An RStudio project is located in a dedicated folder on your computer and that folder will also be the working directory, when you open a project in your *R session*. 
+
+There are two key files linked to your project and placed in your project folder:
+
+1. The file "[name-of-your-project].Rproj" contains the metadata about your project (this is a small file);
+
+2. The file ".RData" (no file name, just the extension ".RData") contains all the objects of your environment and is loaded/saved when you open/close your project. 
+    
+    
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
