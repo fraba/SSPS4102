@@ -48,11 +48,11 @@ For each index,
 
     4.1 `support_demo_index` and 
     
-    4.2 `confidence_govt_index`  –  for  selected  countries  separately.  
+    4.2 `confidence_govt_index`  –  for selected (3+) countries  separately.  
     
     Do  they  look  the  same  across countries? 
 
-5. Conclude with a general comment on support for democracy and confidence in institutions in these three countries. 
+5. Conclude with a general comment on support for democracy and confidence in institutions in these countries. 
 
 ## R programming tips
 
