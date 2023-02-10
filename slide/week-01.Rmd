@@ -637,7 +637,7 @@ Vectors are values of the same type (e.g. `numeric`, `character`) combined toget
 c("first", "second", "third")
 ```
 
-If we *bind* vectors of the same type and of the same lenght, by columns with `cbind()` or by rows `rbind()`, we create a `matrix`. 
+If we *bind* vectors of the same type and of the same lenght, by columns with `cbind()` or by rows `rbind()`, we create a rectangular-shaped data object called a `matrix`. 
 
 A special type of matrix is the `data.frame` in which each column - we refer to a data frame column as *variables* - can be a vector of a different type (e.g. `character` and `numeric`).
 
