@@ -56,6 +56,27 @@ I am a Lecturer in the School of Social and Political Sciences, University of Sy
 
 This year I am teaching GOVT6139 and SSPS4102.
 
+---
+
+## Today's class
+
+* Unit's introduction and overview
+
+    * Textbook and texts
+  
+    * Content
+    
+    * Learning goals
+    
+    * How to do this
+  
+* Lab: Get started with R and RStudio
+
+* Individual quiz
+
+* Group problem set
+
+
 
 ---
 class: inverse, center, middle
@@ -64,7 +85,7 @@ class: inverse, center, middle
 
 ---
 
-# What you need to take this unit
+# What you need to take this unit (1/2)
 
 * No prior knowledge of statistics
 
@@ -92,7 +113,7 @@ class: inverse, center, middle
 
 ---
 
-# What you need to take this unit
+# What you need to take this unit  (2/2)
 
 *  **Every week**: 
 
@@ -144,7 +165,7 @@ Suggestion: Get your own copy (PDF and Kindle version are available)
   
 ---
 
-# Other texts (1/4)
+## Other texts (1/4)
 
 * boyd,  danah, &amp; Crawford, K. (2012). Critical questions for big data. _Information, Communication &amp; Society_, 15(5), 662–679. https://doi.org/10.1080/1369118X.2012.678878
   * Publicly and fully available online: NO
@@ -158,7 +179,7 @@ Suggestion: Get your own copy (PDF and Kindle version are available)
   
 ---
 
-# Other texts (2/4)
+## Other texts (2/4)
 
 * Cairo, A. (2016). _The Truthful Art: Data, Charts, and Maps for Communication_. Pearson Education. https://learning.oreilly.com/library/view/the-truthful-art/9780133440492 (TA)
   * Publicly and fully available online: NO
@@ -175,7 +196,7 @@ Suggestion: Get your own copy (PDF and Kindle version are available)
 
 ---
 
-# Other texts (3/4)
+## Other texts (3/4)
 
 * James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2021). _An introduction to statistical learning: With applications in R_. Springer. https://www.statlearning.com/ (I2SL)
   * Publicly and fully available online: YES [link](https://link.springer.com/book/10.1007/978-1-0716-1418-1)
@@ -189,7 +210,7 @@ Suggestion: Get your own copy (PDF and Kindle version are available)
 
 ---
 
-# Other texts (4/4)
+## Other texts (4/4)
 
 * Silge, J., &amp; Robinson, D. (2017). _Text mining with R: A tidy approach_. O’Reilly. https://www.tidytextmining.com/ (TMWR)
   * Publicly and fully available online: YES [link](https://www.tidytextmining.com/)
@@ -257,8 +278,8 @@ Focus on
 
 &lt;center&gt;
 
-<div id="htmlwidget-3d34c80507166f613719" style="width:800px;height:300px;" class="grViz html-widget "></div>
-<script type="application/json" data-for="htmlwidget-3d34c80507166f613719">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR] \n  \n  node [shape = oval]        \n  nod1 [label = \"Deep\\nunderstanding\"]\n  nod2 [label = \"Functional\\nunderstanding\"]\n  nod3 [label =  \"Communicating\\nand reporting\"]\n  \n  node [shape = egg]        \n  nod4 [label = \"Data analysis\\nconcepts\"]\n  nod5 [label = \"R\"]\n  \n  node [shape = diamond]  \n  nod6 [label = \"Data\"]\n  \n  \n  # edge definitions with the node IDs\n  nod1 -> nod4\n  nod2 -> nod5\n  nod4 -> nod6\n  nod5 -> nod6\n  nod6 -> nod3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5b147dfba3664f414723" style="width:800px;height:300px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-5b147dfba3664f414723">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR] \n  \n  node [shape = oval]        \n  nod1 [label = \"Deep\\nunderstanding\"]\n  nod2 [label = \"Functional\\nunderstanding\"]\n  nod3 [label =  \"Communicating\\nand reporting\"]\n  \n  node [shape = egg]        \n  nod4 [label = \"Data analysis\\nconcepts\"]\n  nod5 [label = \"R\"]\n  \n  node [shape = diamond]  \n  nod6 [label = \"Data\"]\n  \n  \n  # edge definitions with the node IDs\n  nod1 -> nod4\n  nod2 -> nod5\n  nod4 -> nod6\n  nod5 -> nod6\n  nod6 -> nod3\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 &lt;/center&gt;
 
@@ -374,6 +395,17 @@ Reporting
 |12 | Logistic regression and advanced topics | I2SL [Ch4.1-3](https://link.springer.com/chapter/10.1007/978-1-0716-1418-1_4); QSS Ch5.2-3.1 | | Individual quiz; Group problem set | 
 |13 | Computational text analysis | TMWR [Ch1](https://www.tidytextmining.com/tidytext.html), [Ch2](https://www.tidytextmining.com/sentiment.html), [Ch3](https://www.tidytextmining.com/tfidf.html), [Ch4](https://www.tidytextmining.com/ngrams.html), [Ch6](https://www.tidytextmining.com/topicmodeling.html) | QSS Ch5.1 | Group problem set |
 
+
+---
+
+## Canvas
+
+### Let's take a quick tour!
+
+.center[https://canvas.sydney.edu.au/courses/47713]
+
+.center[&lt;img src = 'https://media.giphy.com/media/jhzBQquG4KjaU/giphy.gif'&gt;]
+
 ---
 
 class: inverse, center, middle
@@ -399,7 +431,7 @@ class: inverse, center, middle
 # No-code / low-code software alternatives for data analysis (1/2)
 
 * **Spreadsheet (Excel et al)**: Easy to access (likely your university or employer will give you access to it) and effective and intuitive for manipulating tabular data but limited in 
-  * the type of analysis and visualisation they allow (e.g., no out-of-the-box linear regression 😿);
+  * the type of analysis and visualisation they allow (e.g., no out-of-the-box linear regression 😭);
   * the "shape" of data they can read: it can only be a table with rows and columns (i.e, no [API](https://en.wikipedia.org/wiki/API) data);
   * the size of the data they can read.
   
