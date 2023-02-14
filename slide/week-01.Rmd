@@ -404,7 +404,7 @@ Reporting
 
 ### Let's take a quick tour!
 
-.center[https://canvas.sydney.edu.au/courses/47713]
+.center[https://canvas.sydney.edu.au/courses/49127]
 
 .center[<img src = 'https://media.giphy.com/media/jhzBQquG4KjaU/giphy.gif'>]
 
