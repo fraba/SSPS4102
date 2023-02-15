@@ -402,6 +402,8 @@ Reporting
 
 ## Canvas
 
+Remember, all announcements will come to you via Canvas - not email. So keep an eye on it (or check your notifications settings, so that you get an email alert everytime there's a new announcement - see [here](https://community.canvaslms.com/t5/Student-Guide/How-do-I-manage-my-Canvas-notification-settings-as-a-student/ta-p/434)).   
+
 ### Let's take a quick tour!
 
 .center[https://canvas.sydney.edu.au/courses/49127]
