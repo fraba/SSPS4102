@@ -411,6 +411,172 @@ Remember, all announcements will come to you via Canvas - not email. So keep an 
 .center[<img src = 'https://media.giphy.com/media/jhzBQquG4KjaU/giphy.gif'>]
 
 ---
+## Let's talk about... ChatGPT (1/4)
+
+
+.center[<img src = 'https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg' width = '20%'></img>]
+
+
+### Do you use it and how?
+
+.center[<img src ='../img/menti-week-01.png' width = '30%'></img> 
+
+or https://www.menti.com/al8jn8dsxbqa]
+
+
+---
+
+## Let's talk about... ChatGPT (2/4)
+
+### Should I use it? 
+
+.center[<img src = 'https://media.giphy.com/media/l2JhNkxsr2EtjfXwY/giphy.gif' width ='35%'></img>]
+
+Definitely!
+
+### Problem is how to use it!
+
+No need to say that the wrong way to use it is copying/pasting ChatGPT answers into your *original* work. 
+
+This is not only cheating but also ChatGPT will never produce *original* (that is, *creative*) work!
+
+---
+
+## Let's talk about... ChatGPT (3/4)
+
+### What is ChatGPT?
+
+ChatGPT is a *chatbot* build on a very sophisticated *language model* trained on one of the most comprehensive corpus of texts ever assembled in the history on our human civilisation.
+
+### What does it do in practice? 
+
+.pull-left[
+
+Given an input, ChatGPT will guess the *best* possible series of words to respond to that input. In doing so, it simulate a person that is not only very knowledgeable on the topic but also naturally competent in the English language.   
+
+]
+
+.pull-right[
+
+![](https://media.giphy.com/media/19OIUml06udBC/giphy.gif)
+
+]
+
+---
+
+## Let's talk about... ChatGPT (4/4)
+
+### How does it do in practice?
+
+One of the best way to understand the working of any language model available in 2023 is to think about *compression algorithms*.
+
+
+### How do compression algorithms work? 
+
+* First excluding some information and 
+
+* second interpolating information to fill gaps. 
+
+ChatGPT is for written information what JPEG is for images. Interpolation is what gives the impression of creative knowledge. **In conclusions**, ChatGPT output can be helpful to find new information (e.g. a paper?) but can't be trusted at face value! 
+
+
+See: *ChatGPT Is a Blurry JPEG of the Web* by Ted Chiang  (https://www.newyorker.com/tech/annals-of-technology/chatgpt-is-a-blurry-jpeg-of-the-web)
+
+---
+
+# Do you want to demo ChatGPT now?
+
+.center[![](https://media.giphy.com/media/BpGWitbFZflfSUYuZ9/giphy.gif)]
+
+https://chat.openai.com/chat
+---
+class: inverse, center, middle
+
+---
+class: inverse, center, middle
+
+# Queries about the course?
+
+---
+
+## General course queries:
+
+1. Bring to seminar
+
+2. Post in Teams (in "General" channel) 
+
+## Assignment queries:
+
+1. Bring to seminar.
+
+2. Check if your query has been addressed already in the three Q&A docs (links here: [A1](https://unisyd.sharepoint.com/:w:/r/teams/2023SSPS4102/Shared%20Documents/Assignments/A1%20-%20Q%26A.docx?d=we7f4715e2a37402898a3223f16aa53f2&csf=1&web=1&e=I2fabu), [A2](https://unisyd.sharepoint.com/:w:/r/teams/2023SSPS4102/Shared%20Documents/Assignments/A2%20-%20Q%26A.docx?d=w333da0af015b4e55bb252d30e8a7cb74&csf=1&web=1&e=m5qWIi), [A3](https://unisyd.sharepoint.com/:w:/r/teams/2023SSPS4102/Shared%20Documents/Assignments/A3%20-%20Q%26A.docx?d=w6d214c199cc041dba41fad09e93f5c15&csf=1&web=1&e=Eg5nh9));
+
+3. Post your query in Teams ("Assignments" channel).
+
+## Personal queries: 
+
+Email me (francesco.bailo@sydney.edu.au, add GOVT6139 to your email's subject) or book an apointment [here](https://outlook.office.com/bookwithme/user/846b379784f440f185dfc56ee6d18f1f@sydney.edu.au/meetingtype/K2mXXuHQhk2lATtqMzAObQ2?anonymous&ep=mlink).
+
+---
+
+## All queries and request about extensions (also simple extensions of five days or less) should be directed to special considerations
+
+=> https://www.sydney.edu.au/students/special-consideration.html
+
+### Remember
+
+> Deduction of 5% of the maximum mark for each calendar day after the due date.
+
+> After ten calendar days late, a mark of zero will be awarded.
+
+## Also about participation
+
+> Students are expected to attend a minimum of 90 per cent of timetabled activities
+
+---
+
+## Academic Honesty & Plagiarism
+
+- If you use other peoples work, acknowledge it.
+
+- If you do use direct quotes, put it in quotation marks and acknowledge it.
+
+- Assignments are submitted to Turnitin. Turnitin will find copied work.
+
+- If Turnitin highlights issues, per Usyd policy the assignment will be referred to the Educational Integrity Officer who will assess.
+
+- Note University of Sydney policies on plagiarism do not distinguish between accidental and intentional plagiarism. 
+
+    * **Most student plagiarims is non-intentional**. Be careful and use a RMS!
+
+- Academic Honesty Education Module - https://canvas.sydney.edu.au/courses/15270
+
+- Policy - http://sydney.edu.au/policies/showdoc.aspx?recnum=PDOC2012/254&RendNum=0
+
+---
+
+## Need help? University of Sydney resources
+
+- University of Sydney Learning Hub
+
+    - Workshops and consultation on study skills, writing, referencing
+    
+    - https://www.sydney.edu.au/students/learning-hub-academic-language.html
+    
+- University of Sydney Library
+
+    - https://library.sydney.edu.au/study/student-support/
+    
+- Health and wellbeing
+
+     - https://sydney.edu.au/students/browse.html?category=support-andservices&topic=health-wellbeing-and-support-services
+     
+     - Counselling and mental health support, disability support, and other
+services
+
+- Many support services for students, do not hesitate to reach out!
+
+---
 
 class: inverse, center, middle
 
