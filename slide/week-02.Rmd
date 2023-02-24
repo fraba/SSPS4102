@@ -1,7 +1,7 @@
 ---
 title: "SSPS4102</br>Data Analytics in the Social Sciences"
 subtitle: "Week 02</br>Measuring and summarising data"
-author: "Francesco Bailo (slides by Elena Llaudet are indicated with a *)"
+author: "Francesco Bailo"
 institute: "The University of Sydney"
 date: "Semester 1, 2023 (updated: `r Sys.Date()`)"
 output:
