@@ -103,7 +103,11 @@ lapply(packages, require, character.only = TRUE)
     
 ## Week 02
 
-* Getting the column names of a matrix-like (rectangular) object.
+* Getting the first part of matrix-like (rectangular) object
+
+   * `head(dataframe)`
+
+* Getting the column names of a matrix-like (rectangular) object
 
     * `colnames(dataframe)`
 
