@@ -45,115 +45,119 @@ lapply(packages, require, character.only = TRUE)
 
 * Installing packages
 
-  * `install.packages(packages)`
+    * `install.packages(packages)`
   
 * Loading packages
 
-  * `library(package)` or 
+    * `library(package)` or 
   
-  * `require(package)`
+    * `require(package)`
 
 * Running simple calculations
 
-  * `1 + 2` and 
+    * `1 + 2` and 
   
-  * `2 - 3` and 
+    * `2 - 3` and 
   
-  * `3 * 4` and 
+    * `3 * 4` and 
   
-  * `4 / 5`     
+    * `4 / 5`     
 
 * Creating objects
 
-  * `hello <- "hi"` or `hello = "hi"`
+    * `hello <- "hi"` or `hello = "hi"`
 
 * Using functions
 
-  * `function_name(arguments)` [don't run]
+    * `function_name(arguments)` [don't run]
     
-  * `package::function_name(arguments)` [don't run]
+    * `package::function_name(arguments)` [don't run]
 
 * Loading data
 
-  * `load(file)` [don't run]
+    * `load(file)` [don't run]
 
-  * `read.csv(file)` [don't run]
+    * `read.csv(file)` [don't run]
 
 * Making sense of data (and data *vector*, *matrices*, *data frames*)
 
-  * Identifying type of R object
+    * Identifying type of R object
   
-    * `class(dataframe)` 
+        * `class(dataframe)` 
 
-  * Identifying length of vector
+    * Identifying length of vector
     
-    * `length(numbers)`
+        * `length(numbers)`
   
-  * Identifying number of rows (observations)
+    * Identifying number of rows (observations)
     
-    * `nrow(dataframe)`
+        * `nrow(dataframe)`
     
-  * Identifying number of columns
+    * Identifying number of columns
   
-    * `ncol(matrix)`
+        * `ncol(matrix)`
     
-  * Identifying number of rows and columns
+    * Identifying number of rows and columns
     
-    * `dim(matrix)`
+        * `dim(matrix)`
     
 ## Week 02
 
+* Getting the column names of a matrix-like (rectangular) object.
+
+    * `colnames(dataframe)`
+
 * Accessing variables inside dataframes
 
-  * `dataframe$numbers`
+    * `dataframe$numbers`
 
 * Computing means
 
-  * `mean(numbers)`
+    * `mean(numbers)`
 
 ## Week 03
 
 * Creating a ggplot with ggplot2
 
-  * Using aesthetic mappings
+    * Using aesthetic mappings
   
-    * `ggplot2::ggplot(dataframe, aes(x = numbers, y = factors))`
+        * `ggplot2::ggplot(dataframe, aes(x = numbers, y = factors))`
 
-  * Choosing and using different geoms
+    * Choosing and using different geoms
 
-    * Using geom_density
+        * Using geom_density
     
-      * `ggplot(dataframe, aes(numbers)) + ggplot2::geom_density()`
+          * `ggplot(dataframe, aes(numbers)) + ggplot2::geom_density()`
  
-    * Using geom_histogram
+        * Using geom_histogram
     
-      * `ggplot(dataframe, aes(numbers)) + geom_histogram()`
+          * `ggplot(dataframe, aes(numbers)) + geom_histogram()`
  
-    * Using geom_bar
+        * Using geom_bar
     
-      * `ggplot(dataframe, aes(x = factors)) + geom_bar()`
+          * `ggplot(dataframe, aes(x = factors)) + geom_bar()`
 
-    * Using geom_point
+        * Using geom_point
     
-      * `ggplot(dataframe, aes(x = numbers, y = other_numbers)) + geom_point()`
+          * `ggplot(dataframe, aes(x = numbers, y = other_numbers)) + geom_point()`
 
-    * Using geom_smooth
+        * Using geom_smooth
     
-      * `ggplot(dataframe, aes(x = numbers, y = other_numbers)) + geom_smooth()`
+          * `ggplot(dataframe, aes(x = numbers, y = other_numbers)) + geom_smooth()`
   
-    * Using geom_boxplot
+        * Using geom_boxplot
     
-      * `ggplot(dataframe, aes(x = factors, y = numbers)) + geom_boxplot()`
+          * `ggplot(dataframe, aes(x = factors, y = numbers)) + geom_boxplot()`
   
-    * Using geom_line
+        * Using geom_line
     
-      * `ggplot(dataframe, aes(x = numbers, y = other_numbers)) + geom_line()`
+          * `ggplot(dataframe, aes(x = numbers, y = other_numbers)) + geom_line()`
   
-  * Using scales
+    * Using scales
   
-    * `ggplot(dataframe, aes(x = numbers, y = other_numbers)) + scale_y_continuous()`
+        * `ggplot(dataframe, aes(x = numbers, y = other_numbers)) + scale_y_continuous()`
   
-  * Using facets
+    * Using facets
   
     `ggplot(dataframe, aes(x = numbers, y = other_numbers)) + facet_grid()`
   
@@ -161,290 +165,290 @@ lapply(packages, require, character.only = TRUE)
 
 * Using pipes (%>%)
 
-  * `dataframe %>% dplyr::mutate(division = numbers / other_numbers)`
+    * `dataframe %>% dplyr::mutate(division = numbers / other_numbers)`
 
 * Manipulating dataframes with dplyr
 
-  * Filtering observations
+    * Filtering observations
   
-    * `dplyr::filter(dataframe, numbers > 50, factors == "red")`
+        * `dplyr::filter(dataframe, numbers > 50, factors == "red")`
   
-  * Selecting variables
+    * Selecting variables
   
-    * `dplyr::select(dataframe, numbers, factors)`
+        * `dplyr::select(dataframe, numbers, factors)`
   
-  * Creating new variables
+    * Creating new variables
   
-    * `dplyr::mutate(dataframe, division = numbers / other_numbers)`
+        * `dplyr::mutate(dataframe, division = numbers / other_numbers)`
     
-  * Recoding a variable
+    * Recoding a variable
   
-    * `dplyr::recode(numbers, `-1` = 2, `0` = 1)`
+        * `dplyr::recode(numbers, `-1` = 2, `0` = 1)`
   
-  * Grouping observation
+    * Grouping observation
   
-    * `dplyr::group_by(dataframe, factors)`
+        * `dplyr::group_by(dataframe, factors)`
   
-  * Summarising variables
+    * Summarising variables
   
-    * `dplyr::summarise(dataframe, n = n())`
+        * `dplyr::summarise(dataframe, n = n())`
   
-  * Row-wise operations
+    * Row-wise operations
   
-    * `dataframe %>% dplyr::rowwise() %>% dplyr::mutate(m = mean(c(numbers, other_numbers)))`
+        * `dataframe %>% dplyr::rowwise() %>% dplyr::mutate(m = mean(c(numbers, other_numbers)))`
   
 ## Week 05
 
 * Using relational operators
 
-  * `3 == 3` and
+    * `3 == 3` and
   
-  * `TRUE != FALSE` and
+    * `TRUE != FALSE` and
   
-  * `3 < 4` and
+    * `3 < 4` and
   
-  * `4 > 3`
+    * `4 > 3`
 
 * Creating variables with ifelse
 
-  * `ifelse(factors == "red", 1, 0)`
+    * `ifelse(factors == "red", 1, 0)`
 
 * Subsetting variables
 
-  * `numbers[numbers > 50]`
+    * `numbers[numbers > 50]`
   
 * Subsetting data frames
 
-  * `dataframe[1,]` or
+    * `dataframe[1,]` or
   
-  * `dataframe[,1]` or
+    * `dataframe[,1]` or
 
 * Reporting with R Markdown
 
-  * `knitr::kable(dataframe, caption = "My caption")`
+    * `knitr::kable(dataframe, caption = "My caption")`
   
-  * `knitr::kable(dataframe, caption = "My caption")`
+    * `knitr::kable(dataframe, caption = "My caption")`
 
 ## Week 06
 
 * Performing principal component analysis
 
-  * `prcomp(matrix, scale = TRUE)`
+    * `prcomp(matrix, scale = TRUE)`
 
 * Performing t-SNE analysis  
 
-  * `Rtsne::Rtsne(matrix, perplexity = 10)`
+    * `Rtsne::Rtsne(matrix, perplexity = 10)`
 
 ## Week 07
 
 * Creating frequency tables
 
-  * `table(factors)`
+    * `table(factors)`
 
 * Creating tables of proportions
 
-  * `prop.table(table(factors))`
+    * `prop.table(table(factors))`
   
 * Understanding missing values
 
-  * `is.na(factors)` and 
+    * `is.na(factors)` and 
   
-  * `is.null(numbers)`
+    * `is.null(numbers)`
 
 * Handling missing values
 
-  * `table(factors, exclude = NULL)` and
+    * `table(factors, exclude = NULL)` and
   
-  * `na.omit(factors)`
+    * `na.omit(factors)`
 
 * Creating two-way frequency tables
 
-  * `table(factors, other_factors)`
+    * `table(factors, other_factors)`
 
 * Creating two-way tables of proportions
 
-  * `prop.table(table(factors, other_factors))`
+    * `prop.table(table(factors, other_factors))`
   
 * Computing descriptive statistics
 
-  * Mean
+    * Mean
   
-    * `mean(numbers)`
+        * `mean(numbers)`
     
-  * Median 
+    * Median 
   
-    * `median(numbers)`
+        * `median(numbers)`
     
-  * Standard deviation
+    * Standard deviation
   
-    * `sd(numbers)`
+        * `sd(numbers)`
     
-  * Variance
+    * Variance
   
-    * `var(numbers)`
+        * `var(numbers)`
 
 * Computing correlations
 
-  * `cor(numbers, other_numbers)`
+    * `cor(numbers, other_numbers)`
 
 ## Week 08
 
 * Taking a random sample
 
-  * `sample(numbers, size = 10)`
+    * `sample(numbers, size = 10)`
 
 * Taking a random sample from a normal distribution
 
-  * `rnorm(10)`
+    * `rnorm(10)`
 
 * Computing probability of normal random variables
 
-  * `pnorm(-1.96)`
+    * `pnorm(-1.96)`
 
 * Using for loops
 
-  * `for(i in 1:10) {print(i)}`
+    * `for(i in 1:10) {print(i)}`
   
 * Computing absolute value
 
-  * `abs(-10)`
+    * `abs(-10)`
 
 ## Week 09
 
 * Computing 95% confidence interval for sample means 
 
-  * `mean(numbers) - 1.96 * sqrt(var(numbers) / length(numbers))` and 
+    * `mean(numbers) - 1.96 * sqrt(var(numbers) / length(numbers))` and 
   
-  * `mean(numbers) + 1.96 * sqrt(var(numbers) / length(numbers))`
+    * `mean(numbers) + 1.96 * sqrt(var(numbers) / length(numbers))`
 
 * Computing 95% confidence interval for difference-in-means estimators
 
-  * `mean(numbers) - mean(other_numbers) - 1.96 * sqrt(var(numbers) / length(numbers) + var(other_numbers) / length(other_numbers))` and 
+    * `mean(numbers) - mean(other_numbers) - 1.96 * sqrt(var(numbers) / length(numbers) + var(other_numbers) / length(other_numbers))` and 
   
-  * `mean(numbers) - mean(other_numbers) + 1.96 * sqrt(var(numbers) / length(numbers) + var(other_numbers) / length(other_numbers))`  
+    * `mean(numbers) - mean(other_numbers) + 1.96 * sqrt(var(numbers) / length(numbers) + var(other_numbers) / length(other_numbers))`  
 
 * Hypothesis testing with the difference-in-means estimators
 
-  * `z_obs <- (mean(numbers) - mean(other_numbers)) / sqrt(var(numbers) / length(numbers) + var(other_numbers) / length(other_numbers))` and
+    * `z_obs <- (mean(numbers) - mean(other_numbers)) / sqrt(var(numbers) / length(numbers) + var(other_numbers) / length(other_numbers))` and
   
-  * `2 * pnorm(-abs(z_obs))`
+    * `2 * pnorm(-abs(z_obs))`
 
 ## Week 10
 
 * Fitting simple linear regression models
 
-  * `fit <- lm(numbers ~ other_numbers, data = dataframe)`
+    * `fit <- lm(numbers ~ other_numbers, data = dataframe)`
 
 * Using natural logarithmic transformations
 
-    * `log(numbers)` or
+        * `log(numbers)` or
     
-    * `lm(log(numbers) ~ other_numbers, data = dataframe)` or
+        * `lm(log(numbers) ~ other_numbers, data = dataframe)` or
 
 * Hypothesis testing with estimated regression coefficients
 
-  * `summary(fit)$coef`
+    * `summary(fit)$coef`
 
 * Reporting linear model results
 
-  * `summary(fit)`
+    * `summary(fit)`
 
 ## Week 11
 
 * Fitting multiple linear regression models
 
-  * `lm(numbers ~ other_numbers + factors + other_factors)`
+    * `lm(numbers ~ other_numbers + factors + other_factors)`
 
 * Computing confidence interval for predicted outcomes
 
-  * `predict(fit, newdata = data.frame(other_numbers = 100), interval = "confidence")`
+    * `predict(fit, newdata = data.frame(other_numbers = 100), interval = "confidence")`
 
 ## Week 12
 
 * Fitting logistic regression models
 
-  * `glm(factors ~ numbers + other_numbers, family = 'binomial')`
+    * `glm(factors ~ numbers + other_numbers, family = 'binomial')`
   
 ## Week 12 & 13 (advanced topics)
 
 * Analysing network data
 
-  * Creating networks
+    * Creating networks
   
-    * `g <- igraph::graph_from_adjacency_matrix(adjmatrix)`
+        * `g <- igraph::graph_from_adjacency_matrix(adjmatrix)`
   
-    * `g <- igraph::graph_from_edgelist(edglist)`
+        * `g <- igraph::graph_from_edgelist(edglist)`
   
-  * Visualising networks
+    * Visualising networks
   
-    * `plot(g)`
+        * `plot(g)`
   
-  * Computing network statistics
+    * Computing network statistics
   
-    * Size (global)
+        * Size (global)
     
-      * `igraph::vcount(g)` and
+          * `igraph::vcount(g)` and
       
-      * `igraph::ecount(g)`
+          * `igraph::ecount(g)`
   
-    * Degree (local)
+        * Degree (local)
       
-      * `igraph::degree(g)`
+          * `igraph::degree(g)`
     
-    * Closeness (local)
+        * Closeness (local)
     
-      * `igraph::closeness(g)`
+          * `igraph::closeness(g)`
       
-    * Betweenness (local)
+        * Betweenness (local)
     
-      * `igraph::betweenness(g)`
+          * `igraph::betweenness(g)`
     
-  * Computing network communities
+    * Computing network communities
   
-    * `igraph::cluster_optimal(g)`
+        * `igraph::cluster_optimal(g)`
 
 * Analysing spatial data
 
-  * Loading spatial data
+    * Loading spatial data
   
-    * `data.sf <- sf::read_sf(file)` [don't run]
+        * `data.sf <- sf::read_sf(file)` [don't run]
   
-  * Visualising spatial data 
+    * Visualising spatial data 
   
-    * `leaflet::leaflet(sf) + leaflet::addTiles()` [don't run] or
+        * `leaflet::leaflet(sf) + leaflet::addTiles()` [don't run] or
     
-    * `ggplot2::ggplot(sf) + geom_sf()` [don't run]
+        * `ggplot2::ggplot(sf) + geom_sf()` [don't run]
     
-  * Manipulating spatial data
+    * Manipulating spatial data
   
-    * `sf::st_buffer(sf, dist = 150)` [don't run]
+        * `sf::st_buffer(sf, dist = 150)` [don't run]
     
-    * `sf::st_intersects(sf)` [don't run]
+        * `sf::st_intersects(sf)` [don't run]
     
-  * Getting spatial features from OpenStreetMap
+    * Getting spatial features from OpenStreetMap
   
-    * `query <- osmdata::opq(bbox = c(13.30,45.89,13.31,45.91))`
+        * `query <- osmdata::opq(bbox = c(13.30,45.89,13.31,45.91))`
     
-    * `osm_feature <- osmdata::add_osm_feature(query, key = 'building')`
+        * `osm_feature <- osmdata::add_osm_feature(query, key = 'building')`
     
-    * `sf <- osmdata::osmdata_sf(osm_feature)`
+        * `sf <- osmdata::osmdata_sf(osm_feature)`
 
 * Analysing text data
 
-  * Tidying text data
+    * Tidying text data
 
-  * Analysing word frequencies
+    * Analysing word frequencies
   
     `text_df %>% unnest_tokens(word, text)` [don't run]
     
     `tidy_df %>% anti_join(stop_words)` [don't run]
 
-  * Analysing sentiment of texts
+    * Analysing sentiment of texts
   
     `tidy_books %>% dplyr::inner_join(tidytext::get_sentiments("bing"))`  [don't run]
 
-  * Analysing relationships between words
+    * Analysing relationships between words
 
-  * Identifying topics in texts
+    * Identifying topics in texts
   
     `topicmodels::LDA(dtm, k = 10)` [don't run]
