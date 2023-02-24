@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>SSPS4102Data Analytics in the Social Sciences</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Francesco Bailo (slides by Elena Llaudet are indicated with a *)" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# SSPS4102</br>Data Analytics in the Social Sciences
+]
+.subtitle[
+## Week 02</br>Measuring and summarising data
+]
+.author[
+### Francesco Bailo (slides by Elena Llaudet are indicated with a *)
+]
+.institute[
+### The University of Sydney
+]
+.date[
+### Semester 1, 2023 (updated: 2023-02-24)
+]
+
+---
+
+
+background-image: url(https://upload.wikimedia.org/wikipedia/en/6/6a/Logo_of_the_University_of_Sydney.svg)
+background-size: 95%
+
+
+
+---
+
+## Acknowledgement of Country
+
+* would like to acknowledge the Traditional Owners of Australia and  recognise their continuing connection to land, water and culture. The  University of Sydney is located on the land of the Gadigal people  of the Eora Nation. * pay my respects to their Elders, past and present.
+
+
+---
+
+## Let's start with a question:
+
+.center[&lt;img src ='../img/menti-week-02.png' width = '30%'&gt;&lt;/img&gt; 
+
+or https://www.menti.com/alfygs13yu5q 
+
+(Mentimeter's answers are always anonymous and not recorded)]
+
+
+---
+
+&lt;div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'&gt;&lt;iframe sandbox='allow-scripts allow-same-origin allow-presentation' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/app/presentation/alfweb93f1fyj647kvbpm2gs2fg1v153/embed' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'&gt;&lt;/iframe&gt;&lt;/div&gt;
+
+---
+class: inverse, center, middle
+
+# The shape of data
+
+---
+
+## Information
+
+### What is information?&lt;sup&gt;1&lt;/sup&gt;  
+
+When we talk about information we either intend 
+
+1. Information *as* something; or 
+
+2. Information *about* something
+
+.pull-left[
+
+A population **is** information because *objectively* contains information, from the information *stored* in the DNA of its people to the information *stored* in its social arrangements.  
+
+]
+
+.pull-right[
+
+Information **about** the same population instead involves some medium - a message or a spreadsheet - where something or somebody has *encoded* and *stored* information *selectively* describing traits of that population. 
+
+]
+
+.footnote[
+[1] Hidalgo, C. (2015). *Why information grows: The evolution of order, from atoms to economies*. Basic Books.
+
+]
+
+---
+
+## Information as data
+
+When we talk about data we intend information *about* something. That is, with the term "data" we refer to some information `\(AND\)` the relation between that information and something (or somebody).
+
+Let's take one of the objects we learned to create last week in R: `age &lt;- 75`. `age` is an object of class "numeric". But is it information *as* something or *about* something? 
+
+When you run the code `age &lt;- 75` that information is "physically" stored in the memory of your computer. (And by *physically* * mean *physically*, as the physical order of your computer will in fact be different.) In this sense, this is information as *something*. 
+
+And yet as social scientists we are not interested in that kind of physical information... What we want to know is: who is 75? As we link `75` to somebody and to the number of years that that person has lived we have information *about* something. We have a first **data point**.
+
+
+---
+
+## From information to data
+
+In Latin, *data* is the plural of *datum*. Nowadays in the English language data is commonly use as singular, mass noun. But the singular/plural reflection is important because when we speak about data we refer to a collection and not to discrete values, which we would instead refer to as *datum* or more commonly *data point*. 
+
+In conclusion, when we refer to *data* we intend 
+
+.center[
+
+A **collection** of
+
+`\(\bullet\)`
+
+**information** about
+
+`\(\bullet\)` 
+
+**something**.
+
+]
+
+---
+
+## The two critical relationships of data
+
+Data exist because of two critical relationships:
+
+1. The relations connecting data points within the data 
+
+    * information `\(\iff\)` information (e.g. "age:75" `\(\iff\)` "name:Claire"); and
+
+2. The relations between the information in the data and something outside of it
+
+    * information `\(\iff\)` something  (e.g, "name:Claire" `\(\iff\)` 👩).
+    
+    
+If these relationships break, we don't have data anymore. **Data is fragile**!
+
+.center[&lt;img src = 'https://media.giphy.com/media/3on2145OdwdWxn48Oh/giphy.gif' width = '30%'&gt;&lt;/img&gt;]
+
+---
+
+## What are data sets? And what are data frames?
+
+When we talk about *data sets* we tend to refer to data stored in a single rectangular (i.e. tabular) format. That is, one data set = one table, two data sets = two tables.  
+
+In the R-verse, a dataset is known as a ...
+
+.center[`data.frame`]
+
+an R object you will frequently use.
+
+---
+
+## Data frames
+
+In a data frame, each row is a different **observation** while each column is a different **variable**.&lt;sup&gt;1&lt;/sup&gt;
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Sex &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Exer &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Smoke &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Height &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; M.I &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Age &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Some &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Never &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 173.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Metric &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.250 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; None &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Regul &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 177.80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Imperial &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.583 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; None &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Occas &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16.917 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; None &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Never &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 160.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Metric &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20.333 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Some &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Never &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 165.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Metric &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 23.667 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Some &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Never &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 172.72 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Imperial &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21.000 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+.footnote[
+[1] Although this is not the only way to order values in a data frame, it is the most common way to order in the social sciences.
+
+]
+
+---
+
+## Now let's open Professor Elena Llaudet's slides 
+
+(she is the author of our textbook...)
+
+https://canvas.sydney.edu.au/courses/49127/files/folder/dass-slides?preview=29662524
+
+
+---
+class: inverse, center, middle
+
+# Lab: Recap of Week 01
+
+---
+## Recap of Week 01 (1/3)
+
+* Launching RStudio
+
+* Installing packages
+
+  * `install.packages(packages)`
+  
+* Loading packages
+
+    * `library(package)` or 
+  
+    * `require(package)`
+
+* Running simple calculations
+
+    * `1 + 2` and 
+  
+    * `2 - 3` and 
+  
+    * `3 * 4` and 
+  
+    * `4 / 5`   
+  
+---
+## Recap of Week 01 (2/3)
+
+* Creating objects
+
+    * `hello &lt;- "hi"` or `hello = "hi"`
+
+* Using functions
+
+    * `function_name(arguments)` [don't run]
+    
+    * `package::function_name(arguments)` [don't run]
+
+* Loading data
+
+    * `load(file)` [don't run]
+
+    * `read.csv(file)` [don't run]
+  
+---
+## Recap of Week 01 (3/3)
+
+* Making sense of data (and data *vector*, *matrices*, *data frames*)
+
+    * Identifying type of R object
+  
+        * `class(dataframe)` 
+
+    * Identifying length of vector
+    
+        * `length(numbers)`
+  
+    * Identifying number of rows (observations)
+    
+        * `nrow(dataframe)`
+    
+    * Identifying number of columns
+  
+        * `ncol(matrix)`
+    
+    * Identifying number of rows and columns
+    
+        * `dim(matrix)`
+  
+---
+class: inverse, center, middle
+
+# Lab
+
+---
+## Where am I? Where is my stuff?
+
+### Understanding the working directory 
+
+.pull-left[
+.center[&lt;img src = 'https://bookdown.org/daniel_dauber_io/r4np_book/images/chapter_04_img/02_console_window/console_algebra.png' width = '100%'&gt;&lt;/img&gt;]
+]
+
+.pull-right[
+The working directory is the location of your current R process. RStudio shows your working directory at the top of your "Console" (usually, bottom-left window). In the figure is "~/Downloads/R-For-Non-Programmers/". 
+]
+
+To access files in your working directory, you don't need to specify any path, only the file name. E.g. `read.csv("my-table.csv")`. When you open an RStudio project the working directory is set to the project directory.
+
+To change your working directory at any point you can use `setwd("/your/path/to/folder")`. If you want to get the working directory path instead `getwd()` with no argument. Let's try this...
+
+---
+
+## Your computer's file system
+
+RStudio also gives you access to your system under "Files" in the bottom-right window.
+
+Use "More" =&gt; "Copy Folder Path to Clipboard" to get a copy of the path of the directory you see open in the "Files" tab.
+
+.center[&lt;img src = '../img/rstudio-setwd.gif'&gt;&lt;/img&gt;]
+
+---
+
+## Getting some data
+
+Let's create a `data.frame` object first by reading in some data with `read.csv()`. With `head()`, we quickly get the first rows of our data frame.
+
+
+```r
+people &lt;- 
+  read.csv("https://raw.githubusercontent.com/lawlesst/vivo-sample-data/master/data/csv/people.csv")
+```
+
+
+```r
+head(people)
+```
+
+&lt;table class=" lightable-paper" style='font-size: 14px; font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; person_ID &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; name &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; first &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; last &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; middle &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; email &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; phone &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; fax &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; title &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3130 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Burks, Rosella &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Rosella &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Burks &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; BurksR@univ.edu &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 963.555.1253 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 963.777.4065 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Professor &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3297 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Avila, Damien &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Damien &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Avila &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; AvilaD@univ.edu &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 963.555.1352 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 963.777.7914 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Professor &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3547 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Olsen, Robin &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Robin &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Olsen &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; OlsenR@univ.edu &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 963.555.1378 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 963.777.9262 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Assistant Professor &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1538 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Moises, Edgar Estes &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Edgar &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Moises &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Estes &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; MoisesE@univ.edu &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 963.555.2731x3565 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 963.777.8264 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Professor &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2941 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Brian, Heath Pruitt &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Heath &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Brian &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Pruitt &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; BrianH@univ.edu &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 963.555.2800 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 963.777.7249 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Associate Curator &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2401 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Claude, Elvin Haney &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Elvin &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Claude &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Haney &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; ClaudeE@univ.edu &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 963.555.2902 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 963.777.9730 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Curator &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+## Getting the dimensions of your data frame
+
+How many observations and columns do we have here?
+
+
+```r
+nrow(people)
+```
+
+```
+## [1] 40
+```
+
+```r
+ncol(people)
+```
+
+```
+## [1] 9
+```
+
+Or in just one function
+
+
+```r
+dim(people)
+```
+
+```
+## [1] 40  9
+```
+
+---
+
+## Getting the names of the variables (columns)
+
+The function `colnames()` will quickly let you know the names of the columns
+
+
+```r
+colnames(people)
+```
+
+```
+## [1] "person_ID" "name"      "first"     "last"      "middle"    "email"    
+## [7] "phone"     "fax"       "title"
+```
+
+Yet you can also get this information from RStudio in the "Environment" tab (top-right window):
+
+.center[&lt;img src = '../img/rstudio-dataframe-details.png' width = '90%'&gt;&lt;/img&gt;]
+
+---
+
+## Accessing a single variable from your data frame
+
+Once you have the names of your columns/variables you can access a single column by 
+
+
+.center[`dataframe_name` + `$` + `column_name`]
+
+so for example, to access the first name variable in the `people` data frame, we do
+
+
+```r
+people$first
+```
+
+```
+##  [1] "Rosella"   "Damien"    "Robin"     "Edgar"     "Heath"     "Elvin"    
+##  [7] "Edmund"    "Antoine"   "Callie"    "Andrea"    "Liz"       "Reba"     
+## [13] "Angelina"  "Kimberly"  "Lloyd"     "Ladonna"   "Johnathan" "Gilbert"  
+## [19] "Florence"  "Toby"      "Patrica"   "Leila"     "Rose"      "Kathie"   
+## [25] "Shannon"   "Cleo"      "Nellie"    "Ruben"     "Dianne"    "Adam"     
+## [31] "Kurtis"    "Jami"      "Jaime"     "Summer"    "Sam"       "Ann"      
+## [37] "Rich"      "Winnie"    "Ezra"      "Elba"
+```
+
+---
+
+## Accessing a single variable from your data frame
+
+Similarly for the `email` variable we do 
+
+
+```r
+people$email
+```
+
+```
+##  [1] "BurksR@univ.edu"    "AvilaD@univ.edu"    "OlsenR@univ.edu"   
+##  [4] "MoisesE@univ.edu"   "BrianH@univ.edu"    "ClaudeE@univ.edu"  
+##  [7] "MosleyE@univ.edu"   "DerekA@univ.edu"    "HawkinsC@univ.edu" 
+## [10] "PateA@univ.edu"     "AustinL@univ.edu"   "KendrickR@univ.edu"
+## [13] "SimsA@univ.edu"     "MullinsK@univ.edu"  "ChuckL@univ.edu"   
+## [16] "PayneL@univ.edu"    "BaxterJ@univ.edu"   "WeissG@univ.edu"   
+## [19] "DeirdreF@univ.edu"  "FernandoT@univ.edu" "GarrisonP@univ.edu"
+## [22] "EffieL@univ.edu"    "BuckleyR@univ.edu"  "StantonK@univ.edu" 
+## [25] "BanksS@univ.edu"    "BarnesC@univ.edu"   "BradyN@univ.edu"   
+## [28] "KatherynR@univ.edu" "MichaelD@univ.edu"  "GrantA@univ.edu"   
+## [31] "HeadK@univ.edu"     "BergerJ@univ.edu"   "EarlineJ@univ.edu" 
+## [34] "EvelynS@univ.edu"   "QuentinS@univ.edu"  "DunlapA@univ.edu"  
+## [37] "ShieldsR@univ.edu"  "PageW@univ.edu"     "SparksE@univ.edu"  
+## [40] "KaufmanE@univ.edu"
+```
+
+---
+
+## Accessing a single variable from your data frame
+
+Note that if you misspelled the name of the variable (including the wrong capitalisation), you will not get an error but you will get `NULL`. For example 
+
+
+```r
+people$Email
+```
+
+```
+## NULL
+```
+
+In some sense, the column with the wrong name exists but its value is `NULL`. 
+
+Try to assign the value `NULL` to a column and see what happens to your data frame...
+
+
+```r
+people$email &lt;- NULL
+```
+
+
+```r
+colnames(people)
+```
+
+```
+## [1] "person_ID" "name"      "first"     "last"      "middle"    "phone"    
+## [7] "fax"       "title"
+```
+
+---
+
+## Getting some new data
+
+Let's get some other data now: 
+
+
+```r
+presidents &lt;-
+  read.csv("https://people.math.sc.edu/Burkardt/datasets/presidents/president_heights.csv")
+```
+
+
+```r
+head(presidents)
+```
+
+&lt;table class=" lightable-paper" style='font-size: 14px; font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Name &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Height..inches. &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; George Washington &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 74 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; John Adams &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 67 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Thomas Jefferson &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 75 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; James Madison &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 64 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; James Monroe &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 72 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; John Quincy Adams &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 67 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+Here we have two columns only: `Name` and `Height..inches.` (note that the dots `.` are part of the name!)
+
+---
+
+## Calculating a new variable
+
+What do we have here? The height of US Presidents in... inches! Since we are not in the US we don't like inches, we want centimeters (note: `\(1 inch = 2.54 \times centimeter\)`)! 
+
+How do we fix this? We create a new variable `height_cm` (no dots for us!) where the height is expressed in centimeters. 
+
+
+```r
+presidents$height_cm &lt;- presidents$Height..inches. * 2.54
+```
+
+We have seen the  assign operator (`&lt;-`) already. What it does it to take a value (or more values, like in this case) on its right-hand side and "assigns" it to the object on its left-hand side, which in this case is a column/variable in our data frame `presidents`. 
+
+In this case `presidents$height_cm` didn't exist so `&lt;-` will create a new variable. If the variable name is already used in the data frame, `&lt;-` will replace the old values with a new set of values - writing over the old column. 
+
+---
+
+## Calculating the arithmetic mean (average) of a vector
+
+The function to calculate the arithmetic mean of numerical values is (quite unsurprisingly) `mean()`. The function `mean()` takes as argument a vector of numerical values (of class `int` or `numeric`). Let's try it, by combining (with `c()`) values into a vector
+
+
+```r
+my_vector &lt;- c(10, 100, 1000, 5000)
+```
+
+Then
+
+
+```r
+mean(my_vector)
+```
+
+```
+## [1] 1527.5
+```
+
+&lt;div class="tenor-gif-embed" data-postid="13572360" data-share-method="host" data-aspect-ratio="1.81818" data-width="40%"&gt;&lt;a href="https://tenor.com/view/cool-minions-thumbs-up-good-job-ok-gif-13572360"&gt;Cool Minions GIF&lt;/a&gt;from &lt;a href="https://tenor.com/search/cool-gifs"&gt;Cool GIFs&lt;/a&gt;&lt;/div&gt; &lt;script type="text/javascript" async src="https://tenor.com/embed.js"&gt;&lt;/script&gt;
+
+---
+## Calculating the mean of a variable 
+
+We can then go back to our `presidents` data frame and calculate the mean of its variable. First, let's make trouble for the sake of it. Let's try to use as argument of `mean()` a `character` vector: `presidents$Name`
+
+
+```r
+mean(presidents$Name)
+```
+
+```
+## Warning in mean.default(presidents$Name): argument is not numeric or logical:
+## returning NA
+```
+
+```
+## [1] NA
+```
+
+Since `mean()` requires objects of class `numeric` or `int`, R tried to convert our string into numerical values without success producing `NA` (i.e. "'Not Available' / Missing Values") in the process. But the mean of `NA` is still `NA`. 
+
+So what's the average (also expected) height of a US president in cm? Let me know with Mentimeter (link of the next page)
+
+---
+
+.center[&lt;img src ='../img/menti-week-02.png' width = '30%'&gt;&lt;/img&gt; 
+
+or https://www.menti.com/alfygs13yu5q 
+
+(Mentimeter's answers are always anonymous and not recorded)]
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
