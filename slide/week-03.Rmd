@@ -21,7 +21,9 @@ background-size: 95%
 options(htmltools.dir.version = FALSE)
 
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, 
-                      dev = 'svg', out.width = "45%", fig.width = 6,
+                      dev = 'svg', 
+                      fig.width = 4, 
+                      fig.height = 4, out.width="30%",
                       fig.align="center")
 
 library(knitr)
@@ -102,11 +104,11 @@ Healy, K. (2018). *Data visualization: A practical introduction*. Princeton Univ
 
 ## Why do we visualise data?
 
-Data visualisation happens 
+#### 1. We visualise data because we want to understand it as part of our *analysis* process. 
 
-1. We visualise 
+.pull-left[
 
-```{r echo = F}
+```{r echo = F, out.width = "90%"}
 cowplot::plot_grid(
   ggplot(anscombe, aes(x = x1, y = y1)) +
     geom_point() +
@@ -127,10 +129,55 @@ cowplot::plot_grid(
   ncol = 2)
 ```
 
+]
+
+.pull-right[
+
+Consider these data. 
+
+These four combinations of variables return the exact same correlation and slope. 
+
+And yet these variables are totally different - something you might miss if you don't visualise it before jumping into your analysis.
+
+]
+
 
 ---
 
-background-image: url(https://learning.oreilly.com/api/v2/epubs/urn:orm:book:9780133041187/files/graphics/02fig13_newyork.jpg)
+## Why do we visualise data?
+
+#### 2. We visualise data to (1) communicate to (2) some audience (3) selected insights from our data analysis excercise
+
+.center[<img src = 'https://learning.oreilly.com/api/v2/epubs/urn:orm:book:9780133041187/files/graphics/02fig13_newyork.jpg' width = '85%'></img>]
+
+---
+class: inverse, center, middle
+
+# Lab
+
+---
+
+## The gapminder package
+
+To replicate the code in the next slide, you need to install and load the *gapminder* package. 
+
+.pull-left[
+
+Do it now with 
+
+```{r eval = F}
+
+install.packages("gapminder")
+
+library(gapminder)
+
+```
+
+]
+
+.pull-right[
+<img src = 'https://media.giphy.com/media/3o6Ygfw40tlnPhX87m/giphy.gif'></img>
+]
 
 ---
 
@@ -139,7 +186,7 @@ background-image: url(https://learning.oreilly.com/api/v2/epubs/urn:orm:book:978
 Q: **What is a tibble?** A: Tibbles *are* data frames.<sup>1</sup>
 
 ```{r inlude = F}
-mpg 
+gapminder 
 ```
 
 .footnote[
@@ -184,30 +231,6 @@ For more information, https://cran.r-project.org/web/packages/tidyr/vignettes/ti
 
 ---
 
-## The gapminder package
-
-To replicate the code in the next slide, you need to install and load the *gapminder* package. 
-
-.pull-left[
-
-Do it now with 
-
-```{r eval = F}
-
-install.packages("gapminder")
-
-library(gapminder)
-
-```
-
-]
-
-.pull-right[
-<img src = 'https://media.giphy.com/media/3o6Ygfw40tlnPhX87m/giphy.gif'></img>
-]
-
----
-
 ## Visualisations in R
 
 The two most popular ways to make data visualisation in R are 
@@ -221,8 +244,6 @@ As you will soon realise, the textbook doesn't use ggplot2 but instead produces 
 ---
 
 ### Visualisations in R: base vs ggplot2
-
-.pull-left[
 
 With the base package ...
 
@@ -240,16 +261,24 @@ ggplot(data = gapminder,
   geom_point()
 ```
 
-]
+---
 
-.pull-right[
+### Visualisations in R: base vs ggplot2
 
-```{r fig.width = 4, fig.height = 4, echo = F, out.width='80%'}
+With these results: 
+
+.pull-left[
+
+```{r fig.cap = "base", fig.width = 4, fig.height = 4, echo = F, out.width='80%'}
 plot(x = gapminder$gdpPercap, 
      y = gapminder$lifeExp)
 ```
 
-```{r fig.width = 4, fig.height = 4, echo = F, out.width='60%'}
+]
+
+.pull-right[
+
+```{r fig.cap = "ggplot2",  fig.width = 4, fig.height = 4, echo = F, out.width='80%'}
 ggplot(data = gapminder, 
        mapping = aes(x = gdpPercap,
                      y = lifeExp)) +
@@ -257,6 +286,12 @@ ggplot(data = gapminder,
 ```
 
 ]
+
+---
+
+class: inverse, center, middle
+
+# ggplot2: the basics
 
 ---
 
@@ -270,14 +305,580 @@ ggplot(data = gapminder,
 
 4. The documentation is great.  
 
+.center[<img src = 'https://ggplot2.tidyverse.org/logo.png' width = '30%'></img>]
 
 
 ---
 
-## First steps
+## The basics of ggplot2
 
-```{r}
-mpg
+ggplot2 builds your visualisation by *mapping* 
+
+* **variables** 
+
+onto 
+
+* **visual elements** or **aesthetics**: with the function `aes()` (e.g. lines, dots, colours, shapes, areas, labels, ect...) 
+
+
+```{r eval = F}
+
+p <-  
+  ggplot(data = <data>, 
+         mapping = aes(<aesthetic> = <variable>,
+                       <aesthetic> = <variable>,
+                       <   ...   > = <   ...  >))
+# Don't run. Credit: Healy, 2018
+ 
 ```
 
+---
+
+## The basics of ggplot2
+
+This creates a ggplot object, with all the instructions to map *variables* to *aesthetics.* But it won't visualise anything yet...
+
+```{r out.width = "15%"}
+
+p <-  
+  ggplot(data = gapminder, 
+         mapping = aes(x = gdpPercap,
+                       y =lifeExp))
+
+class(p)
+```
+
+```{r echo = F, fig.width = 4, fig.height = 4, out.width="30%"}
+p
+```
+
+
+---
+
+## The basics of ggplot2
+
+After we have specified `data = <data>` and `mapping = aes(...)`, we need to pass at least an additional *layer* specifying the *geometry* we want, so that ggplot2 can visualise the mapping.  
+
+
+```{r out.width="45%"}
+p + 
+  geom_point()
+```
+
+---
+
+## Layers
+
+ggplots are constructed by progressively adding new layers with new specifics about your plot. The minimum number required is two: `ggplot(...)` + `geom_<type>(...)` with all the other required layers being set by default.   
+
+
+.pull-left[
+
+```{r eval = F}
+
+ggplot(...) + #<<
+  geom_<type>(...) + #<<
+  scale_<mapping>_<type>(...) +
+  coord_<type>(...) + 
+  labs(...) +
+  facet_grid(...)
+  
+# Don't run. Credit: Healy, 2018
+```
+
+
+]
+
+.pull-right[<img src = 'https://media.giphy.com/media/XMgCFjsCSARxK/giphy.gif'></img>]
+
+---
+
+## Essential ggplot2 decisions
+
+### Layer 0 (the base, invisible layer)
+
+1. Tell the `ggplot()` function what our data is with the `data = <data>` argument.
+
+2. Tell the `ggplot()` function the *relationships* you want to visualise with the `mapping` attribute and the `aes()` function (`mapping = aes()`).
+
+    ### Layer 1 (visible)
+
+3. Tell the geometry you want to see with `geom_<type>` (e.g. `geom_point()`) 
+
+    ### Layer 2+ (visible)
+    
+4. Use additional functions (e.g. `scale_y_continuous()`) to specify everything else 😊
+
+---
+
+class: inverse, center, middle
+
+# Aesthetic mapping
+
+---
+
+## Aesthetic mapping
+
+Consider this, 
+
+* Data => variables => *values*
+
+* Aesthetics => properties => *levels*
+
+Values and levels need to be of the same type (continuous vs categorical or you will get an error/warning) 
+
+And remember,
+
+> An aesthetic is a visual property of the objects in your plot.
+
+> You can convey information about your data by mapping the aesthetics in your plot to the variables in your dataset.
+
+(Wickham & Grolemund, 2017)
+
+.center[<img src = 'https://media.giphy.com/media/xT9IgpL2wyBi1tCWYg/giphy-downsized-large.gif'></img>]
+
+---
+
+## Aesthetic mapping
+
+```{r out.width="60%", fig.width = 6, fig.height = 4}
+ggplot(data = gapminder, 
+       mapping = aes(x = gdpPercap, 
+                     y = lifeExp, 
+                     color = continent)) +
+  geom_point()
+```
+
+
+What is going on here? What are the aesthetic *properties* (or *arguments*) that we have set? What do they do?
+
+---
+
+### Aesthetic mapping
+
+There are a many different aesthetic property you can set and whether you need to specify them depends on the type of geometry you will use.
+
+So let's set up our layer 0 and store it into `g`... 
+
+```{r}
+g <- ggplot(data = gapminder)
+```
+
+
+Among the most common aesthetic properties are **`x`** and **`y`** which position in a 2D space. These are usually the only properties that are strictly required.
+
+
+```{r}
+g + geom_point(mapping = aes(x = gdpPercap, y = lifeExp))
+```
+
+
+---
+
+### Aesthetic mapping
+
+#### size
+
+```{r fig.width=5, fig.height=4, out.width="60%"}
+g + 
+  geom_point(mapping = aes(x = gdpPercap, 
+                           y = lifeExp, 
+                           size = lifeExp)) #<<
+```
+
+---
+
+### Aesthetic mapping
+
+#### shape
+
+```{r fig.width=5, fig.height=4, out.width="60%"}
+g + 
+  geom_point(mapping = aes(x = gdpPercap, 
+                           y = lifeExp, 
+                           shape = continent)) #<<
+```
+
+---
+
+### Aesthetic mapping
+
+#### colour
+
+```{r fig.width=5, fig.height=4, out.width="60%"}
+g + 
+  geom_point(mapping = aes(x = gdpPercap, 
+                           y = lifeExp, 
+                           colour = continent)) #<<
+```
+
+---
+
+### Aesthetic mapping
+
+#### label
+
+```{r fig.width=5, fig.height=4, out.width="60%"}
+g + 
+  geom_text(mapping = aes(x = gdpPercap, #<<
+                           y = lifeExp, 
+                           label = continent)) #<<
+```
+
+---
+
+### Aesthetic mapping vs aesthetic setting
+
+#### label
+
+```{r fig.width=5, fig.height=4, out.width="50%"}
+g + 
+  geom_text(mapping = aes(x = gdpPercap, 
+                           y = lifeExp),
+            label = "My new label") #<<
+```
+
+What happened here?
+
+---
+
+### Aesthetic mapping vs aesthetic setting
+
+#### alpha (transparency, in range 0 to 1)
+
+```{r fig.width=5, fig.height=4, out.width="60%"}
+g + 
+  geom_point(mapping = aes(x = gdpPercap, 
+                           y = lifeExp),
+            alpha = 0.2) #<< 
+```
+
+---
+
+### Aesthetic mapping (advanced topics!)
+
+Aesthetics can be mapped at the level of the individual geom layer, and so can data...
+
+This can be confusing but actually allows you a lot of flexibility...
+
+```{r fig.width=5, fig.height=4, out.width="50%"}
+ggplot() + # Note, this is empty!
+  geom_point(data = gapminder, 
+             mapping = aes(x = gdpPercap, 
+                           y = lifeExp),
+             alpha = .2)
+```
+
+---
+
+### Aesthetic mapping (advanced topics!)
+
+And then...
+
+```{r fig.width=5, fig.height=4, out.width="40%"}
+ggplot() + 
+  geom_point(data = gapminder, 
+             mapping = aes(x = gdpPercap, 
+                           y = lifeExp),
+             alpha = .2) +
+    geom_point(data = gapminder[gapminder$country == "Australia",], #<<
+             mapping = aes(x = gdpPercap, #<<
+                           y = lifeExp), #<<
+             colour = "orange", size = 4) #<<
+```
+
+---
+
+class: inverse, center, middle
+
+# Geometries
+
+---
+
+### What geometries can I use? 
+
+A lot! There are about 50 geometries you can use in ggplot2. A complete list is [here](https://www.maths.usyd.edu.au/u/UG/SM/STAT3022/r/current/Misc/data-visualization-2.1.pdf). 
+
+### Which one should I use?
+
+It depends on the variables you plan to visualise...
+
+#### Consider these scenarios
+
+1. ONE VARIABLE continuous
+
+2. ONE VARIABLE discrete
+
+3. TWO VARIABLES continuous x, continuous y
+
+4. TWO VARIABLE discrete x, continuous y
+
+5. THREE VARIABLES
+
+---
+
+## ONE VARIABLE continuous
+
+```{r}
+g <- ggplot(data = gapminder, aes(x = gdpPercap))  
+```
+
+
+.pull-left[
+
+### Histogram
+
+```{r out.width = '80%'}
+g + geom_histogram()
+```
+
+]
+
+.pull-right[
+
+### Density
+
+```{r out.width = '80%'}
+g + geom_density()
+```
+
+]
+
+---
+
+## ONE VARIABLE discrete
+
+```{r}
+g <- ggplot(data = gapminder, aes(x = continent))  
+```
+
+### Bars
+
+```{r out.width = '40%'}
+g + geom_bar()
+```
+
+---
+
+## TWO VARIABLES continuous x, continuous y
+
+```{r}
+g <- ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp))  
+```
+
+.pull-left[
+
+### Point
+
+```{r out.width = '80%'}
+g + geom_point()
+```
+
+]
+
+.pull-right[
+
+### Text (or label)
+
+```{r out.width = '80%'}
+g + geom_text(aes(label = continent)) # try also geom_label
+```
+
+]
+
+---
+
+## TWO VARIABLES continuous x, continuous y (cont. function)
+
+```{r}
+g <- ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp))  
+```
+
+
+### Smooth
+
+```{r}
+g + geom_point() + geom_smooth(method = "lm") # Try method = 'loess' #<<
+```
+
+
+---
+
+## TWO VARIABLES continuous x, continuous y 
+
+```{r}
+g <- ggplot(data = gapminder, aes(x = year, y = lifeExp))  
+```
+
+### Line
+
+
+```{r}
+g + geom_line(aes(group = country)) #<<
+```
+
+
+---
+
+## What's the "group" aesthetic again?
+
+Let's try reproducing the same `geom_line()` as before, *without* setting `group` within `aes()`.
+
+```{r}
+g + geom_line()
+```
+
+
+Clearly, not good! the `geom_line()` doesn't know that year are grouped by country so will mesh every value with the same year in the same line!
+
+---
+
+## What's the "group" aesthetic again?
+
+```{r echo = F}
+gapminder %>%
+  dplyr::filter(year == 1982) %>%
+  dplyr::slice(1:5)  %>%
+  knitr::kable()
+```
+
+By setting `aes(group = country)` we specify that each country needs its own different line.
+
+---
+
+## TWO VARIABLE discrete x, continuous y
+
+```{r}
+g <- ggplot(data = gapminder, aes(x = continent))  
+```
+
+.pull-left[
+
+### Columns
+
+```{r out.width = '80%'}
+g + geom_col(aes(y = pop))
+```
+
+]
+
+.pull-right[
+
+### Boxplot
+
+```{r out.width = '80%'}
+g + geom_boxplot(aes(y = lifeExp)) 
+```
+
+]
+
+---
+
+## THREE VARIABLES
+
+```{r}
+g <- ggplot(data = gapminder, aes(x = year, y = continent))  
+```
+
+```{r out.width = '90%', fig.height = 4, fig.width = 9}
+g + geom_tile(aes(fill = lifeExp)) +
+  scale_fill_viridis_c() 
+```
+
+What is going on here?
+
+
+---
+
+class: inverse, center, middle
+
+# Position adjustement
+
+---
+
+## Position scales 
+
+The `scale_<mapping>_<type>()` functions allows you to position scales for your data. It basically, allows to add specifics about how your data/aesthetic mapping should behave. 
+
+Common scenarios are ...
+
+---
+
+## Position scales 
+
+### Setting the colour palette for your mapping
+
+```{r out.width = '40%'}
+ggplot(data = gapminder, aes(x = continent, fill = continent))  +
+  geom_col(aes(y = pop)) +
+  scale_fill_brewer(palette = "Set1")  #<<
+```
+
+---
+
+## Position scales 
+
+###  Setting the limits of your scale to zoom within your chart in some range on the y (vertical axis);
+
+```{r out.width = '40%'}
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp))  +
+  geom_point() +
+  scale_y_continuous(limits = c(50, 60)) #<<
+```
+
+---
+
+## Position scales
+
+### Setting the colour palette for your mapping
+
+```{r out.width = '40%'}
+ggplot(data = gapminder, 
+       mapping = aes(x = gdpPercap, y = lifeExp,
+                     colour = lifeExp))  +
+  geom_point() +
+  scale_colour_viridis_c() #<<
+```
+
+---
+
+## Position scales
+
+### Using a scale transformation
+
+```{r out.width = '40%'}
+ggplot(data = gapminder, 
+       mapping = aes(x = gdpPercap, y = lifeExp))  +
+  geom_point() +
+  scale_x_log10() #<<
+```
+
+---
+
+class: inverse, center, middle
+
+## Facets
+
+---
+
+What if you want to make your visualisation easier to understand by having multiple panels mapping the same variables but for different groups? You can do it with the ggplot's **facets**.
+
+Remember the messy plots with a lot of spaghetti-lines? 
+
+```{r}
+
+g <- 
+  ggplot(data = gapminder, aes(x = year, y = lifeExp)) +
+  geom_line(aes(group = country))
+
+```
+
+
+Let's make it better, with `facet_grid()`:
+
+```{r out.width = "100%", fig.height = 3, fig.width = 10}
+g + facet_grid(~continent)  #<<
+```
+
+What happened? Try `facet_grid("continent")` instead...
 

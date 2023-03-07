@@ -25,7 +25,7 @@ class: center, middle, inverse, title-slide
 ### The University of Sydney
 ]
 .date[
-### Semester 1, 2023 (updated: 2023-03-07)
+### Semester 1, 2023 (updated: 2023-03-08)
 ]
 
 ---
@@ -102,16 +102,60 @@ Healy, K. (2018). *Data visualization: A practical introduction*. Princeton Univ
 
 ## Why do we visualise data?
 
-Data visualisation happens 
+#### 1. We visualise data because we want to understand it as part of our *analysis* process. 
 
-1. We visualise 
+.pull-left[
 
-&lt;img src="week-03_files/figure-html/unnamed-chunk-1-1.svg" width="45%" style="display: block; margin: auto;" /&gt;
+&lt;img src="week-03_files/figure-html/unnamed-chunk-1-1.svg" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+Consider these data. 
+
+These four combinations of variables return the exact same correlation and slope. 
+
+And yet these variables are totally different - something you might miss if you don't visualise it before jumping into your analysis.
+
+]
 
 
 ---
 
-background-image: url(https://learning.oreilly.com/api/v2/epubs/urn:orm:book:9780133041187/files/graphics/02fig13_newyork.jpg)
+## Why do we visualise data?
+
+#### 2. We visualise data to (1) communicate to (2) some audience (3) selected insights from our data analysis excercise
+
+.center[&lt;img src = 'https://learning.oreilly.com/api/v2/epubs/urn:orm:book:9780133041187/files/graphics/02fig13_newyork.jpg' width = '85%'&gt;&lt;/img&gt;]
+
+---
+class: inverse, center, middle
+
+# Lab
+
+---
+
+## The gapminder package
+
+To replicate the code in the next slide, you need to install and load the *gapminder* package. 
+
+.pull-left[
+
+Do it now with 
+
+
+```r
+install.packages("gapminder")
+
+library(gapminder)
+```
+
+]
+
+.pull-right[
+&lt;img src = 'https://media.giphy.com/media/3o6Ygfw40tlnPhX87m/giphy.gif'&gt;&lt;/img&gt;
+]
 
 ---
 
@@ -121,24 +165,24 @@ Q: **What is a tibble?** A: Tibbles *are* data frames.&lt;sup&gt;1&lt;/sup&gt;
 
 
 ```r
-mpg 
+gapminder 
 ```
 
 ```
-## # A tibble: 234 × 11
-##    manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class
-##    &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
-##  1 audi         a4           1.8  1999     4 auto… f        18    29 p     comp…
-##  2 audi         a4           1.8  1999     4 manu… f        21    29 p     comp…
-##  3 audi         a4           2    2008     4 manu… f        20    31 p     comp…
-##  4 audi         a4           2    2008     4 auto… f        21    30 p     comp…
-##  5 audi         a4           2.8  1999     6 auto… f        16    26 p     comp…
-##  6 audi         a4           2.8  1999     6 manu… f        18    26 p     comp…
-##  7 audi         a4           3.1  2008     6 auto… f        18    27 p     comp…
-##  8 audi         a4 quattro   1.8  1999     4 manu… 4        18    26 p     comp…
-##  9 audi         a4 quattro   1.8  1999     4 auto… 4        16    25 p     comp…
-## 10 audi         a4 quattro   2    2008     4 manu… 4        20    28 p     comp…
-## # … with 224 more rows
+## # A tibble: 1,704 × 6
+##    country     continent  year lifeExp      pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333      779.
+##  2 Afghanistan Asia       1957    30.3  9240934      821.
+##  3 Afghanistan Asia       1962    32.0 10267083      853.
+##  4 Afghanistan Asia       1967    34.0 11537966      836.
+##  5 Afghanistan Asia       1972    36.1 13079460      740.
+##  6 Afghanistan Asia       1977    38.4 14880372      786.
+##  7 Afghanistan Asia       1982    39.9 12881816      978.
+##  8 Afghanistan Asia       1987    40.8 13867957      852.
+##  9 Afghanistan Asia       1992    41.7 16317921      649.
+## 10 Afghanistan Asia       1997    41.8 22227415      635.
+## # … with 1,694 more rows
 ## # ℹ Use `print(n = ...)` to see more rows
 ```
 
@@ -214,29 +258,6 @@ For more information, https://cran.r-project.org/web/packages/tidyr/vignettes/ti
 
 ---
 
-## The gapminder package
-
-To replicate the code in the next slide, you need to install and load the *gapminder* package. 
-
-.pull-left[
-
-Do it now with 
-
-
-```r
-install.packages("gapminder")
-
-library(gapminder)
-```
-
-]
-
-.pull-right[
-&lt;img src = 'https://media.giphy.com/media/3o6Ygfw40tlnPhX87m/giphy.gif'&gt;&lt;/img&gt;
-]
-
----
-
 ## Visualisations in R
 
 The two most popular ways to make data visualisation in R are 
@@ -250,8 +271,6 @@ As you will soon realise, the textbook doesn't use ggplot2 but instead produces 
 ---
 
 ### Visualisations in R: base vs ggplot2
-
-.pull-left[
 
 With the base package ...
 
@@ -271,15 +290,35 @@ ggplot(data = gapminder,
   geom_point()
 ```
 
+---
+
+### Visualisations in R: base vs ggplot2
+
+With these results: 
+
+.pull-left[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="week-03_files/figure-html/unnamed-chunk-7-1.svg" alt="base" width="80%" /&gt;
+&lt;p class="caption"&gt;base&lt;/p&gt;
+&lt;/div&gt;
+
 ]
 
 .pull-right[
 
-&lt;img src="week-03_files/figure-html/unnamed-chunk-7-1.svg" width="80%" style="display: block; margin: auto;" /&gt;
-
-&lt;img src="week-03_files/figure-html/unnamed-chunk-8-1.svg" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="week-03_files/figure-html/unnamed-chunk-8-1.svg" alt="ggplot2" width="80%" /&gt;
+&lt;p class="caption"&gt;ggplot2&lt;/p&gt;
+&lt;/div&gt;
 
 ]
+
+---
+
+class: inverse, center, middle
+
+# ggplot2: the basics
 
 ---
 
@@ -293,35 +332,719 @@ ggplot(data = gapminder,
 
 4. The documentation is great.  
 
+.center[&lt;img src = 'https://ggplot2.tidyverse.org/logo.png' width = '30%'&gt;&lt;/img&gt;]
 
 
 ---
 
-## First steps
+## The basics of ggplot2
+
+ggplot2 builds your visualisation by *mapping* 
+
+* **variables** 
+
+onto 
+
+* **visual elements** or **aesthetics**: with the function `aes()` (e.g. lines, dots, colours, shapes, areas, labels, ect...) 
+
 
 
 ```r
-mpg
+p &lt;-  
+  ggplot(data = &lt;data&gt;, 
+         mapping = aes(&lt;aesthetic&gt; = &lt;variable&gt;,
+                       &lt;aesthetic&gt; = &lt;variable&gt;,
+                       &lt;   ...   &gt; = &lt;   ...  &gt;))
+# Don't run. Credit: Healy, 2018
+```
+
+---
+
+## The basics of ggplot2
+
+This creates a ggplot object, with all the instructions to map *variables* to *aesthetics.* But it won't visualise anything yet...
+
+
+```r
+p &lt;-  
+  ggplot(data = gapminder, 
+         mapping = aes(x = gdpPercap,
+                       y =lifeExp))
+
+class(p)
 ```
 
 ```
-## # A tibble: 234 × 11
-##    manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class
-##    &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
-##  1 audi         a4           1.8  1999     4 auto… f        18    29 p     comp…
-##  2 audi         a4           1.8  1999     4 manu… f        21    29 p     comp…
-##  3 audi         a4           2    2008     4 manu… f        20    31 p     comp…
-##  4 audi         a4           2    2008     4 auto… f        21    30 p     comp…
-##  5 audi         a4           2.8  1999     6 auto… f        16    26 p     comp…
-##  6 audi         a4           2.8  1999     6 manu… f        18    26 p     comp…
-##  7 audi         a4           3.1  2008     6 auto… f        18    27 p     comp…
-##  8 audi         a4 quattro   1.8  1999     4 manu… 4        18    26 p     comp…
-##  9 audi         a4 quattro   1.8  1999     4 auto… 4        16    25 p     comp…
-## 10 audi         a4 quattro   2    2008     4 manu… 4        20    28 p     comp…
-## # … with 224 more rows
-## # ℹ Use `print(n = ...)` to see more rows
+## [1] "gg"     "ggplot"
 ```
 
+&lt;img src="week-03_files/figure-html/unnamed-chunk-11-1.svg" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## The basics of ggplot2
+
+After we have specified `data = &lt;data&gt;` and `mapping = aes(...)`, we need to pass at least an additional *layer* specifying the *geometry* we want, so that ggplot2 can visualise the mapping.  
+
+
+
+```r
+p + 
+  geom_point()
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-12-1.svg" width="45%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Layers
+
+ggplots are constructed by progressively adding new layers with new specifics about your plot. The minimum number required is two: `ggplot(...)` + `geom_&lt;type&gt;(...)` with all the other required layers being set by default.   
+
+
+.pull-left[
+
+
+```r
+*ggplot(...) +
+* geom_&lt;type&gt;(...) +
+  scale_&lt;mapping&gt;_&lt;type&gt;(...) +
+  coord_&lt;type&gt;(...) + 
+  labs(...) +
+  facet_grid(...)
+  
+# Don't run. Credit: Healy, 2018
+```
+
+
+]
+
+.pull-right[&lt;img src = 'https://media.giphy.com/media/XMgCFjsCSARxK/giphy.gif'&gt;&lt;/img&gt;]
+
+---
+
+## Essential ggplot2 decisions
+
+### Layer 0 (the base, invisible layer)
+
+1. Tell the `ggplot()` function what our data is with the `data = &lt;data&gt;` argument.
+
+2. Tell the `ggplot()` function the *relationships* you want to visualise with the `mapping` attribute and the `aes()` function (`mapping = aes()`).
+
+    ### Layer 1 (visible)
+
+3. Tell the geometry you want to see with `geom_&lt;type&gt;` (e.g. `geom_point()`) 
+
+    ### Layer 2+ (visible)
+    
+4. Use additional functions (e.g. `scale_y_continuous()`) to specify everything else 😊
+
+---
+
+class: inverse, center, middle
+
+# Aesthetic mapping
+
+---
+
+## Aesthetic mapping
+
+Consider this, 
+
+* Data =&gt; variables =&gt; *values*
+
+* Aesthetics =&gt; properties =&gt; *levels*
+
+Values and levels need to be of the same type (continuous vs categorical or you will get an error/warning) 
+
+And remember,
+
+&gt; An aesthetic is a visual property of the objects in your plot.
+
+&gt; You can convey information about your data by mapping the aesthetics in your plot to the variables in your dataset.
+
+(Wickham &amp; Grolemund, 2017)
+
+.center[&lt;img src = 'https://media.giphy.com/media/xT9IgpL2wyBi1tCWYg/giphy-downsized-large.gif'&gt;&lt;/img&gt;]
+
+---
+
+## Aesthetic mapping
+
+
+```r
+ggplot(data = gapminder, 
+       mapping = aes(x = gdpPercap, 
+                     y = lifeExp, 
+                     color = continent)) +
+  geom_point()
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-14-1.svg" width="60%" style="display: block; margin: auto;" /&gt;
+
+
+What is going on here? What are the aesthetic *properties* (or *arguments*) that we have set? What do they do?
+
+---
+
+### Aesthetic mapping
+
+There are a many different aesthetic property you can set and whether you need to specify them depends on the type of geometry you will use.
+
+So let's set up our layer 0 and store it into `g`... 
+
+
+```r
+g &lt;- ggplot(data = gapminder)
+```
+
+
+Among the most common aesthetic properties are **`x`** and **`y`** which position in a 2D space. These are usually the only properties that are strictly required.
+
+
+
+```r
+g + geom_point(mapping = aes(x = gdpPercap, y = lifeExp))
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-16-1.svg" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Aesthetic mapping
+
+#### size
+
+
+```r
+g + 
+  geom_point(mapping = aes(x = gdpPercap, 
+                           y = lifeExp, 
+*                          size = lifeExp))
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-17-1.svg" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Aesthetic mapping
+
+#### shape
+
+
+```r
+g + 
+  geom_point(mapping = aes(x = gdpPercap, 
+                           y = lifeExp, 
+*                          shape = continent))
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-18-1.svg" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Aesthetic mapping
+
+#### colour
+
+
+```r
+g + 
+  geom_point(mapping = aes(x = gdpPercap, 
+                           y = lifeExp, 
+*                          colour = continent))
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-19-1.svg" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Aesthetic mapping
+
+#### label
+
+
+```r
+g + 
+* geom_text(mapping = aes(x = gdpPercap,
+                           y = lifeExp, 
+*                          label = continent))
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-20-1.svg" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Aesthetic mapping vs aesthetic setting
+
+#### label
+
+
+```r
+g + 
+  geom_text(mapping = aes(x = gdpPercap, 
+                           y = lifeExp),
+*           label = "My new label")
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-21-1.svg" width="50%" style="display: block; margin: auto;" /&gt;
+
+What happened here?
+
+---
+
+### Aesthetic mapping vs aesthetic setting
+
+#### alpha (transparency, in range 0 to 1)
+
+
+```r
+g + 
+  geom_point(mapping = aes(x = gdpPercap, 
+                           y = lifeExp),
+*           alpha = 0.2)
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-22-1.svg" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Aesthetic mapping (advanced topics!)
+
+Aesthetics can be mapped at the level of the individual geom layer, and so can data...
+
+This can be confusing but actually allows you a lot of flexibility...
+
+
+```r
+ggplot() + # Note, this is empty!
+  geom_point(data = gapminder, 
+             mapping = aes(x = gdpPercap, 
+                           y = lifeExp),
+             alpha = .2)
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-23-1.svg" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Aesthetic mapping (advanced topics!)
+
+And then...
+
+
+```r
+ggplot() + 
+  geom_point(data = gapminder, 
+             mapping = aes(x = gdpPercap, 
+                           y = lifeExp),
+             alpha = .2) +
+*   geom_point(data = gapminder[gapminder$country == "Australia",],
+*            mapping = aes(x = gdpPercap,
+*                          y = lifeExp),
+*            colour = "orange", size = 4)
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-24-1.svg" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, center, middle
+
+# Geometries
+
+---
+
+### What geometries can I use? 
+
+A lot! There are about 50 geometries you can use in ggplot2. A complete list is [here](https://www.maths.usyd.edu.au/u/UG/SM/STAT3022/r/current/Misc/data-visualization-2.1.pdf). 
+
+### Which one should I use?
+
+It depends on the variables you plan to visualise...
+
+#### Consider these scenarios
+
+1. ONE VARIABLE continuous
+
+2. ONE VARIABLE discrete
+
+3. TWO VARIABLES continuous x, continuous y
+
+4. TWO VARIABLE discrete x, continuous y
+
+5. THREE VARIABLES
+
+---
+
+## ONE VARIABLE continuous
+
+
+```r
+g &lt;- ggplot(data = gapminder, aes(x = gdpPercap))  
+```
+
+
+.pull-left[
+
+### Histogram
+
+
+```r
+g + geom_histogram()
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-26-1.svg" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+### Density
+
+
+```r
+g + geom_density()
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-27-1.svg" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+## ONE VARIABLE discrete
+
+
+```r
+g &lt;- ggplot(data = gapminder, aes(x = continent))  
+```
+
+### Bars
+
+
+```r
+g + geom_bar()
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-29-1.svg" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## TWO VARIABLES continuous x, continuous y
+
+
+```r
+g &lt;- ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp))  
+```
+
+.pull-left[
+
+### Point
+
+
+```r
+g + geom_point()
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-31-1.svg" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+### Text (or label)
+
+
+```r
+g + geom_text(aes(label = continent)) # try also geom_label
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-32-1.svg" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+## TWO VARIABLES continuous x, continuous y (cont. function)
+
+
+```r
+g &lt;- ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp))  
+```
+
+
+### Smooth
+
+
+```r
+*g + geom_point() + geom_smooth(method = "lm") # Try method = 'loess'
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-34-1.svg" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## TWO VARIABLES continuous x, continuous y 
+
+
+```r
+g &lt;- ggplot(data = gapminder, aes(x = year, y = lifeExp))  
+```
+
+### Line
+
+
+
+```r
+*g + geom_line(aes(group = country))
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-36-1.svg" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+## What's the "group" aesthetic again?
+
+Let's try reproducing the same `geom_line()` as before, *without* setting `group` within `aes()`.
+
+
+```r
+g + geom_line()
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-37-1.svg" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+Clearly, not good! the `geom_line()` doesn't know that year are grouped by country so will mesh every value with the same year in the same line!
+
+---
+
+## What's the "group" aesthetic again?
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; continent &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; year &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; lifeExp &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; pop &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; gdpPercap &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Asia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1982 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 39.854 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12881816 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 978.0114 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Albania &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Europe &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1982 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 70.420 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2780097 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3630.8807 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Algeria &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Africa &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1982 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 61.368 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20033753 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5745.1602 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Angola &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Africa &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1982 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 39.942 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7016384 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2756.9537 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Argentina &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Americas &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1982 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 69.942 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 29341374 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8997.8974 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+By setting `aes(group = country)` we specify that each country needs its own different line.
+
+---
+
+## TWO VARIABLE discrete x, continuous y
+
+
+```r
+g &lt;- ggplot(data = gapminder, aes(x = continent))  
+```
+
+.pull-left[
+
+### Columns
+
+
+```r
+g + geom_col(aes(y = pop))
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-40-1.svg" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+### Boxplot
+
+
+```r
+g + geom_boxplot(aes(y = lifeExp)) 
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-41-1.svg" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+## THREE VARIABLES
+
+
+```r
+g &lt;- ggplot(data = gapminder, aes(x = year, y = continent))  
+```
+
+
+```r
+g + geom_tile(aes(fill = lifeExp)) +
+  scale_fill_viridis_c() 
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-43-1.svg" width="90%" style="display: block; margin: auto;" /&gt;
+
+What is going on here?
+
+
+---
+
+class: inverse, center, middle
+
+# Position adjustement
+
+---
+
+## Position scales 
+
+The `scale_&lt;mapping&gt;_&lt;type&gt;()` functions allows you to position scales for your data. It basically, allows to add specifics about how your data/aesthetic mapping should behave. 
+
+Common scenarios are ...
+
+---
+
+## Position scales 
+
+### Setting the colour palette for your mapping
+
+
+```r
+ggplot(data = gapminder, aes(x = continent, fill = continent))  +
+  geom_col(aes(y = pop)) +
+* scale_fill_brewer(palette = "Set1")
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-44-1.svg" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Position scales 
+
+###  Setting the limits of your scale to zoom within your chart in some range on the y (vertical axis);
+
+
+```r
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp))  +
+  geom_point() +
+* scale_y_continuous(limits = c(50, 60))
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-45-1.svg" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Position scales
+
+### Setting the colour palette for your mapping
+
+
+```r
+ggplot(data = gapminder, 
+       mapping = aes(x = gdpPercap, y = lifeExp,
+                     colour = lifeExp))  +
+  geom_point() +
+* scale_colour_viridis_c()
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-46-1.svg" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Position scales
+
+### Using a scale transformation
+
+
+```r
+ggplot(data = gapminder, 
+       mapping = aes(x = gdpPercap, y = lifeExp))  +
+  geom_point() +
+* scale_x_log10()
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-47-1.svg" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, center, middle
+
+## Facets
+
+---
+
+What if you want to make your visualisation easier to understand by having multiple panels mapping the same variables but for different groups? You can do it with the ggplot's **facets**.
+
+Remember the messy plots with a lot of spaghetti-lines? 
+
+
+```r
+g &lt;- 
+  ggplot(data = gapminder, aes(x = year, y = lifeExp)) +
+  geom_line(aes(group = country))
+```
+
+
+Let's make it better, with `facet_grid()`:
+
+
+```r
+*g + facet_grid(~continent)
+```
+
+&lt;img src="week-03_files/figure-html/unnamed-chunk-49-1.svg" width="100%" style="display: block; margin: auto;" /&gt;
+
+What happened? Try `facet_grid("continent")` instead...
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
