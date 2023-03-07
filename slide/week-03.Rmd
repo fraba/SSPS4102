@@ -20,42 +20,264 @@ background-size: 95%
 
 options(htmltools.dir.version = FALSE)
 
-knitr::opts_chunk$set(echo = TRUE, message = F, warning = F)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, 
+                      dev = 'svg', out.width = "45%", fig.width = 6,
+                      fig.align="center")
+
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(sf)
+library(DiagrammeR)
+library(cowplot)
+library(gapminder)
+
+ggplot2::theme_set(theme_bw())
 
 ```
 
 ---
-class: center, middle
 
-# xaringan
+## Acknowledgement of Country
 
-### /ʃaː.'riŋ.ɡan/
+I would like to acknowledge the Traditional Owners of Australia and recognise their continuing connection to land, water and culture. The  University of Sydney is located on the land of the Gadigal people  of the Eora Nation. I pay my respects to their Elders, past and present.
 
----
-class: inverse, center, middle
-
-# Get Started
 
 ---
 
-# Hello World
+background-image: url(https://learning.oreilly.com/api/v2/epubs/urn:orm:book:9780133041187/files/graphics/fmfig02.jpg)
+background-size: 100%
 
-Install the **xaringan** package from [Github](https://github.com/yihui/xaringan):
+# Data visualisation
 
-```{r eval=FALSE, tidy=FALSE}
-remotes::install_github("yihui/xaringan")
+---
+
+## The five qualities of great visualisations
+
+1. It is **truthful**, as it’s based on thorough and honest research.
+
+2. It is **functional**, as it constitutes an accurate depiction of the data, and it’s built in a way that lets people do meaningful operations based on it (seeing change in time).
+
+3. It is **beautiful**, in the sense of being attractive, intriguing, and even aesthetically pleasing for its intended audience—scientists, in the first place, but the general public, too.
+
+4. It is **insightful**, as it reveals evidence that we would have a hard time seeing otherwise.
+
+5. It is **enlightening** because if we grasp and accept the evidence it depicts, it will change our minds for the better.
+
+Cairo, A. (2016). 2. The five qualities of great visualizations. *In The Truthful Art: Data, Charts, and Maps for Communication*. Pearson Education.
+
+---
+
+## What Makes Bad Figures Bad 
+
+### 1. Bad taste
+
+.center[<img src = 'https://socviz.co/assets/ch-01-chartjunk-life-expectancy.png' width = '70%'></img>]
+
+Healy, K. (2018). *Data visualization: A practical introduction*. Princeton University Press.
+
+---
+
+## What Makes Bad Figures Bad
+
+### 2. Bad data
+
+.center[<img src = 'https://socviz.co/assets/ch-01-democracy-nyt-version.png' width = '80%'></img>]
+
+Healy, K. (2018). *Data visualization: A practical introduction*. Princeton University Press.
+
+---
+
+## What Makes Bad Figures Bad
+
+### 3. Bad perception
+
+.center[<img src = 'https://socviz.co/dataviz-pdfl_files/figure-html4/ch-01-preception-data-1.png'></img>]
+
+Healy, K. (2018). *Data visualization: A practical introduction*. Princeton University Press.
+
+
+
+---
+
+## Why do we visualise data?
+
+Data visualisation happens 
+
+1. We visualise 
+
+```{r echo = F}
+cowplot::plot_grid(
+  ggplot(anscombe, aes(x = x1, y = y1)) +
+    geom_point() +
+    geom_smooth(method = 'lm', se = FALSE) +
+    coord_cartesian(xlim = c(0, 20), ylim = c(0,15)),
+  ggplot(anscombe, aes(x = x2, y = y2)) +
+    geom_point() +
+    geom_smooth(method = 'lm', se = FALSE) +
+    coord_cartesian(xlim = c(0, 20), ylim = c(0,15)),
+  ggplot(anscombe, aes(x = x3, y = y3)) +
+    geom_point() +
+    geom_smooth(method = 'lm', se = FALSE) +
+    coord_cartesian(xlim = c(0, 20), ylim = c(0,15)),
+  ggplot(anscombe, aes(x = x4, y = y4)) +
+    geom_point() +
+    geom_smooth(method = 'lm', se = FALSE) +
+    coord_cartesian(xlim = c(0, 20), ylim = c(0,15)),
+  ncol = 2)
 ```
 
+
 ---
 
-# Some Tips
+background-image: url(https://learning.oreilly.com/api/v2/epubs/urn:orm:book:9780133041187/files/graphics/02fig13_newyork.jpg)
 
-```{r tidy=FALSE, eval=TRUE, dev="svg", out.width="45%"}
-library(ggplot2)
-ggplot(mtcars) + 
-  aes(mpg, disp) + 
-  geom_point() +   #<<
-  geom_smooth()    #<<
+---
+
+## Preliminary information (1/2)
+
+Q: **What is a tibble?** A: Tibbles *are* data frames.<sup>1</sup>
+
+```{r inlude = F}
+mpg 
 ```
 
+.footnote[
+[1] If you want to know more: https://r4ds.had.co.nz/tibbles.html
+]
+
 ---
+
+## Preliminary information (2/2)
+
+Q: **What is tidy data?** 
+
+A: Simply, *tidy* data is data that is in a single rectangular data object of class `data.frame` (or `tibble`), where
+
+.pull-left[
+
+1. Every **column** is a variable.
+
+2. Every **row** is an observation.
+
+3. Every **cell** is a single value.
+
+]
+
+.pull-right[
+
+```{r echo = F}
+gapminder %>%
+  dplyr::select(1:4) %>%
+  dplyr::slice(1:4) %>%
+  knitr::kable()
+```
+
+
+]
+
+</br>
+
+Remember that if your data is not *tidy*, ggplot2 will not take it!
+
+For more information, https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html 
+
+---
+
+## The gapminder package
+
+To replicate the code in the next slide, you need to install and load the *gapminder* package. 
+
+.pull-left[
+
+Do it now with 
+
+```{r eval = F}
+
+install.packages("gapminder")
+
+library(gapminder)
+
+```
+
+]
+
+.pull-right[
+<img src = 'https://media.giphy.com/media/3o6Ygfw40tlnPhX87m/giphy.gif'></img>
+]
+
+---
+
+## Visualisations in R
+
+The two most popular ways to make data visualisation in R are 
+
+1. To use the **base** package.
+
+2. To use the **ggplot2** package, which is part of the *Tidyverse*, "a collection of R packages designed for data science" (see https://www.tidyverse.org/). 
+
+As you will soon realise, the textbook doesn't use ggplot2 but instead produces all the visualisations using the base package. 
+
+---
+
+### Visualisations in R: base vs ggplot2
+
+.pull-left[
+
+With the base package ...
+
+```{r eval = F}
+plot(x = gapminder$gdpPercap, 
+     y = gapminder$lifeExp)
+```
+
+... and with ggplot2
+
+```{r eval = F}
+ggplot(data = gapminder, 
+       mapping = aes(x = gdpPercap,
+                     y = lifeExp)) +
+  geom_point()
+```
+
+]
+
+.pull-right[
+
+```{r fig.width = 4, fig.height = 4, echo = F, out.width='80%'}
+plot(x = gapminder$gdpPercap, 
+     y = gapminder$lifeExp)
+```
+
+```{r fig.width = 4, fig.height = 4, echo = F, out.width='60%'}
+ggplot(data = gapminder, 
+       mapping = aes(x = gdpPercap,
+                     y = lifeExp)) +
+  geom_point()
+```
+
+]
+
+---
+
+## Why to use ggplot2?
+
+1. If ggplot2 is more *expensive* in terms of lines of code (see previous slides) is also more *effective* and *intuitive* for making *complex* visualisations.
+
+2. By learning ggplot2, you learn a basic visualisation grammar that is use by a large number of third-party packages (ggplot2 is the *de-facto* visualisation standard for R).
+
+3. ggplot2 figures look much better already in its default version (so without spending time fine-tuning it). 
+
+4. The documentation is great.  
+
+
+
+---
+
+## First steps
+
+```{r}
+mpg
+```
+
+
