@@ -857,6 +857,32 @@ ggplot(data = gapminder,
 
 class: inverse, center, middle
 
+# Plot labels
+
+---
+
+To set the labels of your plot's elements - *title*, *axes*, *legends* - you add a `labs()` layer.
+
+It is pretty self-explanatory:
+
+```{r out.width = "75%", fig.width = 6, fig.height = 3}
+ggplot(data = gapminder, 
+       mapping = aes(x = gdpPercap, y = lifeExp, colour = lifeExp))  +
+  geom_point() +
+  scale_colour_viridis_c() +
+  labs(x = "My x-axis label", y = "My y-axis label",
+       colour = "My colour-legend title,", 
+       title = "my plot's title...", subtitle = "my subtitle",
+       caption = "...and my caption")
+```
+
+
+
+
+---
+
+class: inverse, center, middle
+
 ## Facets
 
 ---
