@@ -98,6 +98,15 @@ Healy, K. (2018). *Data visualization: A practical introduction*. Princeton Univ
 
 Healy, K. (2018). *Data visualization: A practical introduction*. Princeton University Press.
 
+---
+
+##  Basic perceptual tasks for nine chart types
+
+.center[<img src ='https://socviz.co/assets/ch-01-channels-for-cont-data-vertical.png' width = "15%"></img>]
+
+> Channels for mapping unordered categorical data, arranged top-to-bottom from more to less effective, after Munzer (2014, 102).
+
+Source: Healy, K. (2018). Data visualization: A practical introduction. Princeton University Press.
 
 
 ---
@@ -409,6 +418,7 @@ ggplot(...) + #<<
     
 4. Use additional functions (e.g. `scale_y_continuous()`) to specify everything else 😊
 
+
 ---
 
 class: inverse, center, middle
@@ -586,6 +596,28 @@ ggplot() +
                            y = lifeExp), #<<
              colour = "orange", size = 4) #<<
 ```
+
+
+---
+
+## How defining data and aesthetics for layers
+
+Data (`data = <data>`) and aesthetics (`mapping = aes(<aesthetics>)`) are defined top-down. Each layer will look for a definition of the two above if not directly provided.
+
+```{r eval = F}
+
+ggplot(data = gapminder, 
+             mapping = aes(x = gdpPercap, 
+                           y = lifeExp)) + 
+  geom_<type>() +
+  geom_<type>()
+
+
+```
+
+Let's try this out...
+
+
 
 ---
 
@@ -907,4 +939,23 @@ g + facet_grid(~continent)  #<<
 ```
 
 What happened? Try `facet_grid("continent")` instead...
+
+---
+
+### The main elements of ggplot’s grammar of graphics
+
+.pull-left[
+
+.center[<img src = 'https://socviz.co/assets/ch-03-ggplot-flow-vertical.png' width = '40%'></img>]]
+
+.pull-right[Check out the website containing an almost integral version of Kieran Healy's 🔥 book 🔥.
+
+.center[
+
+<img src = 'https://socviz.co/assets/dv-cover-pupress.jpg' width = '65%'></img>
+
+</br>
+https://socviz.co/
+]]
+
 
