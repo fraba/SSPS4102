@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>SSPS4102Data Analytics in the Social Sciences</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Francesco Bailo" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+    <script src="libs/viz/viz.js"></script>
+    <link href="libs/DiagrammeR-styles/styles.css" rel="stylesheet" />
+    <script src="libs/grViz-binding/grViz.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# SSPS4102</br>Data Analytics in the Social Sciences
+]
+.subtitle[
+## Week 04</br>Data collection and manipulation
+]
+.author[
+### Francesco Bailo
+]
+.institute[
+### The University of Sydney
+]
+.date[
+### Semester 1, 2023 (updated: 2023-03-14)
+]
+
+---
+
+
+background-image: url(https://upload.wikimedia.org/wikipedia/en/6/6a/Logo_of_the_University_of_Sydney.svg)
+background-size: 95%
+
+&lt;style&gt;
+pre {
+  overflow-x: auto;
+}
+pre code {
+  word-wrap: normal;
+  white-space: pre;
+}
+&lt;/style&gt;
+
+
+
+---
+
+## Acknowledgement of Country
+
+I would like to acknowledge the Traditional Owners of Australia and recognise their continuing connection to land, water and culture. The  University of Sydney is located on the land of the Gadigal people  of the Eora Nation. I pay my respects to their Elders, past and present.
+
+---
+background-image: url(https://www.antiprism.com/misc/tri_jit_rd01.gif)
+background-size: 100%
+
+# Data collection and tranformation 
+
+---
+class: inverse, center, middle
+
+# Data collection
+
+---
+
+## Data collection (social sciences)
+
+.pull-left[
+
+In *research design*, **data collection** is the process of *creating* your research data. In the social sciences there are a number of methods to create interesting data sets. They can be of two types:
+
+1. **Observational**: In an observational study, we don't influence in anyway the behaviour of the subjects of our study - who should not adapt their behavior because of or in response to our investigation. 
+
+2. **Experimental**: In an experiment we design and control the environment where our subjects will operate. 
+
+]
+
+.pull-right[
+
+.center[&lt;img src = 'https://1.bp.blogspot.com/-Pt0cQYzFA1A/Xshlv9SviGI/AAAAAAAAAmY/zEMnvw3fq_spdjYmuJ6f8t4q9q20k1kbQCLcBGAsYHQ/w490/pasteur6.gif'&gt;&lt;/img&gt;]
+
+&lt;mark&gt;Try to classify a number of data collection instruments in **Menti**, either as Observational or Experimental...&lt;/mark&gt;
+
+]
+
+
+---
+
+## Data collection (social sciences)
+
+Indeed we might need to add a couple of extra types...
+
+3. **Asking questions**: It is an type of study where we record responses and reactions to questions or other input we design through instruments of our design (online questionnaire, unstructured interview, focus group). The subject is clearly aware of the research setting and the research design should limit the impact of this awareness. 
+  
+4. **Quasi-experimental**: A quasi-experimental study use data recorded in a non-experimental setting. Still, these data will approximate experimental data either because of 
+
+    1. particular events or 
+    
+    2. through "statistically adjusting non-experimental data in an attempt to account for preexisting differences between those who did and did not receive the treatment"&lt;sup&gt;1&lt;/sup&gt;, (for example with a technique called "matching"). 
+  
+.footnote[[1] Salganik, M. J. (2018). Bit by bit: Social research in the digital age. Princeton University Press.]
+
+---
+
+# Data collection (social sciences)
+
+Independently of the *subject* of your data (so the WHOs your data are about), these data sets, can be
+
+1. created directly by you (the researcher) - to which we refer to as **primary** or **first-party data**;
+
+2. created by some other research organisation such as the ABS (**secondary** or **second-party data**); or;
+
+3. commonly nowadays created using different second-party sources by some *data aggregating organisation* (**third-party data**).
+
+---
+
+## Data collection (data analytics)
+
+In data analytics, data collection generally has a slighlty different meaning. *Data collection* refers here to the process of bringing the data into a computing environment and ready that data for the analysis. 
+
+
+### Data collection in research design
+
+<div id="htmlwidget-8af8063faad7b33cfdab" style="width:100%;height:100px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-8af8063faad7b33cfdab">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n  \n  # node definitions with substituted label text\n  node [shape = oval, style = filled]\n  a [label = \"Data collection\", fillcolor = Orange]\n  b [label = \"Data\", shape = egg, fillcolor = Lightblue]\n  c [label = \"Data analysis\"]\n  d [label = \"Results\"]\n\n  \n  a -> b -> c -> d;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+### Data collection in data analytics 
+
+<div id="htmlwidget-2185f54cdef5d427e0a7" style="width:100%;height:100px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-2185f54cdef5d427e0a7">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n  \n  # node definitions with substituted label text\n  node [shape = oval, style = filled]\n  a [label = \"Data\", shape = egg, fillcolor = Lightblue]\n  b [label = \"Data collection\", fillcolor = Orange]\n  c [label = \"Computer\", shape = box]\n  d [label = \"Data analysis\"]\n  e [label = \"Results\"]\n\n  \n  a -> b -> c -> d -> e;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+---
+
+## Data collection (data analytics)
+
+.pull-left[
+
+For data scientists, the problem is not creating the data. Data science is about existing data - not about creating new data through rigorous scientific methods. 
+
+This doesn't mean you should not care about how the data was created in the first place. In fact, as every rigourour research you should!
+
+But, in a data science context, the scope of the *data collection* is different from the scope of *data collection* in a social science research project.
+
+
+]
+
+.pull.right[
+
+
+.center[&lt;img src = 'https://media.giphy.com/media/KzKFAvaM1RBoRU5dcl/giphy.gif'&gt;&lt;/img&gt;]
+
+]
+
+---
+
+## So when data scientists talk about data collection, what do they talk about?
+
+
+1. **Sourcing**: Where is the data store? How big is the data? How is structured? How can I access it (e.g. direct download, database, API)?
+
+.center[↓]
+
+2. **Reading in**: How do I import the data I need into my computer? You can integrally read in the data you need but sometimes you can pre-filter the data at the source with a query (e.g. with a SQL query if you are requesting data from a database or a POST query if you are requesting data from an API...)  
+
+.center[↓]
+
+3. **Cleaning/Preparing**: How do I prepare the data I imported for my analysis? This is about structuring the data, exactly how I need it? &lt;mark&gt;(This is what we'll discuss during the lab today...)&lt;/mark&gt;.
+
+---
+
+## Sourcing and Reading in
+
+Note: Big data for computer scientists `\(\neq\)` Big data for social scientists.
+
+When data is "small" (let's say, it can fit in a spreadsheet or can be shared via email), sourcing and reading in, is generally not a problem. For example, you can simply read your file into memory by pointing your software to that file while specifying the format:
+
+
+```r
+dat &lt;- read.csv(file = "my_file.csv")
+```
+
+But when data is "big" (let's say it won't fit into your memory), you need to deal with sourcing and reading issues. 
+
+Example of big data:
+
+1. The text of all revisions of all pages of en.wikipedia.org;
+
+2. All tweets with the hashtag "#metoo" published since October 2017. 
+
+Simply put, you can't `read(source = "http://en.wikipedia.org")`.
+
+---
+
+## Sourcing and reading in
+
+A detail discussion about sourcing and reading data is out of the scope of this unit. Still, as example, here an example of a common "pipeline" to collect social media data. 
+
+<div id="htmlwidget-ca50bc755cf001959ae8" style="width:100%;height:100px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-ca50bc755cf001959ae8">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n\n  node [shape = oval, style = filled]\n  a [label = \"Query\\nPOST /twitter/api\\n{ query : metoo, since : 20171001 }\", \n  shape = box, fillcolor = Lightblue]\n  b [label = \"API\", fillcolor = Orange, shape = egg]\n  c [label = \"Data\\njson format\"]\n  \n  d [label = \"Read json\", shape = box, fillcolor = Lightblue]\n  \n  e [label = \"Computer\", shape = box]\n\n  \n  a -> b -> c; d -> c; c -> d; d -> e;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+If instead of an API, you have a database you should expect a very similar pipeline.
+
+&lt;/br&gt;
+
+&lt;/br&gt;
+
+.pull-left[
+R offers a large number of tools and packages to deal about all your data sourcing and data reading issues. Yet, we will not cover them in this unit. 
+
+But let's just quickly, talk about APIs...
+]
+
+
+.pull-right[
+.center[&lt;img src = 'https://media.giphy.com/media/y69OrzhaWfE7frw6OI/giphy.gif' width = '55%'&gt;&lt;/img&gt;]
+]
+
+---
+
+## What's an API again?
+
+.center[
+
+&lt;iframe width="560" height="315" src="https://www.youtube.com/embed/s7wmiS2mSXY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen&gt;&lt;/iframe&gt;
+
+]
+
+---
+class: inverse, center, middle
+
+# Lab: Data transformation with dplyr
+
+.center[&lt;img src = 'https://media.giphy.com/media/R9zXHWAHyTjnq/giphy.gif'&gt;&lt;/img&gt;]
+
+
+---
+
+
+## Prerequisites&lt;sup&gt;1&lt;/sup&gt;
+
+We are going to use these two packages:
+
+
+```r
+library(nycflights13)
+library(tidyverse)
+```
+
+Install them with
+
+
+```r
+install.packages(c("nycflights13", "tidyverse"))
+```
+
+nycflights13 includes is a data packages (and includes the data we will use in the examples).
+
+As mentioned last week, tidyverse is not really a package but a collection of packages...
+
+.footnote[[1] Adapted from https://r4ds.had.co.nz/transform.html (Wickham &amp; Grolemund, 2017)]
+
+---
+
+## R's Tidyverse
+
+.center[&lt;img src = 'https://education.rstudio.com/blog/2020/07/teaching-the-tidyverse-in-2020-part-1-getting-started/img/tidyverse-packages.png' width = "95%"&gt;&lt;/img&gt;]
+
+Image from [Mine Çetinkaya-Rundel](https://education.rstudio.com/blog/2020/07/teaching-the-tidyverse-in-2020-part-1-getting-started/)
+
+---
+
+## nycflights13::flights
+
+
+```r
+nycflights13::flights # (or `flights` for short)
+```
+
+```
+## # A tibble: 336,776 × 19
+##     year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
+##  1  2013     1     1      517        515       2     830     819      11 UA     
+##  2  2013     1     1      533        529       4     850     830      20 UA     
+##  3  2013     1     1      542        540       2     923     850      33 AA     
+##  4  2013     1     1      544        545      -1    1004    1022     -18 B6     
+##  5  2013     1     1      554        600      -6     812     837     -25 DL     
+##  6  2013     1     1      554        558      -4     740     728      12 UA     
+##  7  2013     1     1      555        600      -5     913     854      19 B6     
+##  8  2013     1     1      557        600      -3     709     723     -14 EV     
+##  9  2013     1     1      557        600      -3     838     846      -8 B6     
+## 10  2013     1     1      558        600      -2     753     745       8 AA     
+## # … with 336,766 more rows, 9 more variables: flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, and abbreviated variable names
+## #   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay
+```
+
+---
+
+## nycflights13::flights
+
+The object `nycflights13` is not of class `data.frame` but **tibble**. We have already encountered the tibble last week. For our purposes, let's consider a tibble as a data frame (which as a matter of fact is), so a two-dimensional data objects with values ordered in rows and columns.  
+
+In a data frame, each column can be variable of a different class (or type). We have already met a few of these types, here among the most important:
+
+* `int` stands for **integers** (e.g. `c(1, 2, 3, 4)`).
+
+* `dbl` stands for **doubles**, or real numbers:  (e.g. `c(1.5, 2.323132, 3.5445, 4.565)`).
+
+* `chr` stands for **character** vectors, or strings. 
+
+* `lgl` stands for **logical**, vectors that contain only TRUE or FALSE.
+
+* `fctr` stands for **factors**, which R uses to represent *categorical variables* with fixed possible values.
+
+---
+
+## dplyr basics
+
+dplyr is a package for manipulating data frame like objects. 
+
+Today we will use it to learn to 
+
+&gt; * Pick observations by their values with `filter()`.
+&gt;
+&gt; * Reorder the rows with `arrange()`.
+&gt;
+&gt; * Pick variables by their names  with `select()`.
+&gt;
+&gt; * Create new variables with functions of existing variables  with `mutate()`.
+&gt;
+&gt; * Collapse many values down to a single summary  with `summarise()` in combination with `group_by()` (which define the variables to use for the summary).
+
+---
+
+## dplyr basics
+
+
+&gt; All verbs (functions) work similarly:
+&gt;
+&gt; * The first argument is a data frame.
+&gt;
+&gt; * The subsequent arguments describe what to do with the data frame, using the variable names (without quotes).
+&gt;
+&gt; * The result is a new data frame.
+
+So in R...
+
+
+```r
+verb(dataframe, arguments, ...)
+```
+
+or with `filter()`
+
+
+```r
+dplyr::filter(flights, air_time == 100)
+```
+
+---
+
+## Filter rows with filter()
+
+You can filter rows (i.e. records) of your data frame with the function `filter()`.
+
+&gt; The first argument is the name of the data frame. The second and subsequent arguments are the expressions that filter the data frame. For example, we can select all flights on January 1st with:
+
+
+```r
+dplyr::filter(flights, month == 1, day == 1)
+```
+
+```
+## # A tibble: 842 × 19
+##     year month   day dep_time sched_de…¹ dep_d…² arr_t…³ sched…⁴ arr_d…⁵ carrier
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;      &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;   &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;  
+##  1  2013     1     1      517        515       2     830     819      11 UA     
+##  2  2013     1     1      533        529       4     850     830      20 UA     
+##  3  2013     1     1      542        540       2     923     850      33 AA     
+##  4  2013     1     1      544        545      -1    1004    1022     -18 B6     
+##  5  2013     1     1      554        600      -6     812     837     -25 DL     
+##  6  2013     1     1      554        558      -4     740     728      12 UA     
+##  7  2013     1     1      555        600      -5     913     854      19 B6     
+##  8  2013     1     1      557        600      -3     709     723     -14 EV     
+##  9  2013     1     1      557        600      -3     838     846      -8 B6     
+## 10  2013     1     1      558        600      -2     753     745       8 AA     
+## # … with 832 more rows, 9 more variables: flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, and abbreviated variable names
+## #   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay
+```
+
+---
+
+## Filter rows with filter()
+
+Remember that R won't automagically store the resulting, new data frame everywhere. If you don't specify it, your outcome will be lost, as tears in the rain.
+
+.center[
+&lt;img src ='https://media.giphy.com/media/7aFDGPdxGLuEg/giphy.gif'&gt;&lt;/img&gt;
+]
+
+To save your results, do
+
+
+```r
+jan1 &lt;- dplyr::filter(flights, month == 1, day == 1)
+```
+
+---
+
+## Comparisons
+
+&gt; To use filtering effectively, you have to know how to select the observations that you want using the comparison operators. R provides the standard suite: `&gt;`, `&gt;=`, `&lt;`, `&lt;=`, `!=` (not equal), and `==` (equal).
+
+&gt; When you’re starting out with R, the easiest mistake to make is to use = instead of == when testing for equality. When this happens you’ll get an informative error.
+
+
+```r
+dplyr::filter(flights, month = 1)
+```
+
+---
+
+## Logical operators
+
+You can combine multiple logical comparison in your statement with the following operators:
+
+* `&amp;` is “and”, 
+
+* `|` is “or”, and 
+
+* `!` is “not”.
+
+The code
+
+
+```r
+dplyr::filter(flights, month == 11 &amp; year == 2013)
+```
+
+will filter records where month is `11` but also where year is `2013`. We will come back to logical operators next week.
+
+
+---
+
+## Select columns with select()
+
+If you want to simplify your data frame by keeping only some of the columns (this is useful if your data frame contains many columns).
+
+
+```r
+dplyr::select(flights, year, month, day)
+```
+
+```
+## # A tibble: 336,776 × 3
+##     year month   day
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1  2013     1     1
+##  2  2013     1     1
+##  3  2013     1     1
+##  4  2013     1     1
+##  5  2013     1     1
+##  6  2013     1     1
+##  7  2013     1     1
+##  8  2013     1     1
+##  9  2013     1     1
+## 10  2013     1     1
+## # … with 336,766 more rows
+```
+
+---
+
+## Create new variables with mutate()
+
+The function `mutate()` will add a new column at the end of your data frame (on the right...). Of course, it is not enough to only name the new column. You also need to specify the content of the new variable.
+
+The most common scenario is to use `mutate()` to transform an existing variable or to operate on two (or more) variables to create a new one. For example, 
+
+
+```r
+dplyr::mutate(flights,
+  gain = dep_delay - arr_delay,
+  speed = distance / air_time * 60
+)
+```
+
+creates two new columns `gain` and `speed`. For example, `gain` is the result of the *row-wise* subtraction of the value `arr_delay` from the value `dep_delay` (again, for each record). So,
+
+.center[
+`\(gain_i = dep\_delay_i - arr\_delay_i\)`
+]
+
+where `\(i\)` is one of the number of rows. 
+
+
+---
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; dep_delay &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; arr_delay &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; gain &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; distance &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; air_time &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; speed &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1400 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 227 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 370.0441 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1416 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 227 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 374.2731 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 33 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -31 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1089 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 160 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 408.3750 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1576 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 183 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 516.7213 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 762 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 116 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 394.1379 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 719 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 287.6000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1065 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 158 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 404.4304 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 229 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 53 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 259.2453 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 944 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 140 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 404.5714 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 733 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 138 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 318.6957 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+
+## The pipe (%&gt;%) operator
+
+But now let's introduce the pipe operator...
+
+.center[&lt;img src = 'https://magrittr.tidyverse.org/logo.png' width = '10%'&gt;&lt;/img&gt;]
+
+The pipe operator, which you type with a (per cent sign) `%` + `&gt;` + `%`, *chains* function together so that the value returned from the function *on the left* of the `%&gt;%` flows as first argument into the function *on the right* of the `%&gt;%`.
+
+<div id="htmlwidget-07fabc6acc2c0d99bcf1" style="width:100%;height:100px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-07fabc6acc2c0d99bcf1">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n  \n  # node definitions with substituted label text\n  node [shape = box, style = filled]\n  a [label = \"data\"]\n  b [label = \"%>%\", shape = oval, fillcolor = Lightblue]\n  c [label = \"fun()\", fillcolor = Orange]\n  d [label = \"%>%\", shape = oval, fillcolor = Lightblue]\n  e [label = \"fun()\", fillcolor = Orange]\n  f [label = \"%>%\", shape = oval, fillcolor = Lightblue]\n  g [label = \"fun()\", fillcolor = Orange]\n\n  \n  a -> b -> c -> d -> e -> f -> g;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+And in R...
+
+
+```r
+flights %&gt;% filter(air_time &lt; 100) %&gt;% mutate(new = 1)
+```
+
+---
+
+## The pipe (%&gt;%) operator
+
+The pipe operator doesn't add new functions to your toolbox. But it drastically improves and simplifies how you can write your code. 
+
+Also, with `%&gt;%` you don't need to store your results in temporary/intermediary variables. Instead, you define your transformations and you store the results from the entire pipeline of transforming functions.
+
+
+```r
+my_new_dataframe &lt;- 
+* flights %&gt;% # Source of data
+* filter(air_time &lt; 100) %&gt;% # First transformation
+* mutate(new = 1) # Second transformation
+```
+
+Note that you can improve the readability of your code using a new line for each command separated chained with a `%&gt;%`. In this code, after three steps, the results will be stored in the object `my_new_dataframe`.
+
+Also, note that `filter(air_time &lt; 100)` and the other verbs do not specify a data frame (which must be the first argument of `filter()` and `mutate()`) because the data is piped in, top-down, with `%&gt;%`.
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
