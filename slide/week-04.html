@@ -129,13 +129,13 @@ In data analytics, data collection generally has a slighlty different meaning. *
 
 ### Data collection in research design
 
-<div id="htmlwidget-0a682a0f903c2235e2f9" style="width:100%;height:100px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0a682a0f903c2235e2f9">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n  \n  # node definitions with substituted label text\n  node [shape = oval, style = filled]\n  a [label = \"Data collection\", fillcolor = Orange]\n  b [label = \"Data\", shape = egg, fillcolor = Lightblue]\n  c [label = \"Data analysis\"]\n  d [label = \"Results\"]\n\n  \n  a -> b -> c -> d;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-852d26a0ba215a940c75" style="width:100%;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-852d26a0ba215a940c75">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n  \n  # node definitions with substituted label text\n  node [shape = oval, style = filled]\n  a [label = \"Data collection\", fillcolor = Orange]\n  b [label = \"Data\", shape = egg, fillcolor = Lightblue]\n  c [label = \"Data analysis\"]\n  d [label = \"Results\"]\n\n  \n  a -> b -> c -> d;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 ### Data collection in data analytics 
 
-<div id="htmlwidget-5c3198cf75b1095ebd03" style="width:100%;height:100px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5c3198cf75b1095ebd03">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n  \n  # node definitions with substituted label text\n  node [shape = oval, style = filled]\n  a [label = \"Data\", shape = egg, fillcolor = Lightblue]\n  b [label = \"Data collection\", fillcolor = Orange]\n  c [label = \"Computer\", shape = box]\n  d [label = \"Data analysis\"]\n  e [label = \"Results\"]\n\n  \n  a -> b -> c -> d -> e;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-cf9f3879a9603ee761cf" style="width:100%;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cf9f3879a9603ee761cf">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n  \n  # node definitions with substituted label text\n  node [shape = oval, style = filled]\n  a [label = \"Data\", shape = egg, fillcolor = Lightblue]\n  b [label = \"Data collection\", fillcolor = Orange]\n  c [label = \"Computer\", shape = box]\n  d [label = \"Data analysis\"]\n  e [label = \"Results\"]\n\n  \n  a -> b -> c -> d -> e;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 ---
 
@@ -203,8 +203,8 @@ Simply put, you can't `read(source = "http://en.wikipedia.org")`.
 
 A detail discussion about sourcing and reading data is out of the scope of this unit. Still, as example, here an example of a common "pipeline" to collect social media data. 
 
-<div id="htmlwidget-c039fc18c9a4e903cadc" style="width:100%;height:100px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c039fc18c9a4e903cadc">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n\n  node [shape = oval, style = filled]\n  a [label = \"Query\\nPOST /twitter/api\\n{ query : metoo, since : 20171001 }\", \n  shape = box, fillcolor = Lightblue]\n  b [label = \"API\", fillcolor = Orange, shape = egg]\n  c [label = \"Data\\njson format\"]\n  \n  d [label = \"Read json\", shape = box, fillcolor = Lightblue]\n  \n  e [label = \"Computer\", shape = box]\n\n  \n  a -> b -> c; d -> c; c -> d; d -> e;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d0378cd5cd619eeb007d" style="width:100%;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d0378cd5cd619eeb007d">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n\n  node [shape = oval, style = filled]\n  a [label = \"Query\\nPOST /twitter/api\\n{ query : metoo, since : 20171001 }\", \n  shape = box, fillcolor = Lightblue]\n  b [label = \"API\", fillcolor = Orange, shape = egg]\n  c [label = \"Data\\njson format\"]\n  \n  d [label = \"Read json\", shape = box, fillcolor = Lightblue]\n  \n  e [label = \"Computer\", shape = box]\n\n  \n  a -> b -> c; d -> c; c -> d; d -> e;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 If instead of an API, you have a database you should expect a very similar pipeline.
 
@@ -714,29 +714,29 @@ nrow(us_population_by_county)
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Routt County &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Moore County &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Texas &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21904 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Lawrence County &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ohio &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 62450 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Otero County &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Colorado &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 23509 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18831 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Harrison County &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Mississippi &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 187105 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Allen Parish &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Louisiana &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25764 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Houston County &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Alabama &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 101547 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Spartanburg County &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; South Carolina &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 284307 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; White Pine County &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Nevada &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 10030 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Johnston County &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; North Carolina &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 168878 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -762,6 +762,38 @@ dplyr::summarise(us_population_by_state,
 
 What we replace `...` with to get the `sum()` of the population for each **state**?
 
+---
+
+## Grouped summaries of factors with count() and group_by()
+
+Let's say that you have a non-numeric variable (character or factor). How can you summarise it? You can use `count()` on your grouped data frame. 
+
+
+```r
+us_population_by_state &lt;- 
+  dplyr::group_by(us_population_by_county, state)
+
+dplyr::count(us_population_by_state)
+```
+
+```
+## # A tibble: 51 × 2
+## # Groups:   state [51]
+##    state                       n
+##    &lt;chr&gt;                   &lt;int&gt;
+##  1 " Alabama"                 67
+##  2 " Alaska"                  29
+##  3 " Arizona"                 15
+##  4 " Arkansas"                75
+##  5 " California"              58
+##  6 " Colorado"                64
+##  7 " Connecticut"              8
+##  8 " Delaware"                 3
+##  9 " District of Columbia"     1
+## 10 " Florida"                 67
+## # … with 41 more rows
+## # ℹ Use `print(n = ...)` to see more rows
+```
 
 ---
 
@@ -773,8 +805,8 @@ But now let's introduce the pipe operator...
 
 The pipe operator, which you type with a (per cent sign) `%` + `&gt;` + `%`, *chains* function together so that the value returned from the function *on the left* of the `%&gt;%` flows as first argument into the function *on the right* of the `%&gt;%`.
 
-<div id="htmlwidget-7107d131725a80450b4c" style="width:100%;height:100px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7107d131725a80450b4c">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n  \n  # node definitions with substituted label text\n  node [shape = box, style = filled]\n  a [label = \"data\"]\n  b [label = \"%>%\", shape = oval, fillcolor = Lightblue]\n  c [label = \"fun()\", fillcolor = Orange]\n  d [label = \"%>%\", shape = oval, fillcolor = Lightblue]\n  e [label = \"fun()\", fillcolor = Orange]\n  f [label = \"%>%\", shape = oval, fillcolor = Lightblue]\n  g [label = \"fun()\", fillcolor = Orange]\n\n  \n  a -> b -> c -> d -> e -> f -> g;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4595a6ddf4cb3299f323" style="width:100%;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4595a6ddf4cb3299f323">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n  \n  # node definitions with substituted label text\n  node [shape = box, style = filled]\n  a [label = \"data\"]\n  b [label = \"%>%\", shape = oval, fillcolor = Lightblue]\n  c [label = \"fun()\", fillcolor = Orange]\n  d [label = \"%>%\", shape = oval, fillcolor = Lightblue]\n  e [label = \"fun()\", fillcolor = Orange]\n  f [label = \"%>%\", shape = oval, fillcolor = Lightblue]\n  g [label = \"fun()\", fillcolor = Orange]\n\n  \n  a -> b -> c -> d -> e -> f -> g;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 And in R...
 
@@ -850,7 +882,7 @@ us_population_by_county %&gt;%
   theme(axis.text.x = element_text(angle = 45))
 ```
 
-&lt;img src="week-04_files/figure-html/unnamed-chunk-30-1.svg" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="week-04_files/figure-html/unnamed-chunk-31-1.svg" width="100%" style="display: block; margin: auto;" /&gt;
 
 .footnote[`theme(axis.text.x = element_text(angle = 45))` rotate the text of the axis X label by 45 degrees]
 

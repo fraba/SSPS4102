@@ -608,6 +608,20 @@ dplyr::summarise(us_population_by_state,
 
 What we replace `...` with to get the `sum()` of the population for each **state**?
 
+---
+
+## Grouped summaries of factors with count() and group_by()
+
+Let's say that you have a non-numeric variable (character or factor). How can you summarise it? You can use `count()` on your grouped data frame. 
+
+```{r}
+
+us_population_by_state <- 
+  dplyr::group_by(us_population_by_county, state)
+
+dplyr::count(us_population_by_state)
+
+```
 
 ---
 
