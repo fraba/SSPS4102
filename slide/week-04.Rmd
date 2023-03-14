@@ -491,7 +491,7 @@ dplyr::mutate(flights,
 )
 ```
 
-creates two new columns `gain` and `speed`. For example, `gain` is the result of the *row-wise* subtraction of the value `arr_delay` from the value `dep_delay` (again, for each record). So,
+creates two new columns `gain` and `speed`. For example, `gain` is the result of the subtraction of the value `arr_delay` from the value `dep_delay` (again, for each record). So,
 
 .center[
 $gain_i = dep\_delay_i - arr\_delay_i$
@@ -502,6 +502,15 @@ where $i$ is one of the number of rows.
 
 ---
 
+## Create new variables with mutate()
+
+```{r eval = F}
+dplyr::mutate(flights,
+  gain = dep_delay - arr_delay, #<<
+  speed = distance / air_time * 60) #<<
+```
+
+
 ```{r echo = F}
 dplyr::mutate(flights,
   gain = dep_delay - arr_delay,
@@ -510,8 +519,94 @@ dplyr::mutate(flights,
   dplyr::select(dep_delay, arr_delay, gain, distance, air_time, speed) %>%
   dplyr::slice(1:10) %>%
   knitr::kable() %>%
-  kableExtra::
+  column_spec(c(1:2,4:5), background = "lightblue") %>%
+  column_spec(c(3,6), background = "orange") %>%
+   row_spec(4, bold = T, color = "white", background = "#D7261E")
+  
 ```
+
+
+---
+
+## Grouped summaries with summarise()
+
+The verb `summarise()` "collapses a data frame to a single row".
+
+```{r}
+dplyr::summarise(flights, delay = mean(dep_delay, na.rm = TRUE))
+```
+
+Great, it doesn't look that `dplyr::summarise()` does much than simply `mean(flights$dep_delay, na.rm = TRUE)`... 
+
+Indeed! `dplyr::summarise()` is only useful after `group_by()`!
+
+.footnote[Note: We already introduced the function `mean()`, which as expected returned the mean of a vector of numbers. Here `mean()` takes an additional argument `na.rm = TRUE`. It simply tells the function to disregard all the missing values (`NA`) while computing the mean. By default, `mean` will do `na.rm = FALSE)` - and with this setting, the presence of a single `NA` in your vector will force `mean()` to return `NA`. ]
+
+---
+
+## Grouped summaries with summarise() and group_by()
+
+> [`group_by()`] changes the unit of analysis from the complete dataset to individual groups. Then, when you use the dplyr verbs on a grouped data frame they’ll be automatically applied “by group”. For example, if we applied exactly the same code to a data frame grouped by `year, month and day`, we get the average delay per date:
+
+```{r}
+by_day <- dplyr::group_by(flights, 
+                          year, month, day) #<<
+```
+
+And then...
+
+.pull-left[
+```{r eval = F}
+summarise(
+  by_day, 
+  delay = mean(dep_delay, 
+               na.rm = TRUE))
+```
+]
+
+.pull-right[
+```{r echo = F}
+dplyr::summarise(by_day, delay = mean(dep_delay, na.rm = TRUE))
+```
+
+]
+
+---
+
+## Grouped summaries with summarise() and group_by()
+
+Let's take another example:
+
+```{r}
+us_population_by_county <- 
+  read.csv("https://raw.githubusercontent.com/fraba/SSPS4102/master/data/US-pop-by-county.csv")
+nrow(us_population_by_county)
+```
+
+```{r echo = F}
+us_population_by_county %>%
+  dplyr::sample_n(5) %>%
+  knitr::kable()
+```
+
+---
+
+## Grouped summaries with summarise() and group_by()
+
+```{r}
+us_population_by_state <- 
+  dplyr::group_by(us_population_by_county, 
+           state) #<<
+```
+
+and then,
+
+```{r eval = F}
+dplyr::summarise(us_population_by_state, 
+                 sum(...)) #<<
+```
+
+What we replace `...` with to get the `sum()` of the population for each **state**?
 
 
 ---
@@ -577,4 +672,65 @@ Note that you can improve the readability of your code using a new line for each
 
 Also, note that `filter(air_time < 100)` and the other verbs do not specify a data frame (which must be the first argument of `filter()` and `mutate()`) because the data is piped in, top-down, with `%>%`.
 
+---
+
+## Piping all together with %>%: Example 1
+
+```{r}
+us_population_by_county %>%
+  dplyr::group_by(state) %>%
+  dplyr::summarise(tot_pop = sum(population / 1000000),
+                   mean_pop = mean(population / 1000000))
+```
+
+What is `mean_pop`?
+
+---
+
+## Piping all together with %>%: Example 2
+
+```{r fig.width=12, out.width = "100%"}
+us_population_by_county %>%
+  dplyr::group_by(state) %>%
+  dplyr::summarise(tot_pop = sum(population / 1000000),
+                   mean_pop = mean(population / 1000000)) %>%
+  ggplot(aes(x = state, y = tot_pop)) +
+  geom_col() + 
+  theme(axis.text.x = element_text(angle = 45))
+```
+
+.footnote[`theme(axis.text.x = element_text(angle = 45))` rotate the text of the axis X label by 45 degrees]
+
+---
+
+## Finally, the rowwise operator!
+
+Sometimes a function will need to operate *row-wise*. In other words, you can't pass it two vectors - as it can only work with one! 
+
+For example, the function `mean()` expect a vector of numbers: `mean( c(1, 5, 10) )`. But what if I want to compute, for each record, the mean of values in 2+ columns and store it in a new column? 
+
+For example, the data frame `flights` has a variable for `dep_delay` and a variable for `arr_delay`. What if I want for each flight the mean delay? So for each row $i$:  
+
+$$\frac{dep\_delay_i+arr\_delay_i}{2}$$
+---
+
+## Finally, the rowwise operator!
+
+```{r eval = F}
+flights %>% 
+  dplyr::rowwise() %>% #<<
+  dplyr::mutate(mean_delay = mean(c(dep_delay, arr_delay)))
+```
+
+```{r echo = F}
+
+flights %>% 
+  dplyr::slice(1:5) %>%
+  dplyr::rowwise() %>% #<<
+  dplyr::mutate(mean_delay = mean(c(dep_delay, arr_delay))) %>%
+  dplyr::select(dep_delay, arr_delay, mean_delay) %>%
+  knitr::kable() %>%
+  column_spec(1:2, background = "lightblue") %>%
+  column_spec(3, background = "orange")
+```
 

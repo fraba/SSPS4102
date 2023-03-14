@@ -11,6 +11,8 @@
     <script src="libs/viz/viz.js"></script>
     <link href="libs/DiagrammeR-styles/styles.css" rel="stylesheet" />
     <script src="libs/grViz-binding/grViz.js"></script>
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
   </head>
   <body>
     <textarea id="source">
@@ -29,7 +31,7 @@ class: center, middle, inverse, title-slide
 ### The University of Sydney
 ]
 .date[
-### Semester 1, 2023 (updated: 2023-03-14)
+### Semester 1, 2023 (updated: 2023-03-15)
 ]
 
 ---
@@ -127,13 +129,13 @@ In data analytics, data collection generally has a slighlty different meaning. *
 
 ### Data collection in research design
 
-<div id="htmlwidget-8af8063faad7b33cfdab" style="width:100%;height:100px;" class="grViz html-widget "></div>
-<script type="application/json" data-for="htmlwidget-8af8063faad7b33cfdab">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n  \n  # node definitions with substituted label text\n  node [shape = oval, style = filled]\n  a [label = \"Data collection\", fillcolor = Orange]\n  b [label = \"Data\", shape = egg, fillcolor = Lightblue]\n  c [label = \"Data analysis\"]\n  d [label = \"Results\"]\n\n  \n  a -> b -> c -> d;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0a682a0f903c2235e2f9" style="width:100%;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0a682a0f903c2235e2f9">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n  \n  # node definitions with substituted label text\n  node [shape = oval, style = filled]\n  a [label = \"Data collection\", fillcolor = Orange]\n  b [label = \"Data\", shape = egg, fillcolor = Lightblue]\n  c [label = \"Data analysis\"]\n  d [label = \"Results\"]\n\n  \n  a -> b -> c -> d;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 ### Data collection in data analytics 
 
-<div id="htmlwidget-2185f54cdef5d427e0a7" style="width:100%;height:100px;" class="grViz html-widget "></div>
-<script type="application/json" data-for="htmlwidget-2185f54cdef5d427e0a7">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n  \n  # node definitions with substituted label text\n  node [shape = oval, style = filled]\n  a [label = \"Data\", shape = egg, fillcolor = Lightblue]\n  b [label = \"Data collection\", fillcolor = Orange]\n  c [label = \"Computer\", shape = box]\n  d [label = \"Data analysis\"]\n  e [label = \"Results\"]\n\n  \n  a -> b -> c -> d -> e;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5c3198cf75b1095ebd03" style="width:100%;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5c3198cf75b1095ebd03">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n  \n  # node definitions with substituted label text\n  node [shape = oval, style = filled]\n  a [label = \"Data\", shape = egg, fillcolor = Lightblue]\n  b [label = \"Data collection\", fillcolor = Orange]\n  c [label = \"Computer\", shape = box]\n  d [label = \"Data analysis\"]\n  e [label = \"Results\"]\n\n  \n  a -> b -> c -> d -> e;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 ---
 
@@ -201,8 +203,8 @@ Simply put, you can't `read(source = "http://en.wikipedia.org")`.
 
 A detail discussion about sourcing and reading data is out of the scope of this unit. Still, as example, here an example of a common "pipeline" to collect social media data. 
 
-<div id="htmlwidget-ca50bc755cf001959ae8" style="width:100%;height:100px;" class="grViz html-widget "></div>
-<script type="application/json" data-for="htmlwidget-ca50bc755cf001959ae8">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n\n  node [shape = oval, style = filled]\n  a [label = \"Query\\nPOST /twitter/api\\n{ query : metoo, since : 20171001 }\", \n  shape = box, fillcolor = Lightblue]\n  b [label = \"API\", fillcolor = Orange, shape = egg]\n  c [label = \"Data\\njson format\"]\n  \n  d [label = \"Read json\", shape = box, fillcolor = Lightblue]\n  \n  e [label = \"Computer\", shape = box]\n\n  \n  a -> b -> c; d -> c; c -> d; d -> e;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c039fc18c9a4e903cadc" style="width:100%;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c039fc18c9a4e903cadc">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n\n  node [shape = oval, style = filled]\n  a [label = \"Query\\nPOST /twitter/api\\n{ query : metoo, since : 20171001 }\", \n  shape = box, fillcolor = Lightblue]\n  b [label = \"API\", fillcolor = Orange, shape = egg]\n  c [label = \"Data\\njson format\"]\n  \n  d [label = \"Read json\", shape = box, fillcolor = Lightblue]\n  \n  e [label = \"Computer\", shape = box]\n\n  \n  a -> b -> c; d -> c; c -> d; d -> e;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 If instead of an API, you have a database you should expect a very similar pipeline.
 
@@ -300,6 +302,7 @@ nycflights13::flights # (or `flights` for short)
 ## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
 ## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, and abbreviated variable names
 ## #   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay
+## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 ```
 
 ---
@@ -396,6 +399,7 @@ dplyr::filter(flights, month == 1, day == 1)
 ## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
 ## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, and abbreviated variable names
 ## #   ¹​sched_dep_time, ²​dep_delay, ³​arr_time, ⁴​sched_arr_time, ⁵​arr_delay
+## # ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 ```
 
 ---
@@ -476,6 +480,7 @@ dplyr::select(flights, year, month, day)
 ##  9  2013     1     1
 ## 10  2013     1     1
 ## # … with 336,766 more rows
+## # ℹ Use `print(n = ...)` to see more rows
 ```
 
 ---
@@ -494,7 +499,7 @@ dplyr::mutate(flights,
 )
 ```
 
-creates two new columns `gain` and `speed`. For example, `gain` is the result of the *row-wise* subtraction of the value `arr_delay` from the value `dep_delay` (again, for each record). So,
+creates two new columns `gain` and `speed`. For example, `gain` is the result of the subtraction of the value `arr_delay` from the value `dep_delay` (again, for each record). So,
 
 .center[
 `\(gain_i = dep\_delay_i - arr\_delay_i\)`
@@ -504,6 +509,16 @@ where `\(i\)` is one of the number of rows.
 
 
 ---
+
+## Create new variables with mutate()
+
+
+```r
+dplyr::mutate(flights,
+* gain = dep_delay - arr_delay,
+* speed = distance / air_time * 60)
+```
+
 
 &lt;table&gt;
  &lt;thead&gt;
@@ -518,87 +533,234 @@ where `\(i\)` is one of the number of rows.
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1400 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 227 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 370.0441 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; -9 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 1400 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 227 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; 370.0441 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -16 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1416 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 227 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 374.2731 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; -16 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 1416 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 227 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; 374.2731 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 33 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -31 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1089 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 160 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 408.3750 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 33 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; -31 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 1089 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 160 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; 408.3750 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; -1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -18 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 17 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1576 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 183 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 516.7213 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;font-weight: bold;color: white !important;background-color: #D7261E !important;"&gt; -1 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;font-weight: bold;color: white !important;background-color: #D7261E !important;"&gt; -18 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;font-weight: bold;color: white !important;background-color: #D7261E !important;"&gt; 17 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;font-weight: bold;color: white !important;background-color: #D7261E !important;"&gt; 1576 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;font-weight: bold;color: white !important;background-color: #D7261E !important;"&gt; 183 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;font-weight: bold;color: white !important;background-color: #D7261E !important;"&gt; 516.7213 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; -6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -25 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 19 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 762 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 116 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 394.1379 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; -6 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; -25 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; 19 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 762 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 116 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; 394.1379 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; -4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -16 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 719 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 150 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 287.6000 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; -4 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; -16 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 719 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; 287.6000 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; -5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 19 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -24 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1065 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 158 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 404.4304 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; -5 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 19 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; -24 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 1065 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 158 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; 404.4304 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; -3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -14 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 229 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 53 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 259.2453 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; -3 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; -14 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 229 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 53 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; 259.2453 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; -3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 944 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 140 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 404.5714 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; -3 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; -8 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 944 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 140 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; 404.5714 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; -2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -10 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 733 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 138 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 318.6957 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; -2 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; -10 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 733 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 138 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; 318.6957 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+
+
+---
+
+## Grouped summaries with summarise()
+
+The verb `summarise()` "collapses a data frame to a single row".
+
+
+```r
+dplyr::summarise(flights, delay = mean(dep_delay, na.rm = TRUE))
+```
+
+```
+## # A tibble: 1 × 1
+##   delay
+##   &lt;dbl&gt;
+## 1  12.6
+```
+
+Great, it doesn't look that `dplyr::summarise()` does much than simply `mean(flights$dep_delay, na.rm = TRUE)`... 
+
+Indeed! `dplyr::summarise()` is only useful after `group_by()`!
+
+.footnote[Note: We already introduced the function `mean()`, which as expected returned the mean of a vector of numbers. Here `mean()` takes an additional argument `na.rm = TRUE`. It simply tells the function to disregard all the missing values (`NA`) while computing the mean. By default, `mean` will do `na.rm = FALSE)` - and with this setting, the presence of a single `NA` in your vector will force `mean()` to return `NA`. ]
+
+---
+
+## Grouped summaries with summarise() and group_by()
+
+&gt; [`group_by()`] changes the unit of analysis from the complete dataset to individual groups. Then, when you use the dplyr verbs on a grouped data frame they’ll be automatically applied “by group”. For example, if we applied exactly the same code to a data frame grouped by `year, month and day`, we get the average delay per date:
+
+
+```r
+by_day &lt;- dplyr::group_by(flights, 
+*                         year, month, day)
+```
+
+And then...
+
+.pull-left[
+
+```r
+summarise(
+  by_day, 
+  delay = mean(dep_delay, 
+               na.rm = TRUE))
+```
+]
+
+.pull-right[
+
+```
+## # A tibble: 365 × 4
+## # Groups:   year, month [12]
+##     year month   day delay
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+##  1  2013     1     1 11.5 
+##  2  2013     1     2 13.9 
+##  3  2013     1     3 11.0 
+##  4  2013     1     4  8.95
+##  5  2013     1     5  5.73
+##  6  2013     1     6  7.15
+##  7  2013     1     7  5.42
+##  8  2013     1     8  2.55
+##  9  2013     1     9  2.28
+## 10  2013     1    10  2.84
+## # … with 355 more rows
+## # ℹ Use `print(n = ...)` to see more rows
+```
+
+]
+
+---
+
+## Grouped summaries with summarise() and group_by()
+
+Let's take another example:
+
+
+```r
+us_population_by_county &lt;- 
+  read.csv("https://raw.githubusercontent.com/fraba/SSPS4102/master/data/US-pop-by-county.csv")
+nrow(us_population_by_county)
+```
+
+```
+## [1] 3142
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; county &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; state &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; population &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Routt County &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Colorado &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 23509 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Harrison County &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mississippi &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 187105 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Houston County &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Alabama &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 101547 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Spartanburg County &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; South Carolina &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 284307 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; White Pine County &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Nevada &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10030 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+## Grouped summaries with summarise() and group_by()
+
+
+```r
+us_population_by_state &lt;- 
+  dplyr::group_by(us_population_by_county, 
+*          state)
+```
+
+and then,
+
+
+```r
+dplyr::summarise(us_population_by_state, 
+*                sum(...))
+```
+
+What we replace `...` with to get the `sum()` of the population for each **state**?
 
 
 ---
@@ -611,8 +773,8 @@ But now let's introduce the pipe operator...
 
 The pipe operator, which you type with a (per cent sign) `%` + `&gt;` + `%`, *chains* function together so that the value returned from the function *on the left* of the `%&gt;%` flows as first argument into the function *on the right* of the `%&gt;%`.
 
-<div id="htmlwidget-07fabc6acc2c0d99bcf1" style="width:100%;height:100px;" class="grViz html-widget "></div>
-<script type="application/json" data-for="htmlwidget-07fabc6acc2c0d99bcf1">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n  \n  # node definitions with substituted label text\n  node [shape = box, style = filled]\n  a [label = \"data\"]\n  b [label = \"%>%\", shape = oval, fillcolor = Lightblue]\n  c [label = \"fun()\", fillcolor = Orange]\n  d [label = \"%>%\", shape = oval, fillcolor = Lightblue]\n  e [label = \"fun()\", fillcolor = Orange]\n  f [label = \"%>%\", shape = oval, fillcolor = Lightblue]\n  g [label = \"fun()\", fillcolor = Orange]\n\n  \n  a -> b -> c -> d -> e -> f -> g;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7107d131725a80450b4c" style="width:100%;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7107d131725a80450b4c">{"x":{"diagram":"\n  digraph graph2 {\n  \n  graph [layout = dot, rankdir = LR]\n  \n  # node definitions with substituted label text\n  node [shape = box, style = filled]\n  a [label = \"data\"]\n  b [label = \"%>%\", shape = oval, fillcolor = Lightblue]\n  c [label = \"fun()\", fillcolor = Orange]\n  d [label = \"%>%\", shape = oval, fillcolor = Lightblue]\n  e [label = \"fun()\", fillcolor = Orange]\n  f [label = \"%>%\", shape = oval, fillcolor = Lightblue]\n  g [label = \"fun()\", fillcolor = Orange]\n\n  \n  a -> b -> c -> d -> e -> f -> g;\n  }\n  ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 And in R...
 
@@ -641,6 +803,115 @@ Note that you can improve the readability of your code using a new line for each
 
 Also, note that `filter(air_time &lt; 100)` and the other verbs do not specify a data frame (which must be the first argument of `filter()` and `mutate()`) because the data is piped in, top-down, with `%&gt;%`.
 
+---
+
+## Piping all together with %&gt;%: Example 1
+
+
+```r
+us_population_by_county %&gt;%
+  dplyr::group_by(state) %&gt;%
+  dplyr::summarise(tot_pop = sum(population / 1000000),
+                   mean_pop = mean(population / 1000000))
+```
+
+```
+## # A tibble: 51 × 3
+##    state                   tot_pop mean_pop
+##    &lt;chr&gt;                     &lt;dbl&gt;    &lt;dbl&gt;
+##  1 " Alabama"                4.78    0.0713
+##  2 " Alaska"                 0.710   0.0245
+##  3 " Arizona"                6.39    0.426 
+##  4 " Arkansas"               2.92    0.0389
+##  5 " California"            37.3     0.642 
+##  6 " Colorado"               5.03    0.0786
+##  7 " Connecticut"            3.57    0.447 
+##  8 " Delaware"               0.898   0.299 
+##  9 " District of Columbia"   0.602   0.602 
+## 10 " Florida"               18.8     0.281 
+## # … with 41 more rows
+## # ℹ Use `print(n = ...)` to see more rows
+```
+
+What is `mean_pop`?
+
+---
+
+## Piping all together with %&gt;%: Example 2
+
+
+```r
+us_population_by_county %&gt;%
+  dplyr::group_by(state) %&gt;%
+  dplyr::summarise(tot_pop = sum(population / 1000000),
+                   mean_pop = mean(population / 1000000)) %&gt;%
+  ggplot(aes(x = state, y = tot_pop)) +
+  geom_col() + 
+  theme(axis.text.x = element_text(angle = 45))
+```
+
+&lt;img src="week-04_files/figure-html/unnamed-chunk-30-1.svg" width="100%" style="display: block; margin: auto;" /&gt;
+
+.footnote[`theme(axis.text.x = element_text(angle = 45))` rotate the text of the axis X label by 45 degrees]
+
+---
+
+## Finally, the rowwise operator!
+
+Sometimes a function will need to operate *row-wise*. In other words, you can't pass it two vectors - as it can only work with one! 
+
+For example, the function `mean()` expect a vector of numbers: `mean( c(1, 5, 10) )`. But what if I want to compute, for each record, the mean of values in 2+ columns and store it in a new column? 
+
+For example, the data frame `flights` has a variable for `dep_delay` and a variable for `arr_delay`. What if I want for each flight the mean delay? So for each row `\(i\)`:  
+
+`$$\frac{dep\_delay_i+arr\_delay_i}{2}$$`
+---
+
+## Finally, the rowwise operator!
+
+
+```r
+flights %&gt;% 
+* dplyr::rowwise() %&gt;%
+  dplyr::mutate(mean_delay = mean(c(dep_delay, arr_delay)))
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; dep_delay &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; arr_delay &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; mean_delay &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; 6.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; 12.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; 33 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; 17.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; -1 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; -18 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; -9.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; -6 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: lightblue !important;"&gt; -25 &lt;/td&gt;
+   &lt;td style="text-align:right;background-color: orange !important;"&gt; -15.5 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
