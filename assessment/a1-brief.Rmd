@@ -116,13 +116,3 @@ For this assignment your are expected to submit:
     2.3. **Your .Rproj file**.
     
 **Length**: 1500wd (as measured in the R Markdown document)
-
-## Files
-
-* **Data file** [r7_merged_data_34ctry.release.sav](r7_merged_data_34ctry.release.sav)
-
-* **Codebook** [r7_merged.codebook_final_14dec20-1.pdf](r7_merged.codebook_final_14dec20-1.pdf)
-
-* **R Markdown template (source)** [a1-template.Rmd](a1-template.Rmd)
-
-* **R Markdown template (rendered)** [a1-template.pdf](a1-template.pdf)
