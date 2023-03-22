@@ -89,8 +89,3 @@ For this assignment your are expected to submit:
 - [Terrorism Events Data: An Inventory of Databases and Data Sets, 1968-2017](http://www.terrorismanalysts.com/pt/index.php/pot/article/view/622/html)
 - [Quantitative Social Science Data](https://f.briatte.org/teaching/quanti/data/)
 
-## Files 
-
-* **R Markdown template (source)** [a1-template.Rmd](a3-template.Rmd)
-
-* **R Markdown template (rendered)** [a1-template.pdf](a3-template.pdf)
