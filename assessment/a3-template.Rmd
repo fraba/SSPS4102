@@ -1,5 +1,5 @@
 ---
-title: "[SSPS4102 A1 template: Replace with a meaningful title]"
+title: "[SSPS4102 A3 template: Replace with a meaningful title]"
 author: "[STUDENT NAME: Replace with your name]"
 output:
   bookdown::pdf_document2: default
