@@ -1,0 +1,249 @@
+---
+title: "SSPS4102</br>Data Analytics in the Social Sciences"
+subtitle: "Week 06</br>Creating indices in R</br>(by averaging and PCA)"
+author: "Francesco Bailo"
+institute: "The University of Sydney"
+date: "Semester 1, 2023 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+background-image: url(https://upload.wikimedia.org/wikipedia/en/6/6a/Logo_of_the_University_of_Sydney.svg)
+background-size: 95%
+
+<style>
+pre {
+  overflow-x: auto;
+}
+pre code {
+  word-wrap: normal;
+  white-space: pre;
+}
+</style>
+
+```{r setup, include=FALSE}
+
+options(htmltools.dir.version = FALSE)
+
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, 
+                      dev = 'svg', 
+                      fig.width = 4, 
+                      fig.height = 4, out.width="30%",
+                      fig.align="center")
+
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(sf)
+library(DiagrammeR)
+library(cowplot)
+library(haven)
+
+ggplot2::theme_set(theme_bw())
+
+```
+
+---
+
+## Acknowledgement of Country
+
+I would like to acknowledge the Traditional Owners of Australia and recognise their continuing connection to land, water and culture. The  University of Sydney is located on the land of the Gadigal people  of the Eora Nation. I pay my respects to their Elders, past and present.
+
+---
+background-image: url()
+background-size: 100%
+
+# Creating indices in R</br>(by averaging and PCA)
+
+---
+
+## Why do we need an index?
+
+A common situation for social scientists is to work with survey results administered through questionnaires, which contains dozens of questions. 
+
+Yet it might be the c
+
+Through surveys we try to capture and measure complex concepts. Yet, complex concepts usually can't be captured in a single, direct question. Instead, researchers *operationalise* the measurement of that concept through multiple questions. 
+
+---
+
+## Prepare your variables
+
+Once you have selected the variables to use for the index, you must prepare them. In other words, you need to make sure that they can be treated as numerical (you are going to average them!) and that you exclude all the values that do not make numerical sense in your averaging. 
+
+An example will hopefully help us understand the problem...
+
+---
+
+## Load the packages we will need
+
+```{r}
+library(dplyr)
+library(haven)
+```
+
+
+### To install these packages (if you need to...)
+
+```{r eval = F}
+install.packages("dplyr")
+install.packages("haven")
+```
+
+## Load the data 
+
+You can download the data file itanes_2013.RData from Canvas. Then load it into your R session with
+
+```{r}
+
+# Path to file likely different on you computer
+load("../data/itanes_2013.RData") 
+# Note: You can also open and load an .RData file into your current R 
+# session simply by clicking on it.
+
+```
+
+The data file itanes_2013.RData contains a single data frame, named `itanes_2013`, which was originally created reading the SPSS data file the responses to four questions of the *Italian National Election Survey 2013*, plus the `sex` of the respondent.
+
+```{r}
+head(itanes_2013)
+```
+
+---
+
+## Inspect the data 
+
+As we observe the variables are of type `dbl+lbl`. What is that?? 
+
+For our purpose, we shouldn't worry to much about their label, as we can treat these variables as simple numerical variables (`double` or `dbl` for short) disregarding the information contained in their labels (or `lbl` for short).
+
+But if we want to use them as categorical variables (that is, *factors*) instead of numerical we can transform them with the function `haven::as_factor()`. 
+
+.pull-left[
+
+```{r}
+
+itanes_2013$d38_1[1]
+
+```
+
+]
+
+.pull-right[
+
+```{r}
+
+haven::as_factor(itanes_2013$d38_1[1])
+
+```
+
+]
+
+---
+
+## Codebook
+
+This is the description of the four questions provided by the codebook. 
+
+> #### Section 10: Efficacy 
+> D38. For each of the following statements, could you tell me to what degree they are true, in your opinion?
+> * D38_1. People like me don’t have any say in what the government does. 
+> * D38_2. Sometimes politics and government seem so complicated that a person like me can’t really understand what’s going on. 
+> * D38_3. Usually, people we elect to the Parliament quickly lose touch with the people. 
+> * D38_4. Parties are only interested in people's votes, but not in their opinions. 
+>
+> [1] Not at all true [2] Not quite true [3] Fairly true [4] Completely true  [5] Don't know [6] No answer 
+
+---
+
+## Transforming our variables
+
+Based on the codebook we note two things:
+
+1. The four questions (D38_1, D38_2, D38_3 and D38_4) are all about *political efficacy*. Efficacy is an important concept in the political sciences, although not something you can directly ask to your respondents ("What is your sense of political efficacy on a scale from 1 to 10?" will hardly get any meaningful response...). Therefore a single dimension (here, political efficacy) has been measured with four distinct questions. 
+
+2. All questions have the same set of possible answers (multiple-choices):
+
+    * [1] Not at all true 
+    * [2] Not quite true 
+    * [3] Fairly true 
+    * [4] Completely true 
+    * [5] Don't know 
+    * [6] No answer
+    
+    Where a value of `1` in the variable corresponds to the answer "Not at all true" and so on...
+    
+    
+---
+
+## Transforming our variables
+
+We immediately realise that we can place these answers on a numerical scale as they are ordered and equally distanced (or so we can quite legitimately consider them).
+
+So let's consider the 42nd respondent in our data frame (where $i = 42$, no particular reason to pick 42...). 
+
+---
+
+```{r}
+itanes_2013$d38_1[42]
+```
+
+```{r}
+itanes_2013$d38_2[42]
+```
+
+---
+
+```{r}
+itanes_2013$d38_3[42]
+```
+
+```{r}
+itanes_2013$d38_4[42]
+```
+
+---
+
+## Transforming our variables
+
+Their answers to the four questions are respectively: 3, 4, 4 and 3. Since we can treat these variables as continuous, it makes total sense to sum them up 
+
+.center[
+$d38\_1_{42} + d38\_2_{42} + d38\_3_{42} + d38\_4_{42} = `r sum(c(3, 4, 4, 3))`$
+]
+
+or to average them 
+
+.center[
+$\frac{d38\_1_{42} + d38\_2_{42} + d38\_3_{42} + d38\_4_{42}}{4} = `r mean(c(3, 4, 4, 3))`$
+]
+
+Given these questions, the sum or the average can be effectively considered an efficacy *index*. 
+
+And we can you this index to compare across our sample: $respondent_{42}$ has expressed a *weaker*<sup>1</sup> sense of political efficacy than $respondent_{1}$ as
+
+.center[
+$\frac{d38\_1_{42} + d38\_2_{42} + d38\_3_{42} + d38\_4_{42}}{4} = `r mean(c(1, 4, 2, 2))`$
+]
+
+.footnote[
+[1] Look closely at questions and answers to understand the direction of your index. Here statements are negative ("PARTIES ARE ONLY INTERESTED IN PEOPLE'S VOTES...") and answers move from disagreement to agreement.
+]
+
+---
+
+```{r}
+
+itanes_2013 %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(index = mean(d38_1, d38_2, d38_3, d38_4))
+
+```
+
+
+
