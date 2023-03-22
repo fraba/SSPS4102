@@ -72,7 +72,7 @@ Through surveys we try to capture and measure complex concepts. Yet, complex con
 
 ---
 
-## Prepare your variables
+## Preparing your variables
 
 Once you have selected the variables to use for the index, you must prepare them. In other words, you need to make sure that they can be treated as numerical (you are going to average them!) and that you exclude all the values that do not make numerical sense in your averaging. 
 
@@ -80,7 +80,7 @@ An example will hopefully help us understand the problem...
 
 ---
 
-## Load the packages we will need
+## Loading the packages we will need
 
 ```{r}
 library(dplyr)
@@ -95,7 +95,7 @@ install.packages("dplyr")
 install.packages("haven")
 ```
 
-## Load the data 
+## Loading the data 
 
 You can download the data file itanes_2013.RData from Canvas. Then load it into your R session with
 
@@ -116,7 +116,7 @@ head(itanes_2013)
 
 ---
 
-## Inspect the data 
+## Inspecting the data 
 
 As we observe the variables are of type `dbl+lbl`. What is that?? 
 
@@ -161,7 +161,7 @@ This is the description of the four questions provided by the codebook.
 
 ---
 
-## Transforming our variables
+## Transforming our variables into an index
 
 Based on the codebook we note two things:
 
@@ -181,7 +181,7 @@ Based on the codebook we note two things:
     
 ---
 
-## Transforming our variables
+## Transforming our variables into an index
 
 We immediately realise that we can place these answers on a numerical scale as they are ordered and equally distanced (or so we can quite legitimately consider them).
 
@@ -209,7 +209,7 @@ itanes_2013$d38_4[42]
 
 ---
 
-## Transforming our variables
+## Transforming our variables into an index
 
 Their answers to the four questions are respectively: 3, 4, 4 and 3. Since we can treat these variables as continuous, it makes total sense to sum them up 
 
@@ -225,7 +225,7 @@ $\frac{d38\_1_{42} + d38\_2_{42} + d38\_3_{42} + d38\_4_{42}}{4} = `r mean(c(3, 
 
 Given these questions, the sum or the average can be effectively considered an efficacy *index*. 
 
-And we can you this index to compare across our sample: $respondent_{42}$ has expressed a *weaker*<sup>1</sup> sense of political efficacy than $respondent_{1}$ as
+And we can use this index to compare across our sample: $respondent_{42}$ has expressed a *weaker*<sup>1</sup> sense of political efficacy than $respondent_{1}$ as
 
 .center[
 $\frac{d38\_1_{42} + d38\_2_{42} + d38\_3_{42} + d38\_4_{42}}{4} = `r mean(c(1, 4, 2, 2))`$
@@ -237,13 +237,300 @@ $\frac{d38\_1_{42} + d38\_2_{42} + d38\_3_{42} + d38\_4_{42}}{4} = `r mean(c(1, 
 
 ---
 
-```{r}
+## Transforming our variables into an index
 
-itanes_2013 %>%
-  dplyr::rowwise() %>%
-  dplyr::mutate(index = mean(d38_1, d38_2, d38_3, d38_4))
+#### Then shall we sum our values across the variables we want to use to construct the index or shall we average them? 
 
+Most of the times, the two approaches will substantially produce the same result. 
+
+Yet, if the average index will be expressed on the same scale set by the questionnaire (so in our case on a 1-to-4 scale), the scale of the sum index will be expressed on a scale that depends on how many questions we are aggregating for the index (in our case in the range 1 to 16 (as $4 \times 4 = 16$). 
+
+In general, (I think) that averaging instead of summing is the most intuitive solution as it is easier to interpret: an index value of 3.5 will be halfway between "Fairly true" and "Completely true". 
+
+---
+
+## Transforming our variables into an index
+
+But we still have a problem. Let's look again at the multiple choices:
+
+> * [1] Not at all true 
+> * [2] Not quite true 
+> * [3] Fairly true 
+> * [4] Completely true 
+> * [5] Don't know 
+> * [6] No answer
+    
+If it evidently makes sense to average responses in the range 1 to 4, it doesn't to place `5` ("Don't know") and `6` ("No answer") on the same scale. 
+
+If we do, we would implicitly assume that the answers "Don't know" and "No answer" express a stronger agreement to the statement than all the other answers (i.e. 1, 2, 3 and 4). 
+
+---
+
+## Transforming our variables into an index
+
+The scale we are interested in, to capture political efficacy, is in the range 1 to 4 (again with `4` indicating less efficacy and `1` more efficacy, given how questions and answers are expressed). 
+
+The other answers (`5` and `6`) should not treated as numbers. We have to options:
+
+1. We can replace `5` and `6` with `NA` (or "Not Available", or missing) and then still compute the average (i.e. our *index*) for the respondents who have responded `5` or `6` to some of the questions, from on the other responses.
+
+2. We can *filter out* all the records where a responded has responded `5` to `6` to any of the four political efficacy questions.
+
+In most scenarios, solution number 2 is probably the most appropriate. Why?
+
+---
+
+## Summing and averaging with missing values
+
+Let's consider these two respondents ( $i=3$ and $i=42$ ):
+
+```{r, echo = F}
+itanes_2013[3,] %>%
+  dplyr::select(d38_1:d38_4) %>%
+  knitr::kable(caption = "Respondent 3")
+```
+
+which then becomes
+
+```{r echo = F}
+
+replace_fun <- function(x) {ifelse(x > 4, NA, x)}
+
+itanes_2013 <- 
+  itanes_2013 %>%
+  dplyr::select(d38_1:d38_4) %>%
+  dplyr::mutate_all(replace_fun)
 ```
 
 
+```{r, echo = F}
 
+itanes_2013[3,] %>%
+  knitr::kable(caption = "Respondent 3") 
+```
+
+---
+
+## Summing and averaging with missing values
+
+.pull-left[
+
+```{r, echo = F}
+
+itanes_2013[3,] %>%
+  knitr::kable(caption = "Respondent 3") 
+```
+
+
+]
+
+.pull-right[
+
+```{r, echo = F}
+itanes_2013[42,] %>%
+  knitr::kable(caption = "Respondent 42") 
+```
+
+]
+
+</br>
+
+Our $index_{3}$ will be **`r sum(as.numeric(itanes_2013[3, 1:4]), na.rm = T)`** if we sum the values and **`r round(mean(as.numeric(itanes_2013[3, 1:4]), na.rm = T),2)`** if we average them.
+
+Our $index_{42}$ will be **`r sum(as.numeric(itanes_2013[42, 1:4]), na.rm = T)`** if we sum the values and **`r round(mean(as.numeric(itanes_2013[42, 1:4]), na.rm = T),2)`** if we average them.
+
+How does $index_{3}$ compare with $index_{42}$? 
+
+$index_{3}$ is strongly penalised with the sum as in fact we are replacing the "Don't know" with a value of **0** weighting the index down relatively to the other respondent with complete responses. 
+
+Using the average instead we don't penalise $index_{3}$. Still we are in fact *imputing* an answer somewhere between "Fairly true" and "Completely true" when instead the respondent said "Don't know".
+
+Because of this I would argue that the most appropriate solution is usually to drop the record altogether. Let's see how....
+
+---
+
+## Filtering for missing values before summing and averaging
+
+If we want to replace a range of values we can do this with `dplyr::filter()`. 
+
+Specifically to our case, we want to set the conditions to filter out all records (i.e. respondents) that have answered `5` or `6` to any of the questions of interest. 
+
+Since, our variables are numerical we can use the logical operator `<` ("less than") and the logical `var < 5` to only include records where `var` is either `1`, `2`, `3` or `4` (all numbers that are smaller than 5). We also need to use `&` to set more than one condition (we need one condition for each variable).
+
+We will store the results of our filtering out creating a new data frame `itanes_2013_filterd` (because it is a good idea to keep the original data somewhere).
+
+```{r}
+itanes_2013_filtered <-
+  itanes_2013 %>%
+  dplyr::filter(d38_1 < 5 & d38_2 < 5 & d38_3 < 5 & d38_4 < 5)
+```
+
+---
+
+## Creating our index as new variables of a data frame
+
+We are now in the position to create our indices (let's create both `index.sum` and `index.avg`) as new variable of our new data frame ( $n = `r nrow(itanes_2013_filtered)`$, down from $n = `r nrow(itanes_2013)`$ of the original data frame)
+
+```{r}
+itanes_2013_filtered <- 
+  itanes_2013_filtered %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(index.sum = sum(c(d38_1, d38_2, d38_3, d38_4)),
+                index.avg = mean(c(d38_1, d38_2, d38_3, d38_4)))
+  
+```
+
+
+Note that with dplyr we need to functions to create the index. First, we need to specify that our `sum()` and `mean()` should be calculated row-wise (so one sum/mean for each row) and not column-wise (so one sum/mean for the entire data frame). Second, we need to use `mutate()`, where we create two variables (`index.sum`/`index.avg`) from the row-wise sum/average of this variables: `c(d38_1, d38_2, d38_3, d38_4)` (note that the variable names must be concatenated with `c()`).
+
+---
+
+## Inspecting the distribution of sum and average indices
+
+```{r out.width = "90%", fig.height = 3, fig.width = 5}
+ggplot2::ggplot(itanes_2013_filtered, 
+       aes(index.sum)) +
+  ggplot2::geom_bar() +
+  labs(x = "<- stronger    sense of efficacy   weaker ->")
+```
+
+---
+
+## Inspecting the distribution of sum and average indices
+
+```{r out.width = "90%", fig.height = 3, fig.width = 5}
+ggplot2::ggplot(itanes_2013_filtered, 
+       aes(index.avg)) +
+  ggplot2::geom_bar() +
+  labs(x = "<- stronger    sense of efficacy   weaker ->")
+```
+
+---
+
+## Inspecting the distribution of sum and average indices
+
+As you can see, since we dropped the records with missing values the two charts are different only in terms of the horizontal axis.
+
+Let's now see how we can construct an index with the same variables but using principal component analysis... 
+
+
+---
+
+## Constructing an index with Principal component analysis
+
+Principal component analysis (PCA) is a *dimensionality reduction technique* - like summing or averaging, but more sophisticated. In James et al. (Section 12.2, 2021, p. 488),<sup>1</sup> we read a justification for PCA:
+
+> When faced with a large set of correlated variables, principal components allow us to summarize this set with a smaller number of representative variables that collectively explain most of the variability in the original set.
+
+So instead of using 4, 5, 10, 20 or 2000 variables, we use a more manageable number of variables. Yes, but how many?
+
+.footnote[[1] James, G., Witten, D., Hastie, T., & Tibshirani, R. (2021). 12 Unsupervised learning. *In An introduction to statistical learning: With applications in R*. Springer. https://link.springer.com/chapter/10.1007/978-1-0716-1418-1_12 <mark>Note: if you are accessing the 2013, the  Unsupervised learning chapter is number 10 (the section on principal component is still number 2)</mark>  
+]
+
+---
+
+## Constructing an index with Principal component analysis
+
+PCA gives us the information to make a informed decision on how many variables we can use as an acceptable summary of our initial (large) number of variables. 
+
+Let's see how using our previous example: the four variables capturing answers about political efficacy. 
+
+---
+
+## Calculating principal components
+
+To do a PCA on a data frame is relatively simple in R, with the `pca_result()` function. With a data frame, the code looks like this:
+
+```{r eval = F}
+
+prcomp(data, scale = TRUE)
+
+```
+
+A few notes:
+
+1. All the variables (columns) that `prcomp` finds in the `data` will be used for PCA. If I don't want to use a variable (e.g. `sex`) I will need to remove it from the data frame I use with `prcomp()`.
+
+2. `prcomp()` doesn't accept any missing value (`NA`). I will need to remove all the records containing missing values.
+
+3. `prcomp()` doesn't return a single vector or a data frame. But a objects with different values and statistics (similarly to `lm()` which fits linear multivariate models).s
+
+---
+
+## Calculating principal components
+
+Let's then first prepare my data frame for PCA.
+
+```{r}
+
+itanes_2013_filtered_selected <- 
+  itanes_2013 %>%
+  dplyr::filter(d38_1 < 5 & d38_2 < 5 & d38_3 < 5 & d38_4 < 5) %>%
+  dplyr::select(d38_1, d38_2, d38_3, d38_4)
+
+```
+
+With we `filter()` *out* as before all records with responses "I don't know" or "No answer". with `select()` we only select the column we are using for PCA. 
+
+We store the resulting new data frame in `itanes_2013_filtered_selected`. We are now ready to use the PCA function:
+
+```{r}
+pca_result <- 
+  prcomp(itanes_2013_filtered_selected, scale = TRUE)
+```
+
+.footnote[Note: Let's not worry about `scale = TRUE` for now. Just make sure to specify it when you use `prcomp()`.]
+
+---
+
+## Inspecting the results of PCA with summary()
+
+```{r}
+summary(pca_result)
+```
+
+The `summmary()` function on the results of `prcomp` will give me this summary statistics. How do I read it?
+
+First, we need to understand that a PCA on four variables (as in this case) will return four *new* variables, called principal components: so PC1, PC2, PC3 and PC4. 
+
+The most important information at this stage for each new PC is the "Proportion of Variance". That is, how much variance of the original variable is captured by each PC.
+
+As you can see, the new PC are ordered so that PC1 captures more variance than PC2 and so on...
+
+---
+
+## Choosing how many principal components to use
+
+Since PCA is usually done to reduce the number of variables we need to deal with, we need to decide how many PCs are enough. In this case, the first PC (so PC1) is already explaining more than 50% of the variance of the four original variables. And this makes PC1 a legitimate candidate for an political efficacy index.
+
+Sold! But how do we get PC1 out of `pca_result`?
+
+All the new variables (PC1, PC2, PC3, ...) are stored in a data frame that we reach using `pca_result$x` (note the `$` sign again to access the object `x`).
+
+```{r}
+head(pca_result$x)
+```
+
+---
+
+## Storing our principal component back in our data frame
+
+Once we have decided to use PC1 as our index we can, save it as a new varible of the data frame we used for the principal component analysis
+
+```{r}
+itanes_2013_filtered_selected$index.pca <- 
+  pca_result$x[,1]
+```
+
+Note: `[,1]` selects the first column of a matrix or data frame (in this case we are dealing with a matrix stored in `pca_result$x`).
+
+---
+
+## Inspecting the distribution of our new index
+
+```{r out.width = "90%", fig.height = 3, fig.width = 5}
+ggplot2::ggplot(itanes_2013_filtered_selected, 
+                aes(index.pca)) +
+  ggplot2::geom_density() +
+  labs(x = "<- stronger    sense of efficacy   weaker ->")
+```
