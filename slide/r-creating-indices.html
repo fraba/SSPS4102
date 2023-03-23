@@ -7,6 +7,10 @@
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+    <script src="libs/viz/viz.js"></script>
+    <link href="libs/DiagrammeR-styles/styles.css" rel="stylesheet" />
+    <script src="libs/grViz-binding/grViz.js"></script>
   </head>
   <body>
     <textarea id="source">
@@ -25,7 +29,7 @@ class: center, middle, inverse, title-slide
 ### The University of Sydney
 ]
 .date[
-### Semester 1, 2023 (updated: 2023-03-22)
+### Semester 1, 2023 (updated: 2023-03-23)
 ]
 
 ---
@@ -53,20 +57,73 @@ pre code {
 I would like to acknowledge the Traditional Owners of Australia and recognise their continuing connection to land, water and culture. The  University of Sydney is located on the land of the Gadigal people  of the Eora Nation. I pay my respects to their Elders, past and present.
 
 ---
-background-image: url()
-background-size: 100%
 
-# Creating indices in R&lt;/br&gt;(by averaging and PCA)
+## Why do we need an index?
+
+A common situation for social scientists is to work with survey results administered through questionnaires. Yet surveys might contain dozens of questions. Too many include them all in our statistical analysis (as we always need to explain them!). 
+
+.center[&lt;img src = 'https://media.giphy.com/media/l4EoOFliX6Vw4PD20/giphy.gif'&gt;&lt;/img&gt;]
 
 ---
 
 ## Why do we need an index?
 
-A common situation for social scientists is to work with survey results administered through questionnaires, which contains dozens of questions. 
+This problem is commonly refer to by computer and data scientists as **dimensionality reduction**. 
 
-Yet it might be the c
+.pull-left[
+.center[&lt;img src = 'https://leowyy.github.io/public/graphtsne/graphtsne.gif' width = '85%'&gt;&lt;/img&gt;]
+]
 
-Through surveys we try to capture and measure complex concepts. Yet, complex concepts usually can't be captured in a single, direct question. Instead, researchers *operationalise* the measurement of that concept through multiple questions. 
+.pull-right[
+
+Dimensionality reduction is just about using some technique (usually a statistical tecnique) to compress the information we have so that instead of *n* dimensions we have a more manageable number of dimensions to work with (where *n* can be 50 or 50 millions).
+
+]
+&lt;/br&gt;
+The point is of course to reduce the number of variables by keeping as much of the original information as possible. One of the most common approach to do it is to look for statistical correlations among variable - because if they are correlated, we can use the pattern of the correlation instead of all the individual correlated variables (this is what PCA does).
+
+---
+
+## Why do we need an index?
+
+Social scientists generally refer to a variable that captures information from multiple variables (e.g. survey responses) as an **index**.
+
+Social scientists like to construct indices not only because it is easier to work and report on one variable instead of 10 variables. They construct indices also for theoretical reasons; as they want to construct measures (a.k.a "operationalisation") to capture complex theoretical concepts.
+
+Through surveys we try to capture and measure complex concepts. Yet, complex concepts usually can't be captured in a single, direct question. 
+
+Instead, researchers *operationalise* the measurement of that concept through multiple questions. For example...
+
+---
+
+## Why do we need an index?
+
+Measuring the level of democracy in a country with a questionnaire:
+
+<div id="htmlwidget-f53d41af122e2fbe1cba" style="width:100%;height:300px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-f53d41af122e2fbe1cba">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR] \n  \n  node [shape = oval]        \n  nod1 [label = \"High-level\nconcept\"]\n  nod2 [label = \"Low-level\nmeasurable variable(s)\"]\n  nod3 [label = \"Democracy\"]\n  nod4 [label = \"Q1\"]\n  nod5 [label = \"Q2\"]\n  nod6 [label = \"Q3\"]\n  nod7 [label = \"Q4\"]\n\n\n  nod1 -> nod2; nod3 -> nod4; nod3 -> nod5; nod3 -> nod6; nod3 -> nod7;\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+*Q1*: Overall, is the condition of democracy and human rights in your main country of focus today mostly strong or weak?
+
+*Q2*: Overall, do you approve the national government's job on democracy and human rights?
+
+*Q3*: ... 
+
+---
+
+## Why do we need an index?
+
+So once we have collected our responses (four in the example before), we might want to bring them back into a single measure.
+
+For example, a *democracy index*.
+
+<div id="htmlwidget-12727f948c6168a99fe2" style="width:100%;height:300px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-12727f948c6168a99fe2">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR] \n  \n  node [shape = oval]        \n  nod3 [label = \"Democracy index\"]\n  nod4 [label = \"Q1\"]\n  nod5 [label = \"Q2\"]\n  nod6 [label = \"Q3\"]\n  nod7 [label = \"Q4\"]\n\n\n  nod4 -> nod3; nod5 -> nod3; nod6 -> nod3; nod7 -> nod3;\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+---
+class: inverse, center, middle
+
+# Lab
 
 ---
 
@@ -116,8 +173,8 @@ head(itanes_2013)
 
 ```
 ## # A tibble: 6 × 6
-##          sex               d38_1               d38_2       d38_3   d38_4 new_d…¹
-##    &lt;dbl+lbl&gt;           &lt;dbl+lbl&gt;           &lt;dbl+lbl&gt;   &lt;dbl+lbl&gt; &lt;dbl+l&gt; &lt;dbl+l&gt;
+##   sex        d38_1               d38_2               d38_3       d38_4   new_d…¹
+##   &lt;dbl+lbl&gt;  &lt;dbl+lbl&gt;           &lt;dbl+lbl&gt;           &lt;dbl+lbl&gt;   &lt;dbl+l&gt; &lt;dbl+l&gt;
 ## 1 2 [Female] 1 [Not at all true] 4 [Completely true] 2 [Not qui… 2 [Not… 1 [Not…
 ## 2 2 [Female] 4 [Completely true] 4 [Completely true] 4 [Complet… 4 [Com… 4 [Com…
 ## 3 1 [Male]   4 [Completely true] 5 [Don't know]      3 [Fairly … 3 [Fai… 4 [Com…
@@ -320,7 +377,7 @@ Given these questions, the sum or the average can be effectively considered an e
 And we can use this index to compare across our sample: `\(respondent_{42}\)` has expressed a *weaker*&lt;sup&gt;1&lt;/sup&gt; sense of political efficacy than `\(respondent_{1}\)` as
 
 .center[
-`\(\frac{d38\_1_{42} + d38\_2_{42} + d38\_3_{42} + d38\_4_{42}}{4} = 2.25\)`
+`\(\frac{d38\_1_{1} + d38\_2_{1} + d38\_3_{1} + d38\_4_{1}}{4} = 2.25\)`
 ]
 
 .footnote[
@@ -537,7 +594,7 @@ ggplot2::ggplot(itanes_2013_filtered,
   labs(x = "&lt;- stronger    sense of efficacy   weaker -&gt;")
 ```
 
-&lt;img src="r-creating-indices_files/figure-html/unnamed-chunk-18-1.svg" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="r-creating-indices_files/figure-html/unnamed-chunk-20-1.svg" width="90%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -551,7 +608,7 @@ ggplot2::ggplot(itanes_2013_filtered,
   labs(x = "&lt;- stronger    sense of efficacy   weaker -&gt;")
 ```
 
-&lt;img src="r-creating-indices_files/figure-html/unnamed-chunk-19-1.svg" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="r-creating-indices_files/figure-html/unnamed-chunk-21-1.svg" width="90%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -704,7 +761,7 @@ ggplot2::ggplot(itanes_2013_filtered_selected,
   labs(x = "&lt;- stronger    sense of efficacy   weaker -&gt;")
 ```
 
-&lt;img src="r-creating-indices_files/figure-html/unnamed-chunk-26-1.svg" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="r-creating-indices_files/figure-html/unnamed-chunk-28-1.svg" width="90%" style="display: block; margin: auto;" /&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

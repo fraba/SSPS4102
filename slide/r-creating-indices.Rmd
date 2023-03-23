@@ -55,20 +55,107 @@ ggplot2::theme_set(theme_bw())
 I would like to acknowledge the Traditional Owners of Australia and recognise their continuing connection to land, water and culture. The  University of Sydney is located on the land of the Gadigal people  of the Eora Nation. I pay my respects to their Elders, past and present.
 
 ---
-background-image: url()
-background-size: 100%
 
-# Creating indices in R</br>(by averaging and PCA)
+## Why do we need an index?
+
+A common situation for social scientists is to work with survey results administered through questionnaires. Yet surveys might contain dozens of questions. Too many include them all in our statistical analysis (as we always need to explain them!). 
+
+.center[<img src = 'https://media.giphy.com/media/l4EoOFliX6Vw4PD20/giphy.gif'></img>]
 
 ---
 
 ## Why do we need an index?
 
-A common situation for social scientists is to work with survey results administered through questionnaires, which contains dozens of questions. 
+This problem is commonly refer to by computer and data scientists as **dimensionality reduction**. 
 
-Yet it might be the c
+.pull-left[
+.center[<img src = 'https://leowyy.github.io/public/graphtsne/graphtsne.gif' width = '85%'></img>]
+]
 
-Through surveys we try to capture and measure complex concepts. Yet, complex concepts usually can't be captured in a single, direct question. Instead, researchers *operationalise* the measurement of that concept through multiple questions. 
+.pull-right[
+
+Dimensionality reduction is just about using some technique (usually a statistical tecnique) to compress the information we have so that instead of *n* dimensions we have a more manageable number of dimensions to work with (where *n* can be 50 or 50 millions).
+
+]
+</br>
+The point is of course to reduce the number of variables by keeping as much of the original information as possible. One of the most common approach to do it is to look for statistical correlations among variable - because if they are correlated, we can use the pattern of the correlation instead of all the individual correlated variables (this is what PCA does).
+
+---
+
+## Why do we need an index?
+
+Social scientists generally refer to a variable that captures information from multiple variables (e.g. survey responses) as an **index**.
+
+Social scientists like to construct indices not only because it is easier to work and report on one variable instead of 10 variables. They construct indices also for theoretical reasons; as they want to construct measures (a.k.a "operationalisation") to capture complex theoretical concepts.
+
+Through surveys we try to capture and measure complex concepts. Yet, complex concepts usually can't be captured in a single, direct question. 
+
+Instead, researchers *operationalise* the measurement of that concept through multiple questions. For example...
+
+---
+
+## Why do we need an index?
+
+Measuring the level of democracy in a country with a questionnaire:
+
+```{r, echo = F, out.width = "100%"}
+
+DiagrammeR::grViz("digraph {
+  graph [layout = dot, rankdir = LR] 
+  
+  node [shape = oval]        
+  nod1 [label = 'High-level\nconcept']
+  nod2 [label = 'Low-level\nmeasurable variable(s)']
+  nod3 [label = 'Democracy']
+  nod4 [label = 'Q1']
+  nod5 [label = 'Q2']
+  nod6 [label = 'Q3']
+  nod7 [label = 'Q4']
+
+
+  nod1 -> nod2; nod3 -> nod4; nod3 -> nod5; nod3 -> nod6; nod3 -> nod7;
+  }", 
+  height = 300)
+
+```
+
+*Q1*: Overall, is the condition of democracy and human rights in your main country of focus today mostly strong or weak?
+
+*Q2*: Overall, do you approve the national government's job on democracy and human rights?
+
+*Q3*: ... 
+
+---
+
+## Why do we need an index?
+
+So once we have collected our responses (four in the example before), we might want to bring them back into a single measure.
+
+For example, a *democracy index*.
+
+```{r, echo = F, out.width = "100%"}
+
+DiagrammeR::grViz("digraph {
+  graph [layout = dot, rankdir = LR] 
+  
+  node [shape = oval]        
+  nod3 [label = 'Democracy index']
+  nod4 [label = 'Q1']
+  nod5 [label = 'Q2']
+  nod6 [label = 'Q3']
+  nod7 [label = 'Q4']
+
+
+  nod4 -> nod3; nod5 -> nod3; nod6 -> nod3; nod7 -> nod3;
+  }", 
+  height = 300)
+
+```
+
+---
+class: inverse, center, middle
+
+# Lab
 
 ---
 
@@ -228,7 +315,7 @@ Given these questions, the sum or the average can be effectively considered an e
 And we can use this index to compare across our sample: $respondent_{42}$ has expressed a *weaker*<sup>1</sup> sense of political efficacy than $respondent_{1}$ as
 
 .center[
-$\frac{d38\_1_{42} + d38\_2_{42} + d38\_3_{42} + d38\_4_{42}}{4} = `r mean(c(1, 4, 2, 2))`$
+$\frac{d38\_1_{1} + d38\_2_{1} + d38\_3_{1} + d38\_4_{1}}{4} = `r mean(c(1, 4, 2, 2))`$
 ]
 
 .footnote[
