@@ -1,0 +1,93 @@
+---
+title: "Reverse a scale"
+author: "Francesco Bailo"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+## Prepare data
+
+`var_a` is a numeric variable with range 1 to 4:
+
+```{r}
+
+my_dat <- data.frame(var_a = c(1, 1, 1, 2, 2, 4, 1, 3, 2, 4, 1, 2, 1))
+
+```
+
+```{r}
+
+library(ggplot2)
+
+ggplot(my_dat, aes(x = var_a)) +
+  geom_bar()
+
+```
+
+<mark>Task: Reverse the scale so that 4 is now 1 and 1 is now 4 (and 2 is now 3 and 3 is now 2).</mark> 
+
+## First approach: Replacing values one by one in a new variable
+
+### Step 1: Create a new variable with the same values as the original one
+
+```{r}
+
+my_dat$var_b <- my_dat$var_a
+
+```
+
+### Step 2: Replace all the values 
+
+(note that the variable within `[...]` is the old one!)
+
+```{r}
+
+my_dat$var_b[my_dat$var_a == 1] <- 4
+my_dat$var_b[my_dat$var_a == 2] <- 3
+my_dat$var_b[my_dat$var_a == 3] <- 2
+my_dat$var_b[my_dat$var_a == 4] <- 1
+
+```
+
+### Done!
+
+```{r}
+
+ggplot(my_dat, aes(x = var_b)) +
+  geom_bar()
+
+```
+
+## Second approach: The fancy way
+
+### Step 1: Subtract the max value that the variable can take + 1 to the same variable
+
+```{r}
+
+my_dat$var_c <- max(my_dat$var_a) + 1 - my_dat$var_a
+
+```
+
+Let's check, (never trust your teacher!)
+
+```{r}
+
+my_dat$var_c == my_dat$var_b
+
+```
+
+
+```{r}
+
+ggplot(my_dat, aes(x = var_c)) +
+  geom_bar()
+
+```
+
+
+Here why this works:
+
+* `5-4=1`
+* `5-3=2`
+* `5-2=3`
+* `5-1=4`
