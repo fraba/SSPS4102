@@ -1,0 +1,277 @@
+---
+title: "SSPS4102</br>Data Analytics in the Social Sciences"
+subtitle: "Week 07</br>R Markdown"
+author: "Francesco Bailo"
+institute: "The University of Sydney"
+date: "Semester 1, 2023 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+background-image: url(https://upload.wikimedia.org/wikipedia/en/6/6a/Logo_of_the_University_of_Sydney.svg)
+background-size: 95%
+
+<style>
+pre {
+  overflow-x: auto;
+}
+pre code {
+  word-wrap: normal;
+  white-space: pre;
+}
+</style>
+
+```{r setup, include=FALSE}
+
+options(htmltools.dir.version = FALSE)
+
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, 
+                      dev = 'svg', 
+                      fig.width = 4, 
+                      fig.height = 4, out.width="30%",
+                      fig.align="center")
+
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(sf)
+library(DiagrammeR)
+library(cowplot)
+library(gapminder)
+
+ggplot2::theme_set(theme_bw())
+
+```
+
+---
+
+## Acknowledgement of Country
+
+I would like to acknowledge the Traditional Owners of Australia and recognise their continuing connection to land, water and culture. The  University of Sydney is located on the land of the Gadigal people  of the Eora Nation. I pay my respects to their Elders, past and present.
+
+---
+
+# R Markdown
+
+.center[<img src = 'https://bookdown.org/yihui/rmarkdown/images/cover.png' width = '30%'></img>]
+
+Xie, Y., Allaire, J. J., & Grolemund, G. (2019). *R Markdown: The definitive guide*. CRC Press. https://bookdown.org/yihui/rmarkdown
+
+
+Access full book here: https://bookdown.org/yihui/rmarkdown/
+
+---
+
+## Installation
+
+To install the R Markdown package,
+
+```{r eval = F}
+install.packages('rmarkdown')
+```
+
+To install TinyTeX, which allows you to produce a PDF from a RMD using [TeX](https://en.wikipedia.org/wiki/TeX) a popular typesetting system,
+
+```{r eval = F}
+install.packages('tinytex')
+tinytex::install_tinytex()
+```
+
+
+---
+
+## What is R Markdown?
+
+**R Markdown** is a file format (with extension ".Rmd") to produce documents using a source document - the Rmd file - containing both *normal text* and *R code*.   
+
+R Markdown is extremely capable and can be used to produce a wide range of documents, from a PDF file to a Word document, from a slideshow to an HTML webpage. 
+
+
+```{r echo = F, out.with = '100%', fig.pos='center'}
+require(DiagrammeR)
+DiagrammeR::grViz("digraph {
+  graph [layout = dot, rankdir = LR]
+  
+  node [shape = rectangle]        
+  rmd [label = '.Rmd\ntext + code']
+  knitr [label = 'knitr' shape = oval]
+  pdf [label =  '.pdf']
+  doc [label =  '.doc']
+  ppt [label =  '.ppt']
+  html [label =  '.html']
+  etc [label =  '...']
+  
+  
+  rmd -> knitr -> pdf; knitr -> doc; knitr -> ppt; knitr -> html; knitr -> etc;
+  }",
+  width = 600)
+```
+
+---
+
+## What is knitr?
+
+**Knitr** is an engine for report generation. It takes your R Markdown document and produces the output you requested to produce.
+
+From RStudio, you can call knitr on your R Markdown document simply by clicking on this button
+
+.center[<img src = '../img/rstudio-knit-button.png' width = '30%'></img>]
+
+While preparing your document, knitr does two things:
+
+1. It will run all your *code chunks* and collect the output from the code;
+
+2. It will process all your *regular text* using the [Markdown](https://en.wikipedia.org/wiki/Markdown) [syntax](https://en.wikipedia.org/wiki/Markdown#Examples).
+
+```{r echo = F, out.with = '100%', fig.pos='center'}
+require(DiagrammeR)
+DiagrammeR::grViz("digraph {
+  graph [layout = dot, rankdir = LR]
+  
+  node [shape = rectangle]        
+  text [label = 'Text (Markdown)']
+  knitr1 [label = 'knitr\nMarkdown is rendered' shape = oval]
+  out1 [label =  'Normal text']
+  code [label = 'Code chunks']
+  knitr2 [label = 'knitr\nMarkdown is executed' shape = oval]
+  out2 [label =  'Code output\n(Figure, Table, Values, etc.)']
+  
+  
+  text -> knitr1 -> out1; code -> knitr2 -> out2;
+  }",
+  width = 600, height = 150)
+```
+
+---
+
+### R Markdown: The basics 
+
+This is the *header* of the document: 
+
+```{r include=FALSE}
+b = '`r b[1]`'  # an ugly hack; don't look at me
+```
+```yaml
+---
+title: "Hello R Markdown"
+author: "Awesome Me"
+date: "2018-02-14"
+output: html_document
+---
+```
+
+Here, you can set title, date, author but you can also specify the output format (e.g. `html_document` or `pdf_document`) that will be produced when you hit "Knit".
+
+---
+
+### R Markdown: The basics 
+
+This is instead the *body* of the document.
+
+````markdown
+This is a paragraph in an R Markdown document.
+
+Below is a code chunk:
+
+`r ''````{r}
+fit = lm(dist ~ speed, data = cars)
+b   = coef(fit)
+plot(cars)
+abline(fit)
+```
+
+The slope of the regression is `r b[1]`.
+````
+
+Here you see the two different components of a R Markdown document: **Code chunks** and **text**.
+
+When you hit "Knit" you will see that on top of rendering the text, knitr has also produced the figure produced by the code chunk.
+
+---
+
+
+.center[<img src ='https://bookdown.org/yihui/rmarkdown/images/hello-rmd-out.png' width = '65%'></img>]
+
+
+---
+
+### In line code
+
+On top of code chunks is also possible to add code in line (for example, because you want to include a value produced by R as in the example). In the example below, on the last line we print out the value contained in `b[1]`. 
+
+````markdown
+This is a paragraph in an R Markdown document.
+
+Below is a code chunk:
+
+`r ''````{r}
+fit = lm(dist ~ speed, data = cars)
+b   = coef(fit)
+plot(cars)
+abline(fit)
+```
+
+The slope of the regression is `r b[1]`.
+````
+
+---
+
+### Basic Markdown
+
+* Heading level: Start line with `#`, `##`, `###` or `####`
+* Bold, italics: `*italics*` and `**bold**`
+* Lists: Use `1. Item`, `2. Item` or `* Item`
+* Links: Use `[text](http://www.example.com)`
+
+---
+
+### Basic chunk options
+
+You can specify a number of chunk options (a complete list is [here](https://yihui.org/knitr/options/)). Among the most important
+
+#### Hide code from output: `echo = FALSE`
+
+````markdown
+`r ''````{r echo = FALSE}
+fit = lm(dist ~ speed, data = cars)
+b   = coef(fit)
+plot(cars)
+abline(fit)
+```
+````
+
+---
+
+### Basic chunk options
+
+#### Don't run code: `eval = FALSE`
+
+````markdown
+`r ''````{r eval = FALSE}
+fit = lm(dist ~ speed, data = cars)
+b   = coef(fit)
+plot(cars)
+abline(fit)
+```
+````
+
+---
+
+### Basic chunk options
+
+#### Change figure size: `fig.width = 9, fig.height = 7`
+
+````markdown
+`r ''````{r fig.width = 9, fig.height = 7}
+fit = lm(dist ~ speed, data = cars)
+b   = coef(fit)
+plot(cars)
+abline(fit)
+```
+````
+

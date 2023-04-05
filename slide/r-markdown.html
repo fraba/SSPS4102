@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>SSPS4102Data Analytics in the Social Sciences</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Francesco Bailo" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+    <script src="libs/viz/viz.js"></script>
+    <link href="libs/DiagrammeR-styles/styles.css" rel="stylesheet" />
+    <script src="libs/grViz-binding/grViz.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# SSPS4102</br>Data Analytics in the Social Sciences
+]
+.subtitle[
+## Week 07</br>R Markdown
+]
+.author[
+### Francesco Bailo
+]
+.institute[
+### The University of Sydney
+]
+.date[
+### Semester 1, 2023 (updated: 2023-04-03)
+]
+
+---
+
+
+background-image: url(https://upload.wikimedia.org/wikipedia/en/6/6a/Logo_of_the_University_of_Sydney.svg)
+background-size: 95%
+
+&lt;style&gt;
+pre {
+  overflow-x: auto;
+}
+pre code {
+  word-wrap: normal;
+  white-space: pre;
+}
+&lt;/style&gt;
+
+
+
+---
+
+## Acknowledgement of Country
+
+I would like to acknowledge the Traditional Owners of Australia and recognise their continuing connection to land, water and culture. The  University of Sydney is located on the land of the Gadigal people  of the Eora Nation. I pay my respects to their Elders, past and present.
+
+---
+
+# R Markdown
+
+.center[&lt;img src = 'https://bookdown.org/yihui/rmarkdown/images/cover.png' width = '30%'&gt;&lt;/img&gt;]
+
+Xie, Y., Allaire, J. J., &amp; Grolemund, G. (2019). *R Markdown: The definitive guide*. CRC Press. https://bookdown.org/yihui/rmarkdown
+
+
+Access full book here: https://bookdown.org/yihui/rmarkdown/
+
+---
+
+## Installation
+
+To install the R Markdown package,
+
+
+```r
+install.packages('rmarkdown')
+```
+
+To install TinyTeX, which allows you to produce a PDF from a RMD using [TeX](https://en.wikipedia.org/wiki/TeX) a popular typesetting system,
+
+
+```r
+install.packages('tinytex')
+tinytex::install_tinytex()
+```
+
+
+---
+
+## What is R Markdown?
+
+**R Markdown** is a file format (with extension ".Rmd") to produce documents using a source document - the Rmd file - containing both *normal text* and *R code*.   
+
+R Markdown is extremely capable and can be used to produce a wide range of documents, from a PDF file to a Word document, from a slideshow to an HTML webpage. 
+
+
+<div id="htmlwidget-dd093b21565549ef5ef9" style="width:600px;height:288px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-dd093b21565549ef5ef9">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = rectangle]        \n  rmd [label = \".Rmd\ntext + code\"]\n  knitr [label = \"knitr\" shape = oval]\n  pdf [label =  \".pdf\"]\n  doc [label =  \".doc\"]\n  ppt [label =  \".ppt\"]\n  html [label =  \".html\"]\n  etc [label =  \"...\"]\n  \n  \n  rmd -> knitr -> pdf; knitr -> doc; knitr -> ppt; knitr -> html; knitr -> etc;\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+---
+
+## What is knitr?
+
+**Knitr** is an engine for report generation. It takes your R Markdown document and produces the output you requested to produce.
+
+From RStudio, you can call knitr on your R Markdown document simply by clicking on this button
+
+.center[&lt;img src = '../img/rstudio-knit-button.png' width = '30%'&gt;&lt;/img&gt;]
+
+While preparing your document, knitr does two things:
+
+1. It will run all your *code chunks* and collect the output from the code;
+
+2. It will process all your *regular text* using the [Markdown](https://en.wikipedia.org/wiki/Markdown) [syntax](https://en.wikipedia.org/wiki/Markdown#Examples).
+
+<div id="htmlwidget-6c1473a52bd4d1c2a9e7" style="width:600px;height:150px;" class="grViz html-widget "></div>
+<script type="application/json" data-for="htmlwidget-6c1473a52bd4d1c2a9e7">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = rectangle]        \n  text [label = \"Text (Markdown)\"]\n  knitr1 [label = \"knitr\nMarkdown is rendered\" shape = oval]\n  out1 [label =  \"Normal text\"]\n  code [label = \"Code chunks\"]\n  knitr2 [label = \"knitr\nMarkdown is executed\" shape = oval]\n  out2 [label =  \"Code output\n(Figure, Table, Values, etc.)\"]\n  \n  \n  text -> knitr1 -> out1; code -> knitr2 -> out2;\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+---
+
+### R Markdown: The basics 
+
+This is the *header* of the document: 
+
+
+```yaml
+---
+title: "Hello R Markdown"
+author: "Awesome Me"
+date: "2018-02-14"
+output: html_document
+---
+```
+
+Here, you can set title, date, author but you can also specify the output format (e.g. `html_document` or `pdf_document`) that will be produced when you hit "Knit".
+
+---
+
+### R Markdown: The basics 
+
+This is instead the *body* of the document.
+
+````markdown
+This is a paragraph in an R Markdown document.
+
+Below is a code chunk:
+
+```{r}
+fit = lm(dist ~ speed, data = cars)
+b   = coef(fit)
+plot(cars)
+abline(fit)
+```
+
+The slope of the regression is `r b[1]`.
+````
+
+Here you see the two different components of a R Markdown document: **Code chunks** and **text**.
+
+When you hit "Knit" you will see that on top of rendering the text, knitr has also produced the figure produced by the code chunk.
+
+---
+
+
+.center[&lt;img src ='https://bookdown.org/yihui/rmarkdown/images/hello-rmd-out.png' width = '65%'&gt;&lt;/img&gt;]
+
+
+---
+
+### In line code
+
+On top of code chunks is also possible to add code in line (for example, because you want to include a value produced by R as in the example). In the example below, on the last line we print out the value contained in `b[1]`. 
+
+````markdown
+This is a paragraph in an R Markdown document.
+
+Below is a code chunk:
+
+```{r}
+fit = lm(dist ~ speed, data = cars)
+b   = coef(fit)
+plot(cars)
+abline(fit)
+```
+
+The slope of the regression is `r b[1]`.
+````
+
+---
+
+### Basic Markdown
+
+* Heading level: Start line with `#`, `##`, `###` or `####`
+* Bold, italics: `*italics*` and `**bold**`
+* Lists: Use `1. Item`, `2. Item` or `* Item`
+* Links: Use `[text](http://www.example.com)`
+
+---
+
+### Basic chunk options
+
+You can specify a number of chunk options (a complete list is [here](https://yihui.org/knitr/options/)). Among the most important
+
+#### Hide code from output: `echo = FALSE`
+
+````markdown
+```{r echo = FALSE}
+fit = lm(dist ~ speed, data = cars)
+b   = coef(fit)
+plot(cars)
+abline(fit)
+```
+````
+
+---
+
+### Basic chunk options
+
+#### Don't run code: `eval = FALSE`
+
+````markdown
+```{r eval = FALSE}
+fit = lm(dist ~ speed, data = cars)
+b   = coef(fit)
+plot(cars)
+abline(fit)
+```
+````
+
+---
+
+### Basic chunk options
+
+#### Change figure size: `fig.width = 9, fig.height = 7`
+
+````markdown
+```{r fig.width = 9, fig.height = 7}
+fit = lm(dist ~ speed, data = cars)
+b   = coef(fit)
+plot(cars)
+abline(fit)
+```
+````
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
