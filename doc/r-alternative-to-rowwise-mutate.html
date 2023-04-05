@@ -380,12 +380,13 @@ my_dataframe &lt;-
   dplyr::rowwise() %&gt;%
   dplyr::mutate(index.avg = mean(c(Q31, Q32, Q33)))</code></pre>
 <ul>
-<li>If so you should consider using a more efficient function:</li>
+<li>If so you should consider using a more efficient function
+<code>rowMeans()</code>. Consider this example, which produces the exact
+result of the previous chunk (with
+<code>rowwise() %&gt;% mutate()</code>).</li>
 </ul>
 <pre class="r"><code>my_dataframe$index.avg &lt;- 
   rowMeans(my_dataframe %&gt;% dplyr::select(Q31, Q32, Q33))</code></pre>
-<p>This produces the exact result of the previous chunk (with
-<code>rowwise() %&gt;% mutate()</code>)</p>
 <p>Note:</p>
 <ul>
 <li><code>dplyr::select(...)</code> should contain the variables you

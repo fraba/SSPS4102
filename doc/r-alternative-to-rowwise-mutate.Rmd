@@ -27,7 +27,7 @@ my_dataframe <-
 
 ```
 
-* If so you should consider using a more efficient function:
+* If so you should consider using a more efficient function `rowMeans()`. Consider this example, which produces the exact result of the previous chunk (with `rowwise() %>% mutate()`).
 
 ```{r eval = F}
 
@@ -36,7 +36,6 @@ my_dataframe$index.avg <-
 
 ```
 
-This produces the exact result of the previous chunk (with `rowwise() %>% mutate()`)
 
 Note: 
 
