@@ -1,0 +1,43 @@
+---
+title: "Alternative to using rowwise() %>% mutate()"
+author: "Francesco Bailo"
+date: "2023-04-05"
+output: html_document
+---
+
+* Load data with
+
+```{r warning=F, message=F}
+
+library(dplyr)
+library(haven)
+
+my_dataframe <-  
+  haven::read_sav("../data/r7_merged_data_34ctry.release.sav") # <- Change this
+```
+ 
+* Does it take more than 60-80 seconds to do this?
+
+```{r eval = F}
+
+my_dataframe <- 
+  my_dataframe %>%
+  dplyr::rowwise() %>%
+  dplyr::mutate(index.avg = mean(c(Q31, Q32, Q33)))
+
+```
+
+* If so you should consider using a more efficient function:
+
+```{r eval = F}
+
+my_dataframe$index.avg <- 
+  rowMeans(my_dataframe %>% dplyr::select(Q31, Q32, Q33))
+
+```
+
+This produces the exact result of the previous chunk (with `rowwise() %>% mutate()`)
+
+Note: 
+
+* `dplyr::select(...)` should contain the variables you want to use for your index.
