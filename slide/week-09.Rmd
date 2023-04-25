@@ -73,8 +73,14 @@ class: inverse, center, middle
     
 * For your A3, make sure two submit two files: 
 
-  1. Your knitted documen (PDF, but DOCX is also fine if you prefer);
+  1. Your knitted document (PDF, but DOCX is also fine if you prefer);
   
-  2. A zip containing your project folder with your project files (at a minimum: .Rproj, .Rmd and data)
+  2. A zip containing your project folder with your project files (at a minimum: .Rproj, .Rmd and data) - 
+  
+.center[**Let's do it today (individually) with your problem set - so I can check**]
 
 ---
+
+## How to render rmd
+
+=> https://fraba.github.io/SSPS4102/doc/how-to-render-rmd
