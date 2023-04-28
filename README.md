@@ -11,3 +11,4 @@ The course adopts as textbook
 * [Weekly schedule and reading list](weekly-schedule.html)
 * [R programming schedule](r-programming-schedule.html)
 * [Slides](/slide/README.html)
+* [Online resources](online-resources.html)
