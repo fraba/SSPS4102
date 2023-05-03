@@ -3,8 +3,9 @@ title: "Regression tables with Stargazer"
 author: "Francesco Bailo"
 date: "`r Sys.Date()`"
 output:
-  html_document: default
+  pdf_document: default
   word_document: default
+  html_document: default
 ---
 
 ## Installing Stargazer 
@@ -39,6 +40,8 @@ library(stargazer)
 
 ... now we can use the function `stargazer()` with our `lm` object named `fit`.
 
+(You won't see any output if you are not reading this from a PDF)
+
 ```{r results = 'asis'}
 stargazer(fit, header = FALSE, type='latex')
 ```
@@ -55,6 +58,8 @@ We need to specify two options/arguments for this to run properly.
 3. We can specify the type of output with want. In this case, we need a `type='latex'` as the engine to produce the PDF will need a \LaTeX  formatted document. 
 
 ## Step 2b. Let's present the results in a nice table (in a HTML document)
+
+(The output looks good only if you are reading this in a browser)
 
 ```{r results = 'asis'}
 stargazer(fit, header = FALSE, type='html')

@@ -399,6 +399,7 @@ from your regressions.</p>
 <pre><code>##  R package version 5.2.3. https://CRAN.R-project.org/package=stargazer</code></pre>
 <p>… now we can use the function <code>stargazer()</code> with our
 <code>lm</code> object named <code>fit</code>.</p>
+<p>(You won’t see any output if you are not reading this from a PDF)</p>
 <pre class="r"><code>stargazer(fit, header = FALSE, type=&#39;latex&#39;)</code></pre>
 <div id="notes" class="section level3">
 <h3>Notes</h3>
@@ -422,6 +423,7 @@ need a formatted document.</p></li>
 <div id="step-2b.-lets-present-the-results-in-a-nice-table-in-a-html-document" class="section level2">
 <h2>Step 2b. Let’s present the results in a nice table (in a HTML
 document)</h2>
+<p>(The output looks good only if you are reading this in a browser)</p>
 <pre class="r"><code>stargazer(fit, header = FALSE, type=&#39;html&#39;)</code></pre>
 <table style="text-align:center">
 <tr>
