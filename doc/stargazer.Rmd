@@ -8,6 +8,12 @@ output:
   html_document: default
 ---
 
+You can download the source RMD to produce PDF and HTML files here
+
+* [stargazer.Rmd](stargazer.Rmd)
+
+
+
 ## Installing Stargazer 
 
 Make sure to install the package first!
