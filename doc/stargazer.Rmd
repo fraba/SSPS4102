@@ -3,9 +3,8 @@ title: "Regression tables with Stargazer"
 author: "Francesco Bailo"
 date: "`r Sys.Date()`"
 output:
-  html_document: default
-  word_document: default
   pdf_document: default
+  html_document: default
 ---
 
 You can download the source RMD to produce PDF and HTML files here
@@ -50,6 +49,8 @@ library(stargazer)
 ```{r results = 'asis'}
 stargazer(fit, header = FALSE, type='latex')
 ```
+
+Once you have done it, you can Knit a PDF file (in RStudio "Knit" and then "Knit to PDF"). 
 
 
 ### Notes
