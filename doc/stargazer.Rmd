@@ -1,0 +1,76 @@
+---
+title: "Regression tables with Stargazer"
+author: "Francesco Bailo"
+date: "`r Sys.Date()`"
+output:
+  html_document: default
+  word_document: default
+---
+
+## Installing Stargazer 
+
+Make sure to install the package first!
+
+```{r eval = FALSE}
+install.packages("stargazer")
+```
+
+The stargazer package helps you to print out nicely edited tables from your regressions.
+
+## Step 1. Let's produce some results from a linear model
+
+```{r}
+fit <- lm(iris$Sepal.Length ~ iris$Sepal.Width + iris$Petal.Width)
+```
+
+You can get a summary of the regression statistics with
+
+```{r}
+summary(fit)
+```
+
+## Step 2a. Let's present the results in a nice table (in a PDF)
+
+Let's load the package first...
+
+```{r}
+library(stargazer)
+```
+
+... now we can use the function `stargazer()` with our `lm` object named `fit`.
+
+```{r results = 'asis'}
+stargazer(fit, header = FALSE, type='latex')
+```
+
+
+### Notes
+
+We need to specify two options/arguments for this to run properly.
+
+1. We need to specify the option `results = 'asis'` for our code chunk: `{r results = 'asis'}`. This writes "the raw text results directly into the output document without any markups" (see [here](https://yihui.org/knitr/options/#text-output) for details).
+
+2. We need to set the argument `header = FALSE` in the `stargazer()` function, so to avoid adding the name and version of the package just before the table.
+
+3. We can specify the type of output with want. In this case, we need a `type='latex'` as the engine to produce the PDF will need a \LaTeX  formatted document. 
+
+## Step 2b. Let's present the results in a nice table (in a HTML document)
+
+```{r results = 'asis'}
+stargazer(fit, header = FALSE, type='html')
+```
+
+1. Just change to `type='html'` and then Knit an HTML file (in RStudio "Knit" and then "Knit to HTML"). 
+
+## Step 2c. Let's present the results in a nice table (for a Word document)
+
+Unfortunately you can't directly produce the table in a Word document created using the "Knit" command. But there is a workaround.
+
+1. Create the table in an HTML document (previous step).
+
+2. Open the HTML in your browser.
+
+3. Copy the table and paste it into a Word document (or a PowerPoint). 
+
+
+
