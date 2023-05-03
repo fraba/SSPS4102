@@ -1,6 +1,6 @@
 ---
 title: "SSPS4102</br>Data Analytics in the Social Sciences"
-subtitle: "Week 08</br>Normal curve & confidence intervals"
+subtitle: "Week 08</br>Probability"
 author: "Francesco Bailo"
 institute: "The University of Sydney"
 date: "Semester 1, 2023 (updated: `r Sys.Date()`)"
@@ -16,46 +16,651 @@ output:
 background-image: url(https://upload.wikimedia.org/wikipedia/en/6/6a/Logo_of_the_University_of_Sydney.svg)
 background-size: 95%
 
+<style>
+pre {
+  overflow-x: auto;
+}
+pre code {
+  word-wrap: normal;
+  white-space: pre;
+}
+</style>
+
 ```{r setup, include=FALSE}
 
 options(htmltools.dir.version = FALSE)
 
-knitr::opts_chunk$set(echo = TRUE, message = F, warning = F)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, 
+                      dev = 'svg', 
+                      fig.width = 4, 
+                      fig.height = 4, out.width="30%",
+                      fig.align="center")
+
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(sf)
+library(DiagrammeR)
+library(cowplot)
+library(haven)
+
+ggplot2::theme_set(theme_bw())
 
 ```
 
 ---
-class: center, middle
 
-# xaringan
+## Acknowledgement of Country
 
-### /ʃaː.'riŋ.ɡan/
+I would like to acknowledge the Traditional Owners of Australia and recognise their continuing connection to land, water and culture. The  University of Sydney is located on the land of the Gadigal people  of the Eora Nation. I pay my respects to their Elders, past and present.
 
 ---
 class: inverse, center, middle
 
-# Get Started
+# Lab
 
 ---
 
-# Hello World
+## c()
 
-Install the **xaringan** package from [Github](https://github.com/yihui/xaringan):
+We have already met the function `c()` (for `c`ombine). `c()` allows us to create a new vector (that is, a variable). 
 
-```{r eval=FALSE, tidy=FALSE}
-remotes::install_github("yihui/xaringan")
+I can create a binary variable with
+
+```{r}
+
+bin_var_1 <- c(1, 0, 0, 1, 0)
+
+```
+
+but also 
+
+```{r}
+
+bin_var_2 <- c(TRUE, FALSE, FALSE, TRUE, FALSE)
+
+```
+
+but also 
+
+```{r}
+
+bin_var_3 <- c(T, F, F, T, F)
+
+```
+
+Note that these variables are identical
+
+.pull-left[
+
+```{r}
+
+bin_var_1 == bin_var_2 
+
+```
+
+]
+
+.pull-right[
+
+```{r}
+
+bin_var_2 == bin_var_3 
+
+```
+
+]
+
+---
+
+## c()
+
+I can create a non-binary vector
+
+```{r}
+
+num_var <- c(1, 2, -4, 12)
+
+num_var
+
+```
+
+(But also a character vector)
+
+```{r}
+
+char_var <- c("John", "Paul", "George", "Ringo")
+
+char_var
+
 ```
 
 ---
 
-# Some Tips
+## Accessing a vector
 
-```{r tidy=FALSE, eval=TRUE, dev="svg", out.width="45%"}
-library(ggplot2)
-ggplot(mtcars) + 
-  aes(mpg, disp) + 
-  geom_point() +   #<<
-  geom_smooth()    #<<
+Once I create a vector with `c()`, I can access each element of the vector (which is *ordered*) using its index indicated within square brackets: `[i]`.
+
+So 
+
+```{r}
+char_var[1]
+```
+
+But also
+
+```{r}
+char_var[c(1, 3)]
+```
+
+`c(1, 3)` within `[]` creates an index vector, to access item 1 and 3 of the vector `char_var`.
+
+---
+
+## sample()
+
+The function `sample(x, size, replace = FALSE, prob = NULL)` does exactly that: given a vector and the number of number of items to choose, it will return a *sample* from your vector.
+
+It takes four arguments (and the first two must be specified): 
+
+* `x` is the vector from which to sample (or your *population*);
+* `size` the number of items to choose from your vector;
+* `replace` indicates if items should be replaced once selected;
+* `prob` allows you to specify the probability (or weight) of each of your item being sampled. 
+
+Let's take a sample of size two from out vector with
+
+```{r}
+sample(char_var, size = 2)
+```
+
+(If you replicate this you will likely get a different sample)
+
+---
+
+## sample()
+
+Let's now try to get a sample of size five...
+
+```{r eval = F}
+sample(char_var, size = 5)
+```
+
+But we get 
+
+> Error in sample.int(length(x), size, replace, prob) : 
+  cannot take a sample larger than the population when 'replace = FALSE'
+  
+Of course our *population* is of size 4, how can we get a *sample* of five? We can with replacement in the sampling (i.e. we replace the item back into the pool after each selection) by setting `replace = TRUE` (which by default is set to `FALSE` by the function definition)
+
+```{r}
+sample(char_var, size = 5, replace = TRUE)
 ```
 
 ---
+
+## sample()
+
+Let's now discuss the argument to specify the probability weights (`prop`). By default, `sample()` will give each item in the pool the same chance of being selected. But we could have reasons to assigns different probability weights. Note that weights don't need to sum to one, they are *probability weights* not *probabilities*. The only requirement is that we pass a weights vector of the same length of our population. 
+
+```{r}
+
+char_var
+
+sample(char_var, size = 2, prob = c(1, 2, 10, 1))
+
+```
+
+Or even
+
+```{r}
+sample(char_var, size = 2, prob = c(0, 1, 1, 0))
+```
+
+---
+
+## The Bernulli distribution with sample() 
+
+Let's simulate tossing a *fair* coin 5, 500, 5,000 and 5,000,000 times and measure the mean and variance.
+
+```{r}
+coin <- c(0, 1)
+
+coin_prob <- c(0.5, 0.5)
+
+```
+
+--
+
+```{r}
+flip <- sample(coin, size = 5, replace = T, prob = coin_prob)
+```
+
+
+.pull-left[
+```{r}
+
+mean(flip)
+
+```
+
+]
+
+.pull-right[
+
+```{r}
+var(flip)
+```
+
+]
+
+--
+
+```{r}
+flip <- sample(coin, size = 500, replace = T, prob = coin_prob)
+```
+
+
+.pull-left[
+```{r}
+
+mean(flip)
+
+```
+
+]
+
+.pull-right[
+
+```{r}
+var(flip)
+```
+
+]
+
+---
+
+## sample()
+
+```{r}
+flip <- sample(coin, size = 5000, replace = T, prob = coin_prob)
+```
+
+
+.pull-left[
+```{r}
+
+mean(flip)
+
+```
+
+]
+
+.pull-right[
+
+```{r}
+var(flip)
+```
+
+]
+
+--
+
+```{r}
+flip <- sample(coin, size = 5000000, replace = T, prob = coin_prob)
+```
+
+
+.pull-left[
+```{r}
+
+mean(flip)
+
+```
+
+]
+
+.pull-right[
+
+```{r}
+var(flip)
+```
+
+]
+
+---
+
+## The normal distribution
+
+```{r fig.width = 5, fig.height = 4, out.width = "60%"}
+require(tidyverse)
+
+star <- read.csv("../data/STAR.csv")
+
+ggplot(star, aes(x = reading)) +
+  geom_histogram(aes(y=..density..), colour="black", fill="white")+
+  geom_density(alpha=.2, fill="red") 
+
+```
+
+---
+
+## The normal distribution
+
+```{r fig.width = 5, fig.height = 4, out.width = "60%"}
+require(tidyverse)
+
+ggplot(star, aes(x = reading)) +
+  geom_histogram(aes(y=..density..), colour="black", fill="white")+
+  geom_density(alpha=.2, fill="red") +
+  geom_vline(xintercept = mean(star$reading), size = 2) #<<
+
+```
+
+---
+
+## The normal distribution
+
+```{r fig.width = 5, fig.height = 3, out.width = "60%"}
+require(tidyverse)
+
+ggplot(star, aes(x = reading)) +
+  geom_histogram(aes(y=..density..), colour="black", fill="white")+
+  geom_density(alpha=.2, fill="red") +
+  geom_vline(xintercept = mean(star$reading), size = .5) +
+  geom_vline(xintercept = mean(star$reading) - sd(star$reading) * 2, size = 2) + #<<
+  geom_vline(xintercept = mean(star$reading) + sd(star$reading) * 2, size = 2) #<<
+
+```
+
+---
+
+## The normal distribution
+
+```{r fig.width = 5, fig.height = 3, out.width = "50%", echo = F}
+require(tidyverse)
+
+ggplot(star, aes(x = reading)) +
+  geom_histogram(aes(y=..density..), colour="black", fill="white")+
+  geom_density(alpha=.2, fill="red") +
+  geom_vline(xintercept = mean(star$reading), size = .5) +
+  geom_vline(xintercept = mean(star$reading) - sd(star$reading) * 2, size = 2) + #<<
+  geom_vline(xintercept = mean(star$reading) + sd(star$reading) * 2, size = 2) #<<
+
+```
+
+By definition, no matter the size of its variation, in a normal distribution, we expect to find about 95% of the observation within two standard deviations ($\sigma$) from the mean ($\mu$) in both directions. Let's check!  
+
+```{r}
+
+sum(star$reading > 
+      mean(star$reading) - 2 * sd(star$reading) &
+    star$reading <
+      mean(star$reading) + 2 * sd(star$reading)) /
+  nrow(star)
+
+```
+
+---
+
+## rnorm()
+
+With the function `rnorm(n, mean = 0, sd = 1)` we can generate values from a normal distribution of our choice. 
+
+* `n` identifies the number of observations we want to generate;
+* `mean` set the $\mu$ of the generating normal distribution; and
+* `sd` its $\sigma$ (remember, $\sigma^2$ is the variance, which is not in the unit of the variable). 
+
+---
+
+## rnorm()
+
+Let's generate three different normal distribution: $N(0,1)$, $N(2,1)$ and $N(0,4)$.
+
+(Again remember that the standard deviation ($\sigma$) is the square root of the variance ($\sigma^2$) while note that `sqrt()` is the square root function).
+
+```{r}
+
+norm_var_1 <- rnorm(1000, mean = 0, sd = sqrt(1))
+
+norm_var_2 <- rnorm(1000, mean = 2, sd = sqrt(1))
+
+norm_var_3 <- rnorm(1000, mean = 0, sd = sqrt(4))
+
+```
+
+---
+
+## rnorm()
+
+
+```{r fig.width = 6, fig.height = 4, out.width="50%"}
+
+ggplot() +
+  geom_density(data = data.frame(norm_var_1), aes(norm_var_1), fill = "red", alpha = .35) +
+  geom_density(data = data.frame(norm_var_2), aes(norm_var_2), fill = "blue", alpha = .35) +
+  geom_density(data = data.frame(norm_var_3), aes(norm_var_3),fill = "green", alpha = .35) +
+  geom_text(data = data.frame(label = c("N(0,1)", "N(2,1)", "N(0,4)"),
+                              x = c(0, 2, 0),
+                              y = c(.41, .42, .23)),
+            aes(x = x, y = y, label = label))
+  
+```
+
+---
+
+## for()
+
+As every other computer language, R also allows for for-loop operations.
+
+A for-loop will run a chunk of code multiple times. Here an example,
+
+```{r}
+
+for (i in c(1,2,3,4,5)) {
+  print(i)
+}
+
+```
+
+As expected, this outputs (thanks to the function `print()`) five times the content of the variable `i`. 
+
+Yet the variable `i` (but you can use a different variable name) has a different value at each iteration of the loop. We specify this with `i in c(1,2,3,4,5)` (which for simplicity we can replace with `i in 1:5`).
+
+---
+
+## The for-loop to test the central limit theorem
+
+As $n$ increases, the *standardised* sample mean of X can be approximated by the *standard* normal distribution:
+
+$$\frac{\overline{X}-E(X)}{\sqrt{V(X)/n}} \,\,\, \stackrel{\textrm{approx.}}{\sim} \,\,\, N \textrm{(0, 1)}$$
+#### Case Support for a political candidate in the population
+
+* 60% of voters in a country support the candidate
+
+So
+
+* $E(support) = p = 0.60$
+
+* $V(support) = p(1-p) = 0.60 \times (1-0.60) = 0.24$
+
+Let's create an *empty* vector first to store our results:
+
+```{r}
+stand_sample_mean <- c() #<<
+```
+
+---
+
+### The for-loop to test the central limit theorem
+
+Let's loop $n$ times and each time we
+
+1. create a new sample from a binary random variable (with `prob = c(0.6, 0.4)`) 
+
+2. calculate the *standardised* sample mean with the formula above
+
+$$\frac{\overline{support_i} - E(support)}{\sqrt{V(support)/n}} = \frac{\overline{support_i} - 0.60}{\sqrt{0.24/n}}$$
+---
+
+### The for-loop to test the central limit theorem
+
+We start with 10 loops
+
+```{r}
+
+stand_sample_mean <- c()
+
+n_loops <- 10 #<<
+my_sample_size <- 1000
+
+for (i in 1:n_loops) { # Loop starts here #<<
+  loop_sample <- 
+    sample(c(1,0), 
+           size = my_sample_size, 
+           replace = TRUE, 
+           prob = c(0.6, 0.4))
+  
+  stand_sample_mean[i] <- # standardised sample mean formula #<<
+    (mean(loop_sample)-0.60) / #<<
+    sqrt(0.24 / my_sample_size) #<<
+  
+} # ... and loop ends here #<<
+```
+
+---
+
+```{r out.width = "50%"}
+ggplot() + 
+  geom_histogram(data = 
+                   # From our simulation
+                   data.frame(x = stand_sample_mean), #<<
+                 aes(x = x, y = ..density..)) +
+  geom_density(data = 
+                 # This is the N(0,1)
+                 data.frame(x = rnorm(1000, 0, 1)), #<< 
+               aes(x)) 
+```
+
+---
+
+### The for-loop to test the central limit theorem
+
+Let's now go to 100 loops
+
+```{r}
+
+stand_sample_mean <- c()
+
+n_loops <- 100 #<<
+my_sample_size <- 1000
+
+for (i in 1:n_loops) { # Loop starts here #<<
+  loop_sample <- 
+    sample(c(1,0), 
+           size = my_sample_size, 
+           replace = TRUE, 
+           prob = c(0.6, 0.4))
+  
+  stand_sample_mean[i] <- # standardised sample mean formula #<<
+    (mean(loop_sample)-0.60) / #<<
+    sqrt(0.24 / my_sample_size) #<<
+  
+} # ... and loop ends here #<<
+```
+
+---
+
+```{r out.width = "50%"}
+ggplot() + 
+  geom_histogram(data = 
+                   # From our simulation
+                   data.frame(x = stand_sample_mean), #<<
+                 aes(x = x, y = ..density..)) +
+  geom_density(data = 
+                 # This is the N(0,1)
+                 data.frame(x = rnorm(1000, 0, 1)), #<< 
+               aes(x)) 
+```
+
+---
+
+### The for-loop to test the central limit theorem
+
+... 1000 loops
+
+```{r}
+
+stand_sample_mean <- c()
+
+n_loops <- 1000 #<<
+my_sample_size <- 1000
+
+for (i in 1:n_loops) { # Loop starts here #<<
+  loop_sample <- 
+    sample(c(1,0), 
+           size = my_sample_size, 
+           replace = TRUE, 
+           prob = c(0.6, 0.4))
+  
+  stand_sample_mean[i] <- # standardised sample mean formula #<<
+    (mean(loop_sample)-0.60) / #<<
+    sqrt(0.24 / my_sample_size) #<<
+  
+} # ... and loop ends here #<<
+```
+
+---
+
+```{r out.width = "50%"}
+ggplot() + 
+  geom_histogram(data = 
+                   # From our simulation
+                   data.frame(x = stand_sample_mean), #<<
+                 aes(x = x, y = ..density..)) +
+  geom_density(data = 
+                 # This is the N(0,1)
+                 data.frame(x = rnorm(1000, 0, 1)), #<< 
+               aes(x)) 
+```
+
+---
+
+### The for-loop to test the central limit theorem
+
+... 10000 loops
+
+```{r}
+
+stand_sample_mean <- c()
+
+n_loops <- 10000 #<<
+my_sample_size <- 1000
+
+for (i in 1:n_loops) { # Loop starts here #<<
+  loop_sample <- 
+    sample(c(1,0), 
+           size = my_sample_size, 
+           replace = TRUE, 
+           prob = c(0.6, 0.4))
+  
+  stand_sample_mean[i] <- # standardised sample mean formula #<<
+    (mean(loop_sample)-0.60) / #<<
+    sqrt(0.24 / my_sample_size) #<<
+  
+} # ... and loop ends here #<<
+```
+
+---
+
+```{r out.width = "50%"}
+ggplot() + 
+  geom_histogram(data = 
+                   # From our simulation
+                   data.frame(x = stand_sample_mean), #<<
+                 aes(x = x, y = ..density..)) +
+  geom_density(data = 
+                 # This is the N(0,1)
+                 data.frame(x = rnorm(1000, 0, 1)), #<< 
+               aes(x)) 
+```

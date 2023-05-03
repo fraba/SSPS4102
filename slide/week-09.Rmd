@@ -16,46 +16,71 @@ output:
 background-image: url(https://upload.wikimedia.org/wikipedia/en/6/6a/Logo_of_the_University_of_Sydney.svg)
 background-size: 95%
 
+<style>
+pre {
+  overflow-x: auto;
+}
+pre code {
+  word-wrap: normal;
+  white-space: pre;
+}
+</style>
+
 ```{r setup, include=FALSE}
 
 options(htmltools.dir.version = FALSE)
 
-knitr::opts_chunk$set(echo = TRUE, message = F, warning = F)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, 
+                      dev = 'svg', 
+                      fig.width = 4, 
+                      fig.height = 4, out.width="30%",
+                      fig.align="center")
+
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(sf)
+library(DiagrammeR)
+library(cowplot)
+library(haven)
+
+ggplot2::theme_set(theme_bw())
 
 ```
 
 ---
-class: center, middle
 
-# xaringan
+## Acknowledgement of Country
 
-### /ʃaː.'riŋ.ɡan/
+I would like to acknowledge the Traditional Owners of Australia and recognise their continuing connection to land, water and culture. The  University of Sydney is located on the land of the Gadigal people  of the Eora Nation. I pay my respects to their Elders, past and present.
 
 ---
 class: inverse, center, middle
 
-# Get Started
+# A1 Feedback
 
 ---
 
-# Hello World
+## A1 Feedback (for A3)
 
-Install the **xaringan** package from [Github](https://github.com/yihui/xaringan):
+* Always keep the focus of your report on **your** argument (what is going on?) and **your** voice (what **you** think is going on?, why?, how?). 
 
-```{r eval=FALSE, tidy=FALSE}
-remotes::install_github("yihui/xaringan")
-```
+    1. Don't be all over the place: be selective with the (quantitative) information you present;
+    
+    2. Use quantitative information (analysis, results, figures, tables) to support your argument. Not the other way around.
+    
+    3. Don't introduce quantitative information that you can't explain and convincingly integrate into your argument. *A data report is not a list*. 
+    
+* For your A3, make sure two submit two files: 
 
----
-
-# Some Tips
-
-```{r tidy=FALSE, eval=TRUE, dev="svg", out.width="45%"}
-library(ggplot2)
-ggplot(mtcars) + 
-  aes(mpg, disp) + 
-  geom_point() +   #<<
-  geom_smooth()    #<<
-```
+  1. Your knitted document (PDF, but DOCX is also fine if you prefer);
+  
+  2. A zip containing your project folder with your project files (at a minimum: .Rproj, .Rmd and data) - 
+  
+.center[**Let's do it today (individually) with your problem set - so I can check**]
 
 ---
+
+## How to render rmd
+
+=> https://fraba.github.io/SSPS4102/doc/how-to-render-rmd
