@@ -3,9 +3,9 @@ title: "Regression tables with Stargazer"
 author: "Francesco Bailo"
 date: "`r Sys.Date()`"
 output:
-  pdf_document: default
-  word_document: default
   html_document: default
+  word_document: default
+  pdf_document: default
 ---
 
 You can download the source RMD to produce PDF and HTML files here
