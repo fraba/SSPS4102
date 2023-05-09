@@ -1,6 +1,6 @@
 ---
 title: "SSPS4102</br>Data Analytics in the Social Sciences"
-subtitle: "Week 11</br>Multiple regression"
+subtitle: "Week 11</br>predict()"
 author: "Francesco Bailo"
 institute: "The University of Sydney"
 date: "Semester 1, 2023 (updated: `r Sys.Date()`)"
@@ -16,46 +16,203 @@ output:
 background-image: url(https://upload.wikimedia.org/wikipedia/en/6/6a/Logo_of_the_University_of_Sydney.svg)
 background-size: 95%
 
+<style>
+pre {
+  overflow-x: auto;
+}
+pre code {
+  word-wrap: normal;
+  white-space: pre;
+}
+</style>
+
 ```{r setup, include=FALSE}
 
 options(htmltools.dir.version = FALSE)
 
-knitr::opts_chunk$set(echo = TRUE, message = F, warning = F)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, 
+                      dev = 'svg', 
+                      fig.width = 4, 
+                      fig.height = 4, out.width="30%",
+                      fig.align="center")
+
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(sf)
+library(DiagrammeR)
+library(cowplot)
+library(haven)
+
+ggplot2::theme_set(theme_bw())
 
 ```
 
 ---
-class: center, middle
 
-# xaringan
+## Acknowledgement of Country
 
-### /ʃaː.'riŋ.ɡan/
+I would like to acknowledge the Traditional Owners of Australia and recognise their continuing connection to land, water and culture. The  University of Sydney is located on the land of the Gadigal people  of the Eora Nation. I pay my respects to their Elders, past and present.
 
 ---
 class: inverse, center, middle
 
-# Get Started
+# predict()
 
 ---
 
-# Hello World
+## Example: US midterm elections<sup>1</sup>
 
-Install the **xaringan** package from [Github](https://github.com/yihui/xaringan):
+| Variable name | Description |
+| ------------- | ----------- |
+| `year` | midterm election year |
+| `president` | name of president |
+| `party` | Democrat or Republican |
+| `approval` | Gallup approval rating at midterms |
+| `seat.change` | change in the number of House seat's for the president's party |
+| `rdi.change` | change in real disposable income over the year before |
 
-```{r eval=FALSE, tidy=FALSE}
-remotes::install_github("yihui/xaringan")
+
+.footnote[[1] Slides from http://www.mattblackwell.org/files/teaching/gov50/regression-ii.pdf]
+
+
+---
+
+```{r}
+midterms <- read.csv("../data/midterms.csv")
+
+```
+
+```{r echo = F}
+
+midterms %>%
+  slice(1:5) %>%
+  kable()
 ```
 
 ---
 
-# Some Tips
+## Linear regression
 
-```{r tidy=FALSE, eval=TRUE, dev="svg", out.width="45%"}
-library(ggplot2)
-ggplot(mtcars) + 
-  aes(mpg, disp) + 
-  geom_point() +   #<<
-  geom_smooth()    #<<
+```{r}
+fit <- lm(seat.change ~ approval, data = midterms)
+
+summary(fit)
 ```
 
 ---
+
+## Using predict()
+
+The function `predict()` takes the result from a `lm()` function and any value for the $X$ and predict, based on the regression line, the average (expected )value for $Y$ given $x$.
+
+```{r}
+summary(midterms$approval)
+```
+
+
+```{r}
+my_new_data <- 
+  data.frame(approval = c(20, 80))
+
+predict(fit, newdata = my_new_data)
+```
+
+---
+
+## Using predict()
+
+To obtain the 95% confidence intervals around the mean the predictions, we can add `interval = "confidence"`.
+
+```{r}
+seat.change_prediction <- 
+  predict(fit, newdata = my_new_data, interval = "confidence")
+seat.change_prediction
+```
+
+---
+
+We can plot the results from predict with 
+
+```{r out.width = "40%"}
+# First we need to create a data.frame adding the `approval` rate
+# that we want to use as input values
+data.frame(seat.change_prediction,
+           approval = c(20, 80)) %>% 
+# Then we plot  
+  ggplot(aes(y = fit, 
+             ymin = lwr, ymax = upr, 
+             x = approval)) +
+  geom_point() +
+  geom_errorbar() +
+  labs(y = "seat.change")
+```
+
+---
+
+## Example: US midterm elections<sup>1</sup>
+
+| Variable name | Description |
+| ------------- | ----------- |
+| `year` | midterm election year |
+| `president` | name of president |
+| `party` | Democrat or Republican |
+| `approval` | Gallup approval rating at midterms |
+| `seat.change` | change in the number of House seat's for the president's party |
+| `rdi.change` | change in real disposable income over the year before |
+
+
+.footnote[[1] Slides from http://www.mattblackwell.org/files/teaching/gov50/regression-ii.pdf]
+
+
+
+---
+
+## Using predict() with two predictors
+
+```{r}
+fit <- lm(seat.change ~ approval + rdi.change, data = midterms)
+
+my_new_data <- 
+  data.frame(approval = c(20, 50, 80),
+             rdi.change = median(midterms$rdi.change, na.rm = T))
+
+```
+
+What is happening with `my_new_data`?
+
+--
+
+I have added three values for `approval` kept `rdi.change` fixes at the level of the median value for the observations.
+
+```{r echo = F}
+my_new_data %>%
+  kable()
+```
+
+
+---
+
+Let's predict and plot...
+
+```{r out.width = '40%'}
+seat.change_prediction <- 
+  predict(fit, newdata = my_new_data, interval = "confidence")
+
+data.frame(seat.change_prediction,
+           my_new_data) %>% 
+# Then we plot  
+  ggplot(aes(y = fit, 
+             ymin = lwr, ymax = upr, 
+             x = approval)) +
+  geom_point() +
+  geom_errorbar() +
+  labs(y = "seat.change")
+```
+
+---
+
+* The error plot, with estimate and confidence interval is among the best way to present the result of your models (usually, better the the regression table). 
+
+* The error plot allows to explore "what-if" scenario based on your regression analysis (that is, using the line of best fit to predict $Y$ values)
+

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>SSPS4102Data Analytics in the Social Sciences</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Francesco Bailo" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# SSPS4102</br>Data Analytics in the Social Sciences
+]
+.subtitle[
+## Week 11</br>predict()
+]
+.author[
+### Francesco Bailo
+]
+.institute[
+### The University of Sydney
+]
+.date[
+### Semester 1, 2023 (updated: 2023-05-10)
+]
+
+---
+
+
+background-image: url(https://upload.wikimedia.org/wikipedia/en/6/6a/Logo_of_the_University_of_Sydney.svg)
+background-size: 95%
+
+&lt;style&gt;
+pre {
+  overflow-x: auto;
+}
+pre code {
+  word-wrap: normal;
+  white-space: pre;
+}
+&lt;/style&gt;
+
+
+
+---
+
+## Acknowledgement of Country
+
+I would like to acknowledge the Traditional Owners of Australia and recognise their continuing connection to land, water and culture. The  University of Sydney is located on the land of the Gadigal people  of the Eora Nation. I pay my respects to their Elders, past and present.
+
+---
+class: inverse, center, middle
+
+# predict()
+
+---
+
+## Example: US midterm elections&lt;sup&gt;1&lt;/sup&gt;
+
+| Variable name | Description |
+| ------------- | ----------- |
+| `year` | midterm election year |
+| `president` | name of president |
+| `party` | Democrat or Republican |
+| `approval` | Gallup approval rating at midterms |
+| `seat.change` | change in the number of House seat's for the president's party |
+| `rdi.change` | change in real disposable income over the year before |
+
+
+.footnote[[1] Slides from http://www.mattblackwell.org/files/teaching/gov50/regression-ii.pdf]
+
+
+---
+
+
+```r
+midterms &lt;- read.csv("../data/midterms.csv")
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; year &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; president &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; party &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; approval &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; seat.change &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; rdi.change &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1946 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Truman &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; D &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 33 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -55 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1950 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Truman &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; D &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 39 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -29 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8.2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1954 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Eisenhower &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; R &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 61 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1958 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Eisenhower &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; R &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 57 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -47 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1962 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Kennedy &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; D &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 61 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+## Linear regression
+
+
+```r
+fit &lt;- lm(seat.change ~ approval, data = midterms)
+
+summary(fit)
+```
+
+```
+## 
+## Call:
+## lm(formula = seat.change ~ approval, data = midterms)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -31.348 -10.913   6.091  11.473  26.867 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -96.8448    21.2569  -4.556 0.000324 ***
+## approval      1.4244     0.4094   3.479 0.003096 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 17.41 on 16 degrees of freedom
+##   (1 observation deleted due to missingness)
+## Multiple R-squared:  0.4307,	Adjusted R-squared:  0.3951 
+## F-statistic: 12.11 on 1 and 16 DF,  p-value: 0.003096
+```
+
+---
+
+## Using predict()
+
+The function `predict()` takes the result from a `lm()` function and any value for the `\(X\)` and predict, based on the regression line, the average (expected )value for `\(Y\)` given `\(x\)`.
+
+
+```r
+summary(midterms$approval)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   33.00   41.00   49.00   50.26   59.50   66.00
+```
+
+
+
+```r
+my_new_data &lt;- 
+  data.frame(approval = c(20, 80))
+
+predict(fit, newdata = my_new_data)
+```
+
+```
+##         1         2 
+## -68.35610  17.10995
+```
+
+---
+
+## Using predict()
+
+To obtain the 95% confidence intervals around the mean the predictions, we can add `interval = "confidence"`.
+
+
+```r
+seat.change_prediction &lt;- 
+  predict(fit, newdata = my_new_data, interval = "confidence")
+seat.change_prediction
+```
+
+```
+##         fit       lwr       upr
+## 1 -68.35610 -96.58698 -40.12522
+## 2  17.10995  -9.56615  43.78605
+```
+
+---
+
+We can plot the results from predict with 
+
+
+```r
+# First we need to create a data.frame adding the `approval` rate
+# that we want to use as input values
+data.frame(seat.change_prediction,
+           approval = c(20, 80)) %&gt;% 
+# Then we plot  
+  ggplot(aes(y = fit, 
+             ymin = lwr, ymax = upr, 
+             x = approval)) +
+  geom_point() +
+  geom_errorbar() +
+  labs(y = "seat.change")
+```
+
+&lt;img src="week-11_files/figure-html/unnamed-chunk-7-1.svg" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Example: US midterm elections&lt;sup&gt;1&lt;/sup&gt;
+
+| Variable name | Description |
+| ------------- | ----------- |
+| `year` | midterm election year |
+| `president` | name of president |
+| `party` | Democrat or Republican |
+| `approval` | Gallup approval rating at midterms |
+| `seat.change` | change in the number of House seat's for the president's party |
+| `rdi.change` | change in real disposable income over the year before |
+
+
+.footnote[[1] Slides from http://www.mattblackwell.org/files/teaching/gov50/regression-ii.pdf]
+
+
+
+---
+
+## Using predict() with two predictors
+
+
+```r
+fit &lt;- lm(seat.change ~ approval + rdi.change, data = midterms)
+
+my_new_data &lt;- 
+  data.frame(approval = c(20, 50, 80),
+             rdi.change = median(midterms$rdi.change, na.rm = T))
+```
+
+What is happening with `my_new_data`?
+
+--
+
+I have added three values for `approval` kept `rdi.change` fixes at the level of the median value for the observations.
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; approval &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; rdi.change &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.05 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 50 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.05 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.05 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+
+Let's predict and plot...
+
+
+```r
+seat.change_prediction &lt;- 
+  predict(fit, newdata = my_new_data, interval = "confidence")
+
+data.frame(seat.change_prediction,
+           my_new_data) %&gt;% 
+# Then we plot  
+  ggplot(aes(y = fit, 
+             ymin = lwr, ymax = upr, 
+             x = approval)) +
+  geom_point() +
+  geom_errorbar() +
+  labs(y = "seat.change")
+```
+
+&lt;img src="week-11_files/figure-html/unnamed-chunk-10-1.svg" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+* The error plot, with estimate and confidence interval is among the best way to present the result of your models (usually, better the the regression table). 
+
+* The error plot allows to explore "what-if" scenario based on your regression analysis (that is, using the line of best fit to predict `\(Y\)` values)
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

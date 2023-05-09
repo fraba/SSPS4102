@@ -37,12 +37,12 @@ library(DiagrammeR)
 
 ## Acknowledgement of Country
 
-* would like to acknowledge the Traditional Owners of Australia and  recognise their continuing connection to land, water and culture. The  University of Sydney is located on the land of the Gadigal people  of the Eora Nation. * pay my respects to their Elders, past and present.
+I would like to acknowledge the Traditional Owners of Australia and recognise their continuing connection to land, water and culture. The  University of Sydney is located on the land of the Gadigal people  of the Eora Nation. I pay my respects to their Elders, past and present.
 
 
 ---
 
-## Let's start with a question:
+## Today's class
 
 .center[<img src ='../img/menti-week-02.png' width = '30%'></img> 
 
