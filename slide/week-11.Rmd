@@ -216,3 +216,4 @@ data.frame(seat.change_prediction,
 
 * The error plot allows to explore "what-if" scenario based on your regression analysis (that is, using the line of best fit to predict $Y$ values)
 
+
