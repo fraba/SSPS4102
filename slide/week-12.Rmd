@@ -1,6 +1,6 @@
 ---
 title: "SSPS4102</br>Data Analytics in the Social Sciences"
-subtitle: "Week 12</br>Logistic regression and advanced topics"
+subtitle: "Week 12</br>Logistic regression and advanced topics (Networks and Space)"
 author: "Francesco Bailo"
 institute: "The University of Sydney"
 date: "Semester 1, 2023 (updated: `r Sys.Date()`)"
@@ -16,46 +16,418 @@ output:
 background-image: url(https://upload.wikimedia.org/wikipedia/en/6/6a/Logo_of_the_University_of_Sydney.svg)
 background-size: 95%
 
+<style>
+pre {
+  overflow-x: auto;
+}
+pre code {
+  word-wrap: normal;
+  white-space: pre;
+}
+</style>
+
 ```{r setup, include=FALSE}
 
 options(htmltools.dir.version = FALSE)
 
-knitr::opts_chunk$set(echo = TRUE, message = F, warning = F)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, 
+                      dev = 'svg', 
+                      fig.width = 4, 
+                      fig.height = 4, out.width="30%",
+                      fig.align="center")
+
+library(knitr)
+library(kableExtra)
+library(tidyverse)
+library(sf)
+library(DiagrammeR)
+library(cowplot)
+library(haven)
+
+ggplot2::theme_set(theme_bw())
+
+options(scipen = 100)
 
 ```
 
 ---
-class: center, middle
 
-# xaringan
+## Acknowledgement of Country
 
-### /ʃaː.'riŋ.ɡan/
+I would like to acknowledge the Traditional Owners of Australia and recognise their continuing connection to land, water and culture. The  University of Sydney is located on the land of the Gadigal people  of the Eora Nation. I pay my respects to their Elders, past and present.
+
 
 ---
+
 class: inverse, center, middle
 
-# Get Started
+# Logistic regression
 
 ---
 
-# Hello World
+## Why can't we just use a linear regression?
 
-Install the **xaringan** package from [Github](https://github.com/yihui/xaringan):
+Linear regression assumes the dependent variable $Y_i$ to be **quantitative**, that is, to be a variable scoped over a infinite, continuous range.   
 
-```{r eval=FALSE, tidy=FALSE}
-remotes::install_github("yihui/xaringan")
+$$Y_i = \underbrace{\alpha}_{intercept} + \underbrace{\beta}_{slope} \times X_i + \underbrace{\epsilon_i}_{error\:term}$$
+
+Notably, the regression line which is the line that best fits the points (defined by the equation above), does not *begins* or *ends*. In fact, you can plug any number you can think of as value of $X$ and obtained an estimated $\widehat{Y}$. 
+
+This problem is called **extrapolation**. Extrapolation means that you get a trend from your data points, a regression line, and use it to predict outside of the range of your sample data and the "scope of the model". 
+
+---
+
+## Why can't we just use a linear regression?
+
+.center[<img src = 'https://imgs.xkcd.com/comics/extrapolating.png' width = '90%'></img>]
+
+Source: xkcd.com
+
+
+---
+
+## Why can't we just use a linear regression?
+
+.center[<img src = 'https://imgs.xkcd.com/comics/sustainable.png' width = '80%'></img>]
+
+Source: xkcd.com
+
+
+---
+
+## When is (probably) OK to use a linear regression
+
+#### Variables that are continuous but can only assume positive values
+
+$$votes = \alpha + \beta_1 \times approval$$
+The model might also estimate that given a (very low) approval rate, the candidate is *likely* to receive a *negative* number of votes. This clearly doesn't make sense and yet a regression line can still be a very useful (therefore justifiable) approximation of what is going on in the real world.
+
+#### Variables that are continuous but can only assume values in the range 0 to 1 (proportions).
+
+Similarly to above, if we express $votes$ as a proportion of total votes, it is still justifiable to use a regression line, even if doesn't make any sense to receive 105% of the votes.  
+
+---
+
+## When is (probably) OK to use a linear regression
+
+#### Variables that are continuous but can only assume values in the range 1 to 5 (e.g Likert scale answer).
+
+If our dependent variable is a response of a survey with values limited to a small range, we can probably still treat it as a continuous variable (although the variable is more accurately an *ordinal* variable: categorical but ordered).  
+
+## Is it OK to use a linear regression with a binary outcome variable?
+
+Although it is possible to do it - as the parameters the regression is going to estimate for you are *meaningful* in their interpretation (e.g. coefficients, p-values), it is more appropriate to treat the problem as a *classification* problem and use a **logistic regression** (more on this soon!). 
+
+---
+
+## When is (definitely) NOT OK to use a linear regression
+
+
+Suppose we have this data set (James et al., 2021, p. 131)
+
+\begin{equation}
+    Y =
+    \begin{cases}
+      1 & \text{if}\ stroke; \\
+      2 & \text{if}\ drug\ overdose; \\
+      3 & \text{if}\ epileptic\ seasure.
+    \end{cases}
+\end{equation}
+
+ Clearly, in this circumstance although the different cases are coded as a *quantitative* variable, they in fact are a *qualitative* response!
+ 
+> To summarize, there are at least two reasons not to perform classification
+using a regression method: (a) a regression method cannot accommodate
+a qualitative response with more than two classes; (b) a regression
+method will not provide meaningful estimates of $Pr(Y |X)$, even with just
+two classes. (James et al., 2021, p. 132)
+ 
+---
+
+## Logistic regression
+
+* A logistic regression is model that works similarly to the linear regression. 
+
+* But the key difference is that for any value of the independent variable $X$, the logistic regression will estimate (with a *logistic function*) outcomes that are *limited* to values between 0 and 1.
+
+$$log \left( \frac{p(X)}{1-p(X)} \right)  = \beta_0 + \beta_1 \times X$$
+* The left-hand side of the logistic regression equation, which we call *logit* or *log odds* is 
+
+    * not anymore the *average change* in $Y$ associated with a one-unit change in $X$; instead, 
+    
+    * in a logistic regression, a one-unit change in $X$, changes the *log odds* by $B_1$.
+
+---
+
+## Logistic regression
+
+```{r echo = F}
+
+require(ISLR2)
+
+```
+
+```{r echo = F}
+
+Default %>%
+  sample_n(2) %>%
+  kable()
+
+```
+
+
+```{r echo = F, out.width='100%', fig.width=10, fig.height=4}
+
+require(cowplot)
+plot_grid(
+  
+Default %>%
+  dplyr::sample_n(1000) %>%
+  ggplot(aes(x = balance, y = income, 
+             colour = default, shape = default)) +
+  geom_point() + 
+  scale_shape_manual(values=c(1, 3)) + 
+  scale_colour_manual(values=c("blue", "orange")),
+
+Default %>%
+  ggplot(aes(x = default, y = balance, 
+             fill = default)) +
+  scale_fill_manual(values=c("blue", "orange")) +
+  geom_boxplot(),
+
+Default %>%
+  ggplot(aes(x = default, y = income, 
+             fill = default)) +
+  scale_fill_manual(values=c("blue", "orange")) +
+  geom_boxplot(),
+
+ncol = 3, rel_widths = c(1, .6, .6))
+
 ```
 
 ---
 
-# Some Tips
+## Logistic regression: Classification problem
 
-```{r tidy=FALSE, eval=TRUE, dev="svg", out.width="45%"}
-library(ggplot2)
-ggplot(mtcars) + 
-  aes(mpg, disp) + 
-  geom_point() +   #<<
-  geom_smooth()    #<<
+```{r out.width='50%', fig.width = 4, fig.height = 3}
+
+require(ISLR2) # For the `Default` data set
+
+Default <- 
+  Default %>%
+  dplyr::mutate(default_prob = ifelse(default == "Yes", 1, 0))
+
+ggplot(Default, aes(x = balance, y = default_prob, colour = default)) +
+  scale_colour_manual(values=c("blue", "orange")) +
+  geom_point()
+
 ```
 
 ---
+
+### Prediction with linear regression and binary data
+
+
+```{r, out.width='80%', fig.width=5, fig.height=2.8}
+lm_fit <- lm(default_prob ~ balance,  data = Default)
+
+Default$lm_prediction <- predict(lm_fit, newdata = Default) #<<
+
+ggplot(Default, aes(x = balance, y = default_prob, colour = default)) +
+  geom_line(aes(y = lm_prediction), colour = 'red') + #<<
+  scale_colour_manual(values=c("blue", "orange")) +
+  geom_point()
+
+```
+
+---
+
+### Prediction with linear regression and binary data
+
+
+```{r, out.width='80%', fig.width=5, fig.height=2.8, echo=F}
+lm_fit <- lm(default_prob ~ balance,  data = Default)
+
+Default$lm_prediction <- predict(lm_fit, newdata = Default) #<<
+
+ggplot(Default, aes(x = balance, y = default_prob, colour = default)) +
+  geom_line(aes(y = lm_prediction), colour = 'red') + #<<
+  scale_colour_manual(values=c("blue", "orange")) +
+  geom_point()
+
+```
+
+* Clearly, since $Y$ is binary, the regression line does here a poor job.
+
+* The best line of fit, will never meet a single `default = 1` point! 
+
+---
+
+### Logistic regression in R
+
+```{r}
+glm_fit <- 
+  glm(default_prob ~ balance, data = Default, family = binomial) #<<
+
+glm_fit
+```
+
+
+If the interpretation of the p-value doesn't change, the intepretation of the coefficients is differnet. Instead of a change in $Y$ for a one-unit change in $X$ is now a *log odds*, which we will need to transform to communicate 0-to-1 predictions!
+
+---
+
+### Logistic regression in R
+
+```{r}
+summary(glm_fit)
+```
+
+---
+
+### Prediction with logistic regression
+
+```{r eval = F}
+Default$glm_prediction <- 
+  predict(glm_fit, newdata = Default, type = "response") #<<
+
+ggplot(Default, aes(x = balance, y = default_prob, colour = default)) +
+  geom_line(aes(y = glm_prediction), colour = 'red') + #<<
+  scale_colour_manual(values=c("blue", "orange")) +
+  geom_point()
+```
+
+
+
+.pull-left[
+
+```{r out.width='100%', fig.width=5, fig.height=4, echo = F}
+Default$glm_prediction <- 
+  predict(glm_fit, newdata = Default, type = "response") #<<
+
+ggplot(Default, aes(x = balance, y = default_prob, colour = default)) +
+  geom_line(aes(y = glm_prediction), colour = 'red') + #<<
+  scale_colour_manual(values=c("blue", "orange")) +
+  geom_point()
+```
+
+]
+
+.pull-right[
+**Note**: `type = "response"` asks to output probabilities of the form `P(Y=1|X)`, so 0-to-1, instead of `log odds`.
+]
+
+---
+
+#### Prediction with linear regression vs logistic regression
+
+```{r out.width='100%', fig.width=5, fig.height=2.5, echo = F}
+
+plot_grid(
+  
+  ggplot(Default, aes(x = balance, y = default_prob, colour = default)) +
+    geom_line(aes(y = lm_prediction), colour = 'red') + #<<
+    scale_colour_manual(values=c("blue", "orange")) +
+    geom_point() + guides(colour = FALSE),
+  
+  ggplot(Default, aes(x = balance, y = default_prob, colour = default)) +
+    geom_line(aes(y = glm_prediction), colour = 'red') + #<<
+    scale_colour_manual(values=c("blue", "orange")) +
+    geom_point() + guides(colour = FALSE),
+  
+  ncol = 2,  labels = c("linear", "logistic"))
+```
+
+---
+
+### Multiple logistic regression 
+
+```{r echo = F}
+
+Default %>%
+  select(default:income) %>%
+  sample_n(2) %>%
+  kable()
+
+```
+
+```{r}
+glm_fit <- 
+  glm(default_prob ~ balance + income + student, #<<
+      data = Default, family = binomial)
+
+```
+
+---
+
+```{r}
+summary(glm_fit)
+```
+
+---
+
+### Multiple logistic regression 
+
+#### What is the probability of defaulting, given your balance and income if you are a student?
+
+```{r}
+predict(glm_fit, 
+        newdata = #<<
+          data.frame(student = "Yes", #<<
+                     balance = c(0, 1000, 1500, 2500),  #<<
+                     income = 30000), #<<
+        type = "response") #<<
+```
+
+These values are predicted *probabilities* (because of `type = "response"`). 
+
+I can therefore say, 
+
+> a student with an income and a balance of $2500 has an estimated 94.86% probability of defaulting on their credit card debt. 
+
+---
+
+class: inverse, center, middle
+
+# Network analysis
+
+.center[<img src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Internet_map_1024.jpg/768px-Internet_map_1024.jpg' width = '50%'></img>]
+
+---
+
+## Network analysis
+
+#### Relations, not attributes. Networks, not groups.
+
+> [S]ocial network analysts argue that causation is not located in the individual, but in the social structure. While people with similar attributes may behave similarly, explaining these similarities by pointing to common attributes misses the reality that individuals with common attributes often occupy similar positions in the social structure. 
+
+> That is, people with similar attributes frequently have similar social network positions. Their similar outcomes are caused by the **constraints**, **opportunities** and **perceptions** created by these similar network positions. (Marin & Wellman, 2011, p. 13)
+
+
+---
+
+## Network data
+
+Network data is data about relationships (or *edges*) among *vertices* (or *nodes*). Everything can be a node. And everything can be an edge. 
+
+.center[<img src = '../img/newman-net-1.png' width = '80%'></img>]
+
+---
+
+.center[<img src = '../img/newman-net-2.png' width = '100%'></img>]
+
+---
+
+\begin{equation}
+    A_{ij} =
+    \begin{cases}
+      1 & \text{if there is an edge between vertices}\ i\ \text{and}\ j \text{,} \\
+      0 & \text{otherwise.}
+    \end{cases}
+\end{equation}
+
+.center[<img src = '../img/newman-net-3.png' width = '80%'></img>]
+
+
+
+
