@@ -175,15 +175,15 @@ Let's consider some data from James et al., (2021, Chapter 4)...
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Yes &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 745.2825 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 17803.76 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 309.518 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 35293.19 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Yes &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 672.4104 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 16508.43 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 267.514 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27364.87 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -352,14 +352,14 @@ ggplot(Default, aes(x = balance, y = default_prob, colour = default)) +
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1084.9257 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 36908.69 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 399.1184 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 48889.99 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Yes &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 975.9556 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 18246.82 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 831.2419 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13703.00 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -512,8 +512,7 @@ Let's get some network data (from Imai, 2017)
 
 
 ```r
-florence &lt;- 
-  read.csv("../data/florentine.csv", row.names = "FAMILY")
+florence &lt;- read.csv("../data/florentine.csv", row.names = "FAMILY")
 ```
 
 Here how the first five columns/rows of our adjacency matrix look like.
@@ -575,7 +574,26 @@ Here how the first five columns/rows of our adjacency matrix look like.
 
 A `1` in a cell of the matrix represents a marriage among the first five Florentine families.
 
-In this case the network is *undirected* and the matrix is symmetric. Yet networks can be *directed* (e.g. Twitter followers).  
+In this case the network is **undirected** and the matrix is symmetric. Yet networks can be **directed** (e.g. Twitter followers).  
+
+---
+
+
+```r
+library(igraph)
+
+florence &lt;- 
+  as.matrix(florence)
+
+florence.g &lt;- 
+* igraph::graph.adjacency(florence,
+*                         mode = "undirected",
+*                         diag = FALSE)
+
+plot(florence.g)
+```
+
+&lt;img src="week-12_files/figure-html/unnamed-chunk-18-1.svg" width="50%" style="display: block; margin: auto;" /&gt;
 
 
 ---

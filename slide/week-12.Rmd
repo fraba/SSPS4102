@@ -467,9 +467,7 @@ Source: Newman, 2010, p. 112.
 Let's get some network data (from Imai, 2017)
 
 ```{r}
-
-florence <- 
-  read.csv("../data/florentine.csv", row.names = "FAMILY")
+florence <- read.csv("../data/florentine.csv", row.names = "FAMILY")
 ```
 
 Here how the first five columns/rows of our adjacency matrix look like.
@@ -484,6 +482,22 @@ florence %>%
 A `1` in a cell of the matrix represents a marriage among the first five Florentine families.
 
 In this case the network is **undirected** and the matrix is symmetric. Yet networks can be **directed** (e.g. Twitter followers).  
+
+---
+
+```{r, out.width = "50%", fig.width = 7, fig.height = 7}
+library(igraph)
+
+florence <- 
+  as.matrix(florence)
+
+florence.g <- 
+  igraph::graph.adjacency(florence, #<<
+                          mode = "undirected", #<<
+                          diag = FALSE) #<<
+
+plot(florence.g)
+```
 
 
 ---
