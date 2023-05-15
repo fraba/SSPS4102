@@ -104,7 +104,7 @@ The model might also estimate that given a (very low) approval rate, the candida
 
 #### Variables that are continuous but can only assume values in the range 0 to 1 (proportions).
 
-Similarly to above, if we express $votes$ as a proportion of total votes, it is still justifiable to use a regression line, even if doesn't make any sense to receive 105% of the votes.  
+Similarly to above, if we express $votes$ as a proportion of total votes, it is still justifiable to use a regression line, even if doesn't make any sense to receive 105% of the votes (which is something the model can legitimately predict).  
 
 ---
 
@@ -113,10 +113,6 @@ Similarly to above, if we express $votes$ as a proportion of total votes, it is 
 #### Variables that are continuous but can only assume values in the range 1 to 5 (e.g Likert scale answer).
 
 If our dependent variable is a response of a survey with values limited to a small range, we can probably still treat it as a continuous variable (although the variable is more accurately an *ordinal* variable: categorical but ordered).  
-
-## Is it OK to use a linear regression with a binary outcome variable?
-
-Although it is possible to do it - as the parameters the regression is going to estimate for you are *meaningful* in their interpretation (e.g. coefficients, p-values), it is more appropriate to treat the problem as a *classification* problem and use a **logistic regression** (more on this soon!). 
 
 ---
 
@@ -136,11 +132,17 @@ Suppose we have this data set (James et al., 2021, p. 131)
 
  Clearly, in this circumstance although the different cases are coded as a *quantitative* variable, they in fact are a *qualitative* response!
  
-> To summarize, there are at least two reasons not to perform classification
-using a regression method: (a) a regression method cannot accommodate
-a qualitative response with more than two classes; (b) a regression
-method will not provide meaningful estimates of $Pr(Y |X)$, even with just
-two classes. (James et al., 2021, p. 132)
+---
+
+## Is it OK to use a linear regression with a binary outcome variable?
+
+Although it is possible to do it - as the parameters the regression is going to estimate for you are *meaningful* in their interpretation (e.g. coefficients, p-values), it is more appropriate to treat the problem as a *classification* problem and use a **logistic regression** (more on this soon!). 
+ 
+> To summarize, there are at least two reasons **not to perform classification using a regression method**: 
+
+> * (a) a regression method cannot accommodate a qualitative response with more than two classes; 
+
+> * (b) a regression method will not provide meaningful estimates of $Pr(Y |X)$, even with just two classes. (James et al., 2021, p. 132)
  
 ---
 
@@ -155,11 +157,13 @@ $$log \left( \frac{p(X)}{1-p(X)} \right)  = \beta_0 + \beta_1 \times X$$
 
     * not anymore the *average change* in $Y$ associated with a one-unit change in $X$; instead, 
     
-    * in a logistic regression, a one-unit change in $X$, changes the *log odds* by $B_1$.
+    * in a logistic regression, a one-unit change in $X$, changes the *log odds* by $\beta_1$.
 
 ---
 
 ## Logistic regression
+
+Let's consider some data from James et al., (2021, Chapter 4)...
 
 ```{r echo = F}
 
@@ -215,7 +219,7 @@ require(ISLR2) # For the `Default` data set
 
 Default <- 
   Default %>%
-  dplyr::mutate(default_prob = ifelse(default == "Yes", 1, 0))
+  dplyr::mutate(default_prob = ifelse(default == "Yes", 1, 0)) #<<
 
 ggplot(Default, aes(x = balance, y = default_prob, colour = default)) +
   scale_colour_manual(values=c("blue", "orange")) +
@@ -273,7 +277,7 @@ glm_fit
 ```
 
 
-If the interpretation of the p-value doesn't change, the intepretation of the coefficients is differnet. Instead of a change in $Y$ for a one-unit change in $X$ is now a *log odds*, which we will need to transform to communicate 0-to-1 predictions!
+If the interpretation of the p-value doesn't change, the **interpretation of the coefficients is different**. Instead of a change in $Y$ for a one-unit change in $X$, $\beta$ is now a *log odds*, which we will need to transform to communicate 0-to-1 predictions!
 
 ---
 
@@ -383,7 +387,7 @@ These values are predicted *probabilities* (because of `type = "response"`).
 
 I can therefore say, 
 
-> a student with an income and a balance of $2500 has an estimated 94.86% probability of defaulting on their credit card debt. 
+> on average, a student with an income of $30,000 and a balance of $2500 has an estimated 94.86% probability of defaulting on their credit card debt. 
 
 ---
 
@@ -408,15 +412,27 @@ class: inverse, center, middle
 
 ## Network data
 
-Network data is data about relationships (or *edges*) among *vertices* (or *nodes*). Everything can be a node. And everything can be an edge. 
+* Network data is data about relationships (*edges*) among *vertices* (also known as *nodes*). 
+
+* Everything can be a node. And everything can be an edge. 
 
 .center[<img src = '../img/newman-net-1.png' width = '80%'></img>]
 
 ---
 
+### Network data: The adjacency matrix
+
+Let's assume I want to analyse this networks. How can I store the data? A common way to do it is with an adjacency matrix...
+
 .center[<img src = '../img/newman-net-2.png' width = '100%'></img>]
 
+Source: Newman, 2010, p. 111.
+
 ---
+
+### Network data: The adjacency matrix
+
+This is how we define each entry in the matrix:
 
 \begin{equation}
     A_{ij} =
@@ -426,7 +442,65 @@ Network data is data about relationships (or *edges*) among *vertices* (or *node
     \end{cases}
 \end{equation}
 
-.center[<img src = '../img/newman-net-3.png' width = '80%'></img>]
+And this is how the adjancency matrix for the simple network (a) we saw in the previous slide looks like
+
+
+.center[<img src = '../img/newman-net-3.png' width = '60%'></img>]
+
+Source: Newman, 2010, p. 111.
+
+---
+
+### Network data: The adjacency matrix
+
+And this is how the adjacency matrix looks like for the more complex network (b) we saw before with multiple edges and self-edges. 
+
+.center[<img src = '../img/newman-net-4.png' width = '60%'></img>]
+
+Source: Newman, 2010, p. 112.
+
+
+---
+
+### Network data: The adjacency matrix
+
+Let's get some network data (from Imai, 2017)
+
+```{r}
+
+florence <- 
+  read.csv("../data/florentine.csv", row.names = "FAMILY")
+```
+
+Here how the first five columns/rows of our adjacency matrix look like.
+
+```{r echo = FALSE}
+florence %>%
+  select(1:5) %>%
+  slice(1:5) %>%
+  kable()
+```
+
+A `1` in a cell of the matrix represents a marriage among the first five Florentine families.
+
+In this case the network is **undirected** and the matrix is symmetric. Yet networks can be **directed** (e.g. Twitter followers).  
+
+
+---
+
+# References
+
+---
+
+## References
+
+* James, G., Witten, D., Hastie, T., & Tibshirani, R. (2021). 4 Classification. In *An introduction to statistical learning: With applications in R*. Springer. https://link.springer.com/chapter/10.1007/978-1-0716-1418-1_4
+
+* Marin, A., & Wellman, B. (2011). *Social network analysis: An introduction*. In J. Scott & P. J. Carrington (Eds.), The Sage handbook of social network analysis (pp. 11–25). SAGE Publications.
+
+* Newman, M. E. J. (2010). *Networks: An introduction*. Oxford University Press.
+
+* Imai, K. (2017). 5 Discovery. In *Quantitative social science: An introduction*. Princeton University Press. https://press.princeton.edu/books/paperback/9780691175461/quantitative-social-science
 
 
 
