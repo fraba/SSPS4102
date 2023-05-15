@@ -25,7 +25,7 @@ class: center, middle, inverse, title-slide
 ### The University of Sydney
 ]
 .date[
-### Semester 1, 2023 (updated: 2023-05-15)
+### Semester 1, 2023 (updated: 2023-05-16)
 ]
 
 ---
@@ -175,15 +175,15 @@ Let's consider some data from James et al., (2021, Chapter 4)...
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 309.518 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 35293.19 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Yes &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1269.678 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13998.31 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 267.514 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 27364.87 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1186.486 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50371.73 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -352,14 +352,14 @@ ggplot(Default, aes(x = balance, y = default_prob, colour = default)) +
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 399.1184 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 48889.99 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1277.793 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 35620.16 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Yes &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 831.2419 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 13703.00 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1337.391 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 51507.50 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -454,9 +454,34 @@ class: inverse, center, middle
 
 ---
 
+#### Network data: A few examples
+
+Each member of the U.S. House of Representatives is a **node** - Rs are red and Ds are blue -  while **edges** are drawn between members who agree above the Congress’ threshold value of votes. (Andris et al., 2015) 
+
+.center[&lt;img src = '../img/andris-2015.png' width = '100%'&gt;&lt;/img&gt;]
+
+---
+
+#### Network data: A few examples
+
+Each **node** is a US political blog - right-wing are red and left-wing are **blue** - while each edge is a link from one blog to another (Adamic &amp; Glance, 2005).
+
+.center[&lt;img src = '../img/adamic-2005.png' width = '100%'&gt;&lt;/img&gt;]
+
+---
+
+#### Network data: A few examples
+
+Each **node** is a country while each **edge** represents the trade between the two countries. 
+
+&lt;img src="week-12_files/figure-html/unnamed-chunk-16-1.svg" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
 ## Network data
 
-* Network data is data about relationships (*edges*) among *vertices* (also known as *nodes*). 
+* Network data is data about relationships (**edges**) among **vertices** (also known as **nodes**). 
 
 * Everything can be a node. And everything can be an edge. 
 
@@ -486,7 +511,7 @@ This is how we define each entry in the matrix:
     \end{cases}
 \end{equation}`
 
-And this is how the adjancency matrix for the simple network (a) we saw in the previous slide looks like
+This is how the adjancency matrix for the simple network (a) we saw in the previous slide looks like
 
 
 .center[&lt;img src = '../img/newman-net-3.png' width = '60%'&gt;&lt;/img&gt;]
@@ -503,10 +528,68 @@ And this is how the adjacency matrix looks like for the more complex network (b)
 
 Source: Newman, 2010, p. 112.
 
+---
+
+### Network data: The edge list
+
+A second common way to represent and store network data is the edge list. In ad edge list, eacg row of a table is an **edge** between two end point **nodes**. 
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; country1 &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; country2 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; year &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; exports &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Myanmar &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Malaysia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 69.54 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Sweden &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Austria &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1032.92 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Italy &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Slovenia &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1758.53 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Germany &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Bulgaria &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 899.05 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Luxembourg &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Denmark &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 54.66 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; France &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Syria &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 260.90 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+Addition columns in the edge list (here `year` and `exports`) represent attributes of the edges. 
+
+Both edges and nodes can have attributes (e.g. name, gender, etc).
 
 ---
 
-### Network data: The adjacency matrix
+### Creating a network object with igraph
 
 Let's get some network data (from Imai, 2017)
 
@@ -572,15 +655,17 @@ Here how the first five columns/rows of our adjacency matrix look like.
 &lt;/tbody&gt;
 &lt;/table&gt;
 
-A `1` in a cell of the matrix represents a marriage among the first five Florentine families.
+The value `1` in a cell of the matrix represents a marriage among the first five Florentine families. The value `0` the absence of a marriage linking the two families.
 
-In this case the network is **undirected** and the matrix is symmetric. Yet networks can be **directed** (e.g. Twitter followers).  
+In this case the network is **undirected** and the matrix is symmetric (across the diagonal running from the top-left corner to the bottom-right corner). Yet networks can be **directed** (e.g. Twitter followers).  
 
 ---
 
+### Networks in igraph
+
 
 ```r
-library(igraph)
+*library(igraph) # This is the library for network analysis
 
 florence &lt;- 
   as.matrix(florence)
@@ -589,12 +674,50 @@ florence.g &lt;-
 * igraph::graph.adjacency(florence,
 *                         mode = "undirected",
 *                         diag = FALSE)
+```
 
+`igraph::graph.adjacency()` will create a an igraph *graph* (network) object from an edgelist (igraph has many other functions to create a network, for example `igraph::graph.edgelist`).
+
+---
+
+
+```r
+florence.g
+```
+
+```
+## IGRAPH e9c15ec UN-- 16 20 -- 
+## + attr: name (v/c)
+## + edges from e9c15ec (vertex names):
+##  [1] ACCIAIUOL--MEDICI    ALBIZZI  --GINORI    ALBIZZI  --GUADAGNI 
+##  [4] ALBIZZI  --MEDICI    BARBADORI--CASTELLAN BARBADORI--MEDICI   
+##  [7] BISCHERI --GUADAGNI  BISCHERI --PERUZZI   BISCHERI --STROZZI  
+## [10] CASTELLAN--PERUZZI   CASTELLAN--STROZZI   GUADAGNI --LAMBERTES
+## [13] GUADAGNI --TORNABUON MEDICI   --RIDOLFI   MEDICI   --SALVIATI 
+## [16] MEDICI   --TORNABUON PAZZI    --SALVIATI  PERUZZI  --STROZZI  
+## [19] RIDOLFI  --STROZZI   RIDOLFI  --TORNABUON
+```
+
+By typing the name of the network in console I get its details. Here I learn that that my network is **undirected** (`U`), named (`N`), has 16 **nodes** and 20 **edges**.
+
+---
+
+
+```r
 plot(florence.g)
 ```
 
-&lt;img src="week-12_files/figure-html/unnamed-chunk-18-1.svg" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="week-12_files/figure-html/unnamed-chunk-22-1.svg" width="80%" style="display: block; margin: auto;" /&gt;
 
+---
+
+### Network statistics about centrality
+
+A common question about networks is, which nodes are more structurally important? Indeed, a highly connected node is structurally more important than a peripheral, weakly connected node. 
+
+If we are interested in **power** in Renaissance's Florence, then network centrality in the intermarriage network can be an effective measure of power. 
+ 
+How do we measure it? (Un)fortunately, there are more ways to measure node's centrality. 
 
 ---
 
@@ -613,6 +736,10 @@ plot(florence.g)
 * Imai, K. (2017). 5 Discovery. In *Quantitative social science: An introduction*. Princeton University Press. https://press.princeton.edu/books/paperback/9780691175461/quantitative-social-science
 
 
+* Andris, C., Lee, D., Hamilton, M. J., Martino, M., Gunning, C. E., &amp; Selden, J. A. (2015). The rise of partisanship and super-cooperators in the U.S. House of Representatives. *PLOS ONE*, 10(4), e0123507. https://doi.org/10.1371/journal.pone.0123507
+
+
+* Adamic, L. A., &amp; Glance, N. (2005). The political blogosphere and the 2004 U.S. election: Divided they blog. *Proceedings of the 3rd International Workshop on Link Discovery*, 36–43. https://doi.org/10.1145/1134271.1134277
 
 
     </textarea>

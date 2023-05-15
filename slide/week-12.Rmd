@@ -410,9 +410,72 @@ class: inverse, center, middle
 
 ---
 
+#### Network data: A few examples
+
+Each member of the U.S. House of Representatives is a **node** - Rs are red and Ds are blue -  while **edges** are drawn between members who agree above the Congress’ threshold value of votes. (Andris et al., 2015) 
+
+.center[<img src = '../img/andris-2015.png' width = '100%'></img>]
+
+---
+
+#### Network data: A few examples
+
+Each **node** is a US political blog - right-wing are red and left-wing are **blue** - while each edge is a link from one blog to another (Adamic & Glance, 2005).
+
+.center[<img src = '../img/adamic-2005.png' width = '100%'></img>]
+
+---
+
+#### Network data: A few examples
+
+Each **node** is a country while each **edge** represents the trade between the two countries. 
+
+```{r echo = F, out.width='100%', fig.width=9, fig.height=5}
+trade <- 
+  read.csv(
+    "https://raw.githubusercontent.com/kosukeimai/qss/master/DISCOVERY/trade.csv")
+
+trade <- 
+  trade %>%
+  dplyr::filter(year == 2000 & 
+                  exports > 50)
+
+top_c <- 
+  trade$country1[order(trade$exports, decreasing = T)][1:100]
+
+trade.g <- 
+  igraph::graph_from_data_frame(trade  %>%
+                                  dplyr::select(country1, country2, exports))
+
+require(ggnetwork)
+require(ggrepel)
+
+
+
+trade.lo <-
+  ggnetwork(trade.g, layout = igraph::layout_with_fr(trade.g))
+
+trade.lo$label <- trade.lo$name
+trade.lo$label[!trade.lo$name %in% top_c] <- NA
+
+
+
+ggplot(trade.lo, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_edges(color = "grey50", curvature = 0.1, alpha = .2) +
+  geom_nodelabel_repel(aes(label = label),
+                       fontface = "bold", box.padding = unit(1, "lines"),
+                       max.overlaps = 200) +
+  geom_nodes() +
+  theme_blank()
+
+```
+
+
+---
+
 ## Network data
 
-* Network data is data about relationships (*edges*) among *vertices* (also known as *nodes*). 
+* Network data is data about relationships (**edges**) among **vertices** (also known as **nodes**). 
 
 * Everything can be a node. And everything can be an edge. 
 
@@ -442,7 +505,7 @@ This is how we define each entry in the matrix:
     \end{cases}
 \end{equation}
 
-And this is how the adjancency matrix for the simple network (a) we saw in the previous slide looks like
+This is how the adjancency matrix for the simple network (a) we saw in the previous slide looks like
 
 
 .center[<img src = '../img/newman-net-3.png' width = '60%'></img>]
@@ -459,10 +522,28 @@ And this is how the adjacency matrix looks like for the more complex network (b)
 
 Source: Newman, 2010, p. 112.
 
+---
+
+### Network data: The edge list
+
+A second common way to represent and store network data is the edge list. In ad edge list, eacg row of a table is an **edge** between two end point **nodes**. 
+
+```{r echo = F}
+
+trade %>%
+  select(country1:exports) %>%
+  sample_n(6) %>%
+  kable()
+  
+```
+
+Addition columns in the edge list (here `year` and `exports`) represent attributes of the edges. 
+
+Both edges and nodes can have attributes (e.g. name, gender, etc).
 
 ---
 
-### Network data: The adjacency matrix
+### Creating a network object with igraph
 
 Let's get some network data (from Imai, 2017)
 
@@ -479,25 +560,60 @@ florence %>%
   kable()
 ```
 
-A `1` in a cell of the matrix represents a marriage among the first five Florentine families.
+The value `1` in a cell of the matrix represents a marriage among the first five Florentine families. The value `0` the absence of a marriage linking the two families.
 
-In this case the network is **undirected** and the matrix is symmetric. Yet networks can be **directed** (e.g. Twitter followers).  
+In this case the network is **undirected** and the matrix is symmetric (across the diagonal running from the top-left corner to the bottom-right corner). Yet networks can be **directed** (e.g. Twitter followers).  
 
 ---
 
-```{r, out.width = "50%", fig.width = 7, fig.height = 7}
-library(igraph)
+### Networks in igraph
+
+```{r}
+library(igraph) # This is the library for network analysis #<<
 
 florence <- 
   as.matrix(florence)
 
 florence.g <- 
-  igraph::graph.adjacency(florence, #<<
+  igraph::graph.adjacency(florence, #<< 
                           mode = "undirected", #<<
                           diag = FALSE) #<<
 
+```
+
+`igraph::graph.adjacency()` will create a an igraph *graph* (network) object from an edgelist (igraph has many other functions to create a network, for example `igraph::graph.edgelist`).
+
+---
+
+```{r}
+florence.g
+```
+
+By typing the name of the network in console I get its details. Here I learn that that my network is **undirected** (`U`), named (`N`), has 16 **nodes** and 20 **edges**.
+
+---
+
+```{r out.width = "80%", fig.width = 7, fig.height = 7}
 plot(florence.g)
 ```
+
+---
+
+### Network statistics about centrality
+
+A common question about networks is, which nodes are more structurally important? Indeed, a highly connected node is structurally more important than a peripheral, weakly connected node. 
+
+If we are interested in **power** in Renaissance's Florence, then network centrality in the intermarriage network can be an effective measure of power. 
+ 
+How do we measure it? (Un)fortunately, there are more ways to measure node's centrality. 
+
+* *Degree* is the number of connections of a node, but only measure the immediate neighborhood of a node.
+
+* *Closeness* measures the average *distance* between one node and every other node, so the number of hops if you jump from node to node following the connections. 
+
+* *Betweenness* is the instead a measure for the number *paths* that a traverse a node as you move from between any other pair of nodes. 
+
+---
 
 
 ---
@@ -517,5 +633,9 @@ plot(florence.g)
 * Imai, K. (2017). 5 Discovery. In *Quantitative social science: An introduction*. Princeton University Press. https://press.princeton.edu/books/paperback/9780691175461/quantitative-social-science
 
 
+* Andris, C., Lee, D., Hamilton, M. J., Martino, M., Gunning, C. E., & Selden, J. A. (2015). The rise of partisanship and super-cooperators in the U.S. House of Representatives. *PLOS ONE*, 10(4), e0123507. https://doi.org/10.1371/journal.pone.0123507
+
+
+* Adamic, L. A., & Glance, N. (2005). The political blogosphere and the 2004 U.S. election: Divided they blog. *Proceedings of the 3rd International Workshop on Link Discovery*, 36–43. https://doi.org/10.1145/1134271.1134277
 
 
