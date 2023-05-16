@@ -71,6 +71,30 @@ class: inverse, center, middle
 
 (If we don't have time to cover everything we will finish next week)
 
+---
+
+## Please complete the Unit of Study Survey for SPSS4102 (if you haven't yet) 
+
+<mark>Your feedback is critical!</mark>
+
+* Past USS results have been used to improve this unit.
+
+* Your feedback will help us keep improving it.
+
+<mark>Please, do it now by visiting</mark>
+
+.center[https://student-surveys.sydney.edu.au/students/]
+
+or use the QR code
+
+.center[<img src = 'https://student-surveys.sydney.edu.au/common/images/student-surveys-QR.png' width = '30%'></img>]
+
+
+```{r echo = F}
+library(countdown)
+countdown(minutes = 8, seconds = 00)
+```
+
 
 ---
 
