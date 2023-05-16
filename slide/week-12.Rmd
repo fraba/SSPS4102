@@ -58,18 +58,27 @@ I would like to acknowledge the Traditional Owners of Australia and recognise th
 
 ---
 
-class: inverse, center, middle
+class: inverse, middle
 
-# Plan for today
+Plan for today ... 
 
+## Regression analysis
 
-1. Logistic regression
+### Categorical variables as IV
 
-2. Network analysis
+### Logistic regression
 
-3. Spatial analysis
+## Advanced topics
+
+### Network analysis
+
+### Spatial analysis
 
 (If we don't have time to cover everything we will finish next week)
+
+### (Text analysis next week)
+
+
 
 ---
 
@@ -93,6 +102,115 @@ or use the QR code
 ```{r echo = F}
 library(countdown)
 countdown(minutes = 8, seconds = 00)
+```
+
+---
+
+class: inverse, center, middle
+
+# Regression analysis
+
+## Categorical variables in regression models
+
+## Logistic regression
+
+---
+
+## Categorical variables in regression models
+
+Consider this example
+
+```{r}
+
+hsb2 <- 
+  read.csv("https://stats.idre.ucla.edu/stat/data/hsb2.csv") %>%
+  dplyr::select(write, read, female, race)
+summary(hsb2)
+```
+
+Both `female` and `race` are stored as `integer` (numeric) values. But clearly they are not continuous variables: they are categorical non-ordinal variables. 
+
+How to use the correctly as *independent variables* in a regression model?
+
+---
+
+## Binary variables as independent variables
+
+Generally, binary variables do not need any recording. A binary variable stored as an integer (0, 1) is perfectly interpretable as coefficient. 
+
+It is only important to understand what is coded as 0 and what is coded as 1. In this case, the name of the variable (`female`) would imply that `male = 0` and `female = 0`. 
+
+---
+
+### Binary variables as independent variables
+
+Consider this (the `coef()` function only get the coeffience from a lm object):
+
+```{r}
+coef(lm(formula = write ~ female, data = hsb2))
+coef(lm(formula = read ~ female, data = hsb2))
+```
+
+We interpret these coefficients as
+
+On average, a `female` student is expected to score 
+
+* 4.87 points *more* **than** a `male` student in the `write` test and
+
+* 1.09 *less* **than** a `male` student in the `read` test. 
+
+*Remember*: With linear models, $\beta$ corresponds to the change of $Y$ from a one-unit change of $X$ and here $X$ changes from male (0) to female (1)
+
+---
+
+## Categorical (non-ordinal) as independent variables
+
+But then consider this
+
+```{r}
+fit <- lm(formula = write ~ race, data = hsb2)
+coef(fit)
+```
+
+What's the problem here?
+
+Again, $\beta$ corresponds to the change of $Y$ from a one-unit change of $X$ and here $X$ changes from race1 to race2, or from race2 to race3, ...
+
+This of course doesn't make any sense. The race variable can't be used as a continuous variable. I need to recode it as a **factor**!
+
+---
+
+### Categorical (non-ordinal) as independent variables
+
+```{r}
+hsb2 <- hsb2 %>% dplyr::mutate(race.f = factor(race)) #<<
+summary(hsb2$race.f)
+fit <- lm(formula = write ~ race.f, data = hsb2)
+coef(fit)
+```
+
+Wait a minute, where is `race.f1`?
+
+---
+
+### Categorical (non-ordinal) as independent variables
+
+The first level of the factor `race` - in this case `race = "1"`, but it could have whatever string label - is the *base* level and all the other coefficients should be intended as the change on $Y$ from the 
+
+* change of `race = 1` to `race = 2`, corresponding to $\beta_1=11.542$; 
+
+* and from `race = 1` to `race = 3`, corresponding to $\beta_2=11.542$; 
+
+* and finally from `race = 1` to `race = 4`, corresponding to $\beta_3=7.597$
+
+When we use a categorical variable in a regression, we are indeed asking to estimate a different coefficients for each level of the variable, excluding the first one, which is the base level for all the coefficients.
+
+---
+
+You should then interpret regression results as you would for any other independent variable...
+
+```{r}
+summary(fit)
 ```
 
 
