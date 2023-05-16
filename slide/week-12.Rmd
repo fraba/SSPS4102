@@ -78,7 +78,18 @@ Plan for today ...
 
 ### (Text analysis next week)
 
+---
 
+.center[<img src = '../img/chocolate-study.png' width = '100%'></img>]
+
+
+---
+
+.center[<img src = '../img/chocolate-study-table.png' width = '100%'></img>]
+
+(We learned about computing 95% confidence interval for difference-in-means estimators in Week 9...)
+
+And with this in mind...
 
 ---
 
@@ -103,10 +114,6 @@ or use the QR code
 library(countdown)
 countdown(minutes = 8, seconds = 00)
 ```
-
----
-
-.center[<img src = '../img/chocolate-study.png' width = '100%'></img>]
 
 ---
 
