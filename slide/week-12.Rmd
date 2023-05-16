@@ -106,6 +106,10 @@ countdown(minutes = 8, seconds = 00)
 
 ---
 
+.center[<img src = '../img/chocolate-study.png' width = '100%'></img>]
+
+---
+
 class: inverse, center, middle
 
 # Regression analysis
