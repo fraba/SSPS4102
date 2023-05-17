@@ -403,10 +403,19 @@ additional data what you are looking for is a
 <pre class="r"><code>band_members &lt;- 
   data.frame(member = c(&quot;Mick&quot;, &quot;John&quot;, &quot;Paul&quot;),
              band = c(&quot;Stones&quot;, &quot;Beatles&quot;, &quot;Beatles&quot;))
-
-band_instruments &lt;- 
+band_members</code></pre>
+<pre><code>##   member    band
+## 1   Mick  Stones
+## 2   John Beatles
+## 3   Paul Beatles</code></pre>
+<pre class="r"><code>band_instruments &lt;- 
   data.frame(player = c(&quot;John&quot;, &quot;Paul&quot;, &quot;Keith&quot;),
-             instrument = c(&quot;guitar&quot;, &quot;bass&quot;, &quot;guitar&quot;))</code></pre>
+             instrument = c(&quot;guitar&quot;, &quot;bass&quot;, &quot;guitar&quot;))
+band_instruments</code></pre>
+<pre><code>##   player instrument
+## 1   John     guitar
+## 2   Paul       bass
+## 3  Keith     guitar</code></pre>
 <p>I can join them with using the column <code>name</code></p>
 <pre class="r"><code>joined_table &lt;-
   dplyr::left_join(band_members, band_instruments,

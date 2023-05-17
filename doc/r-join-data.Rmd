@@ -43,10 +43,12 @@ Let's consider these two tables
 band_members <- 
   data.frame(member = c("Mick", "John", "Paul"),
              band = c("Stones", "Beatles", "Beatles"))
+band_members
 
 band_instruments <- 
   data.frame(player = c("John", "Paul", "Keith"),
              instrument = c("guitar", "bass", "guitar"))
+band_instruments
   
 ```
 
