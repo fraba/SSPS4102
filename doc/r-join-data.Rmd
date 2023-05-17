@@ -1,0 +1,88 @@
+---
+title: "Join data"
+author: "Francesco Bailo"
+date: "`r Sys.Date()`"
+output: 
+    html_document:
+        toc: true
+---
+
+Let's assume I have data in two different data frames but I wan them in the same data frame. As this is a very common problem, there are many ways to do this (just have a look at the number of highly voted answers to [this question](https://stackoverflow.com/questions/1299871/how-to-join-merge-data-frames-inner-outer-left-right)).
+
+What you want is to **join** two data frames.
+
+## Option 1: The dplyr solution 
+
+dplyr using the [SQL](https://en.wikipedia.org/wiki/SQL) vocabulary, offers four *join* verbs. Which one you need depends on what you want to achieve.
+
+* `dplyr::left_join(x, y)` keeps all observations in table x.
+
+<img src = 'https://www.w3schools.com/sql/img_leftjoin.gif'></img>
+
+* `dplyr::right_join(x, y)` keeps all observations in table y.
+
+<img src = 'https://www.w3schools.com/sql/img_rightjoin.gif'></img>
+
+* `dplyr::full_join(x, y)` keeps all observations in x and y.
+
+<img src = 'https://www.w3schools.com/sql/img_fulljoin.gif'></img>
+
+* `dplyr::inner_join(x, y)` only keeps obervations in x with a matching key in y. 
+
+<img src = 'https://www.w3schools.com/sql/img_innerjoin.gif'></img>
+
+Most likely, if you want to enrich an existing table with some additional data what you are looking for is a `left_join()`.
+
+```{r message = F, warning=F}
+library(dplyr)
+```
+
+Let's consider these two tables
+
+```{r}
+band_members <- 
+  data.frame(member = c("Mick", "John", "Paul"),
+             band = c("Stones", "Beatles", "Beatles"))
+
+band_instruments <- 
+  data.frame(player = c("John", "Paul", "Keith"),
+             instrument = c("guitar", "bass", "guitar"))
+  
+```
+
+I can join them with using the column `name`
+
+```{r}
+joined_table <-
+  dplyr::left_join(band_members, band_instruments,
+                   by = c(member = 'player')) #<<
+```
+
+The argument `by = c(member = 'player')` identifies the two *index* columns for the matching. `member` (without quotes) identifies the index column in the first table while `'player'` (with quotes) identifies the corresponding index in the second column. 
+
+Let's check the result
+
+```{r}
+joined_table
+```
+
+
+Note that,
+
+1. `Mick` from the *first* table is still present in the resulting table but has no instrument (`NA`) since he doesn't appear in the *second* table;
+
+2. `Keith` from the *second* table is not present in the resulting table since it only appears in the *second* table (and is not present in the *first* table).
+
+## Option 2: The base solution 
+
+A similar result can be obtained without using dplyr. You can instead use the `match()` function.
+
+```{r}
+band_members$instrument <- 
+  band_instruments$instrument[match(band_members$member,
+                                    band_instruments$player)]
+```
+
+`match(x, y)` will return the positions of the values found in vector `x` in vector `y`. 
+
+
