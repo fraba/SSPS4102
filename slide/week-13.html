@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>SSPS4102Data Analytics in the Social Sciences</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Francesco Bailo" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# SSPS4102</br>Data Analytics in the Social Sciences
+]
+.subtitle[
+## Week 13</br>Advanced topics (Text analysis)
+]
+.author[
+### Francesco Bailo
+]
+.institute[
+### The University of Sydney
+]
+.date[
+### Semester 1, 2023 (updated: 2023-05-24)
+]
+
+---
+
+
+background-image: url(https://upload.wikimedia.org/wikipedia/en/6/6a/Logo_of_the_University_of_Sydney.svg)
+background-size: 95%
+
+&lt;style&gt;
+pre {
+  overflow-x: auto;
+}
+pre code {
+  word-wrap: normal;
+  white-space: pre;
+}
+&lt;/style&gt;
+
+
+
+---
+
+## Acknowledgement of Country
+
+I would like to acknowledge the Traditional Owners of Australia and recognise their continuing connection to land, water and culture. The  University of Sydney is located on the land of the Gadigal people  of the Eora Nation. I pay my respects to their Elders, past and present.
+
+---
+# Text analysis in R: A Workflow
+
+1. Import your data
+2. Tidy your data
+3. Model your data
+4. Present your results
+
+.center[&lt;img src='../img/workflow.svg'&gt;]
+
+---
+
+class: center, inverse, middle
+
+# Some basic tools...
+
+---
+
+## The stringr package (a package for string manipulation)
+
+
+```r
+library(stringr)
+
+my_strings &lt;- c(" a string ", " anonter string ", "and   another")
+```
+
+### Join multiple strings into one string
+
+
+```r
+stringr::str_c(my_strings, collapse = "~")
+```
+
+```
+## [1] " a string ~ anonter string ~and   another"
+```
+
+### Replace extra white spaces
+
+
+```r
+stringr::str_squish(my_strings)
+```
+
+```
+## [1] "a string"       "anonter string" "and another"
+```
+
+---
+
+## The stringr package (a package for string manipulation)
+
+### Trim extra white spaces (at the start and end of the string)
+
+
+```r
+stringr::str_trim(my_strings) # this leaves inner extra spaces
+```
+
+```
+## [1] "a string"       "anonter string" "and   another"
+```
+
+### Find a string within a number o string
+
+
+```r
+corpus &lt;- 
+  c("One two three", "Four five six", "Seven eight nine")
+```
+
+
+```r
+stringr::str_detect(corpus, 'five')
+```
+
+```
+## [1] FALSE  TRUE FALSE
+```
+
+---
+
+## The rvest package to get scrape web pages
+
+&gt; **scrape [with object]** copy (data) from a website using a computer program: *all search engines scrape content from sites without permission and display it on their own sites*.
+
+The [rvest](https://rvest.tidyverse.org/) package facilitates downloading and manipulating HTML documents.
+
+.center[&lt;img src = 'https://rvest.tidyverse.org/logo.png' width = '40%'&gt;&lt;/img&gt;]
+
+---
+
+## The rvest package to get scrape web pages
+
+A very basic HTML page:
+
+
+```html
+&lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;body&gt;
+    &lt;h1&gt;My First Heading&lt;/h1&gt;
+    &lt;div class='foo'&gt;&lt;p&gt;My first paragraph.&lt;/p&gt;&lt;/div&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+```
+
+HTML documents are defined by nested tags: `&lt;html&gt; &lt;body&gt; ... &lt;/body&gt; &lt;/html&gt;`.
+
+Tags are used by web broswers (Chrome, Firefox, etc.) to position their content (e.g. the text `My First Heading`) onto the page. Tags are not visualised when the is rendered by a browser.
+
+We can use tags to surgically extract information from a page as we are usually not interested in 99.99% of the content of a HTML document.
+
+
+---
+
+## The rvest package to get scrape web pages
+
+A basic [rvest](https://rvest.tidyverse.org/) pipeline
+
+
+```r
+library(rvest)
+
+# Start by reading a HTML page with read_html():
+starwars &lt;- rvest::read_html("https://rvest.tidyverse.org/articles/starwars.html")
+
+# In this example we extract each HTML node (or tag) labelled "section"
+films &lt;- starwars %&gt;% rvest::html_nodes("section")
+
+films
+```
+
+```
+## {xml_nodeset (7)}
+## [1] &lt;section&gt;&lt;h2 data-id="1"&gt;\nThe Phantom Menace\n&lt;/h2&gt;\n&lt;p&gt;\nReleased: 1999 ...
+## [2] &lt;section&gt;&lt;h2 data-id="2"&gt;\nAttack of the Clones\n&lt;/h2&gt;\n&lt;p&gt;\nReleased: 20 ...
+## [3] &lt;section&gt;&lt;h2 data-id="3"&gt;\nRevenge of the Sith\n&lt;/h2&gt;\n&lt;p&gt;\nReleased: 200 ...
+## [4] &lt;section&gt;&lt;h2 data-id="4"&gt;\nA New Hope\n&lt;/h2&gt;\n&lt;p&gt;\nReleased: 1977-05-25\n ...
+## [5] &lt;section&gt;&lt;h2 data-id="5"&gt;\nThe Empire Strikes Back\n&lt;/h2&gt;\n&lt;p&gt;\nReleased: ...
+## [6] &lt;section&gt;&lt;h2 data-id="6"&gt;\nReturn of the Jedi\n&lt;/h2&gt;\n&lt;p&gt;\nReleased: 1983 ...
+## [7] &lt;section&gt;&lt;h2 data-id="7"&gt;\nThe Force Awakens\n&lt;/h2&gt;\n&lt;p&gt;\nReleased: 2015- ...
+```
+
+---
+
+## The tidytext package
+
+A package to facilitate text mining using dplyr, ggplot2, and other tidy tools
+
+
+```r
+library(tidytext)
+
+my_books &lt;- 
+  data.frame(book_id = c("one", 
+                         "two"),
+             book_text = c("Apple banana pear", 
+                           "Kiwi mango tomato"))
+
+my_books %&gt;%
+* tidytext::unnest_tokens(word, book_text, token = "words")
+```
+
+```
+##   book_id   word
+## 1     one  apple
+## 2     one banana
+## 3     one   pear
+## 4     two   kiwi
+## 5     two  mango
+## 6     two tomato
+```
+
+---
+
+## The tidytext package
+
+The function `tidytext::unnest_tokens()` is the core function of the package. It "[s]plit a column (in the example before the column `book_text`) into **tokens**, flattening the table into one-token-per-row".
+
+A **token** is the unit of analysis of choice for your text mining. It can be a `word` but also `sentences`, `lines`, `tweets`, or `ngrams` (so combination of 2, 3, 4+ words). 
+
+
+```r
+my_books %&gt;%
+  tidytext::unnest_tokens(ngram, book_text, 
+*                         token = "ngrams", n = 2)
+```
+
+```
+##   book_id        ngram
+## 1     one apple banana
+## 2     one  banana pear
+## 3     two   kiwi mango
+## 4     two mango tomato
+```
+
+
+
+---
+
+## sprintf()
+
+sprintf() takes a string of text and injects other strings or numbers where you specify with the wildcard `%s`.
+
+Let's take my string, a URL to access the Wikipedia API:
+
+
+```r
+my_url &lt;- 
+  "https://en.wikipedia.org/w/api.php?action=query&amp;titles=%s&amp;prop=info&amp;inprop=url"
+```
+
+I want to reuse this URL to get information about a number of Wikipedia pages. In the query string I specify the page with `titles=[title of the page]`.
+
+So to query for `Sydney` I can use `sprintf()` like this
+
+
+```r
+sprintf(my_url, "Sydney")
+```
+
+```
+## [1] "https://en.wikipedia.org/w/api.php?action=query&amp;titles=Sydney&amp;prop=info&amp;inprop=url"
+```
+
+---
+
+## for()
+
+As every other computer language, R also allows for for-loop operations.
+
+A for-loop will run a chunk of code multiple times. Here an example,
+
+
+```r
+for (i in c(1,2,3,4,5)) {
+  print(i)
+}
+```
+
+```
+## [1] 1
+## [1] 2
+## [1] 3
+## [1] 4
+## [1] 5
+```
+
+As expected, this outputs (thanks to the function `print()`) five times the content of the variable `i`. 
+
+Yet the variable `i` (but you can use a different variable name) has a different value at each iteration of the loop. We specify this with `i in c(1,2,3,4,5)` (which for simplicity we can replace with `i in 1:5`).
+
+---
+
+class: inverse, middle, center
+
+# Importing
+
+---
+
+# Importing
+
+Let's first import some textual data into R from PDFs, webpages, XML documents and an API.
+
+.center[&lt;img src="../img/import-fail.gif" width = '80%'&gt;&lt;/img&gt;]
+
+---
+
+# Import PDF
+
+
+
+
+```r
+library(pdftools)
+library(tidyverse)
+library(stringr)
+
+# List PDFs
+file_names &lt;- list.files("../data/text-analysis/pdf")
+
+# Loop over each file name and read into list
+texts_by_page &lt;- list()
+for (f in file_names) {
+  texts_by_page[[f]] &lt;- 
+    pdftools::pdf_text(sprintf("../data/text-analysis/pdf/%s", f))
+}
+
+# Read each document into a character vector
+texts_by_document &lt;- character()
+for (f in file_names) {
+  texts_by_document[[f]] &lt;- 
+    stringr::str_c(texts_by_page[[f]] %&gt;% 
+                     stringr::str_squish(), 
+                   collapse = " ")
+}
+```
+
+---
+
+# Import HTML
+
+## Xpath
+
+&gt; XPath can be used to navigate through elements and attributes in an XML[-like] document (see [www.w3schools.com/xml/xml_xpath.asp](https://www.w3schools.com/xml/xml_xpath.asp)).
+
+
+```html
+&lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;body&gt;
+  
+    &lt;h1&gt;My First Heading&lt;/h1&gt;
+  
+    &lt;div class='foo'&gt;&lt;p&gt;My first paragraph.&lt;/p&gt;&lt;/div&gt;
+  
+    &lt;/body&gt;
+  &lt;/html&gt;
+```
+
+The xpath `//div[@class='foo']/p` will get you this: `&lt;p&gt;My first paragraph.&lt;/p&gt;`. (And you can check this [here](http://xpather.com/A4yx3Gsx))
+
+---
+
+# Import HTML
+
+
+
+
+```r
+library(rvest)
+library(tidyverse)
+library(stringr)
+
+# Parse page containing articles published 26 nov 2018
+seed_url &lt;- 'https://www.theguardian.com/society/2018/nov/26'
+day_page &lt;- rvest::read_html(seed_url)
+nodes &lt;- 
+  rvest::html_nodes(day_page, 
+                    xpath = './/div[@class="fc-item__content "]')
+
+# Loop
+article_urls &lt;- character()
+for (node in nodes) {
+  node_a &lt;- rvest::html_node(node, xpath = ".//a")
+  article_url &lt;- rvest::html_attr(node_a, 'href')
+  article_urls &lt;- c(article_url, article_urls)
+}
+```
+
+---
+
+# Import HTML
+
+
+```r
+# Create a data.frame and store parts of the articles
+article_df &lt;- data.frame()
+for (article_url in article_urls) {
+  article_page &lt;- 
+    read_html(article_url)
+  body &lt;- 
+    html_node(article_page, xpath=".//div[@itemprop='articleBody']") %&gt;%
+    html_text() %&gt;%
+    str_trim()
+  author &lt;- 
+    html_node(article_page, xpath=".//span[@itemprop='name']") %&gt;%
+    html_text() %&gt;%
+    str_trim()
+  date &lt;- 
+    html_node(article_page, xpath=".//time[@itemprop='datePublished']") %&gt;%
+    html_text() %&gt;%
+    str_trim()
+  title &lt;- 
+    html_node(article_page, xpath=".//h1[@itemprop='headline']") %&gt;%
+    html_text() %&gt;%
+    str_trim()
+```
+
+---
+
+# Import HTML
+
+
+```r
+  article_df &lt;- 
+    rbind(article_df, 
+          data.frame(body, author, date, title,
+                     stringsAsFactors = F))
+}
+```
+
+---
+
+# Hands-on
+
+Visit this page: [imdb.com/title/tt0057012/](https://imdb.com/title/tt0057012/) and try to parse this `summary_text` with XPath.
+
+&lt;div align = 'center'&gt;&lt;img src="../img/imdb.png" width="35%"&gt;&lt;/div&gt;
+
+You will only need three functions: `read_html()`, `html_node()` and `html_text()` (and optionally `str_trim()`).
+
+* Firefox: Right-click and *Inspect Element*
+* Chrome: Right-click and *Inspect*
+* Safari: 
+  1. Enable "Show Developer Menu" in Safari's Preferences, *Advanced tab*.
+  2. Right-click and *Inspect Element*
+
+---
+
+# Import XML
+
+
+
+
+```r
+library(xml2) 
+library(tidyverse)
+
+# Read the document
+doc &lt;- 
+  read_xml('data/xml/apollinaire_heresiarque-et-cie-gold-geonames.xml',
+           encoding = "utf-8")
+
+# Identify the document namespace
+xml_ns(doc)
+
+# Find all place nodes `placeName`
+place_names &lt;-
+  xml_find_all(doc, 
+               ".//d1:placeName")
+```
+
+---
+
+# Import XML
+
+
+```r
+# Extract attributes and names
+place_names.df &lt;-
+  data.frame(ref = xml_attr(place_names, "ref"),
+             name = xml_text(place_names),
+             stringsAsFactors = F)
+place_names.df &lt;- 
+  place_names.df %&gt;% group_by(ref, name) %&gt;% 
+  summarize(citations = n())
+```
+
+---
+
+# APIs
+
+An API (or **A**pplication **P**rogramming **I**nterface) makes it easier for a computer to communicate with another computer. Many public web APIs are available: they offer programmatic access to data resources of an enterprise. For example, the research on large Facebook and Twitter datasets is usually conducted on data collected after a request to the Facebook API (graph.facebook.com) and the Twitter API (api.twitter.com).
+
+Wikipedia also has a [public API](http://en.wikipedia.org/w/api.php). And we can submit a request by concatenating different options in a single string (which you can actually enter into the address bar of your browser).
+
+---
+
+# APIs
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; parameter &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; description &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; http://en.wikipedia.org/w/api.php? &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Base URL &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; action=query &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Which action to perform &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &amp;amp;format=json &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; The format of the output &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &amp;amp;prop=revisions &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Which properties to get for the queried pages &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &amp;amp;rvprop=content &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Which properties to get for each revision &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &amp;amp;rvsection=0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Only retrieve the content of this section number &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &amp;amp;titles=pizza &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A list of titles to work on &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+Ane let's concatenate everything together: 
+
+http://en.wikipedia.org/w/api.php?action=query&amp;format=json&amp;prop=revisions&amp;rvprop=content&amp;rvsection=0&amp;titles=pizza
+
+---
+
+# API import example (using a URL + jsonlite)
+
+
+
+
+```r
+## Wikipedia API
+library(jsonlite)
+res &lt;- 
+  fromJSON('http://en.wikipedia.org/w/api.php?format=json&amp;action=query&amp;prop=revisions&amp;rvprop=content&amp;rvsection=0&amp;titles=pizza')
+
+cat(res[["query"]][["pages"]][["24768"]][["revisions"]][["*"]])
+```
+
+```
+## {{Short description|Italian dish with a flat dough-based base and toppings}}
+## {{redirect|Pizzaiolo|the restaurant chain|Pizzaiolo (restaurant chain)}}
+## {{Other uses}}
+## {{pp-semi-indef}}
+## {{pp-move-indef}}
+## {{Infobox food
+## | name             = Pizza
+## | image            = Pizza-3007395.jpg
+## | caption          = A pizza cut into eight slices
+## | alternate_name =
+## | place_of_origin          = [[Italian cuisine|Italy]]
+## | region           = [[Campania]] ([[Naples]])
+## | course           = Lunch or dinner
+## | type             = [[Flatbread]]
+## | served           = Hot or warm
+## | main_ingredient  = Dough, sauce (usually [[tomato sauce]]), cheese ([[cheese|dairy]] or [[vegan cheese|vegan]])
+## | variations       = [[Calzone]], [[panzerotti]], [[Stromboli (food)|stromboli]]
+## | calories         =
+## | other            =
+## }}
+## {{pizza}}
+## 
+## '''Pizza''' ({{IPAc-en|lang|ˈ|p|iː|t|s|ə}} {{respell|PEET|sə}}, {{IPA-it|ˈpittsa|lang}}, {{IPA-nap|ˈpittsə|lang}}) is a [[Dish (food)|dish]] of  [[Italian cuisine|Italian]] origin consisting of a usually round, flat base of [[Leavening agent|leavened]] wheat-based [[dough]] topped with [[tomatoes]], [[cheese]], and often various other ingredients (such as various types of [[sausage]], [[anchovies]], [[Edible mushroom|mushrooms]], [[onions]], [[olives]], [[vegetables]], [[meat]], [[ham]], etc.), which is then baked at a high temperature, traditionally in a [[wood-fired oven]].&lt;ref&gt;{{OED|144843|id=144843}}&lt;/ref&gt; A small pizza is sometimes called a [[pizzetta]]. A person who makes pizza is known as a '''pizzaiolo'''.
+## 
+## In Italy, pizza served in a restaurant is presented unsliced, and is eaten with the use of a knife and fork.&lt;ref&gt;{{cite news |last=Naylor |first=Tony |date=6 September 2019 |title=How to eat: Neapolitan-style pizza |url=https://www.theguardian.com/food/2019/sep/06/how-to-eat-neapolitan-style-pizza |archive-url=https://web.archive.org/web/20190914233416/https://www.theguardian.com/food/2019/sep/06/how-to-eat-neapolitan-style-pizza |archive-date=14 September 2019 |url-status=live |newspaper=[[The Guardian]] |location=London |access-date=20 September 2019}}&lt;/ref&gt;&lt;ref&gt;{{cite web |last=Godoy |first=Maria |date=13 January 2014 |title=Italians To New Yorkers: 'Forkgate' Scandal? Fuhggedaboutit |url=https://www.npr.org/sections/thesalt/2014/01/13/262087618/italians-to-new-yorkers-forkgate-scandal-fuggedaboutit |archive-url=https://web.archive.org/web/20190920211635/https://www.npr.org/sections/thesalt/2014/01/13/262087618/italians-to-new-yorkers-forkgate-scandal-fuggedaboutit |archive-date=20 September 2019|url-status=live |department=The Salt (blog) |publisher=[[NPR|National Public Radio]] |access-date=20 September 2019}}&lt;/ref&gt; In casual settings, however, it is [[Pizza cutter|cut]] into wedges to be eaten [[finger food|while held in the hand]].
+## 
+## The term ''pizza'' was first recorded in the 10th century in a [[Latin]] manuscript from the [[Southern Italy|Southern Italian]] town of [[Gaeta]] in [[Lazio]], on the border with [[Campania]].&lt;ref name=MartinMaiden/&gt; Modern pizza was invented in [[Naples]], and the dish and its variants have since become one of the most popular foods in the world and a common [[fast food]] item in [[Europe]], [[Americas|the Americas]] and [[Australasia]], available at [[List of pizza chains|pizzeria]]s (restaurants specializing in pizza), restaurants offering [[Mediterranean cuisine]], via [[pizza delivery]], and as [[street food]].&lt;ref name=Miller&gt;{{cite web |last=Miller |first=Hanna |date=April–May 2006 |title=American Pie |url=http://www.americanheritage.com/content/american-pie |archive-url=https://web.archive.org/web/20120203155552/http://www.americanheritage.com/content/american-pie |archive-date=3 February 2012 |url-status=live |work=[[American Heritage (magazine)|American Heritage]] |access-date=4 May 2012}}&lt;/ref&gt; Various food companies sell ready-baked pizzas, which may be [[Frozen food|frozen]], in [[grocery store]]s, to be reheated in a home [[oven]].
+## 
+## In 2017, the world pizza market was [[US$]]128 billion, and in the US it was $44 billion spread over 76,000 pizzerias.&lt;ref&gt;{{cite web|last1=Hynum|first1=Rick|title=Pizza Power 2017 – A State of the Industry Report|url=http://www.pmq.com/December-2016/Pizza-Power-2017-A-State-of-the-Industry-Report/|website=PMQ Pizza Magazine|access-date=28 July 2017|archive-url=https://web.archive.org/web/20170729002308/http://www.pmq.com/December-2016/Pizza-Power-2017-A-State-of-the-Industry-Report/|archive-date=29 July 2017|url-status=live}}&lt;/ref&gt;  Overall, 13% of the U.S. population aged 2 years and over consumed pizza on any given day.&lt;ref&gt;{{cite news|last1=Rhodes|first1=Donna|display-authors=etal|title=Consumption of Pizza|url=https://www.ars.usda.gov/ARSUserFiles/80400530/pdf/DBrief/11_consumption_of_pizza_0710.pdf|access-date=27 September 2017|work=Food Surveys Research Group Dietary Data Brief No. 11|agency=USDA|date=February 2014|archive-url=https://web.archive.org/web/20170930194112/https://www.ars.usda.gov/ARSUserFiles/80400530/pdf/DBrief/11_consumption_of_pizza_0710.pdf|archive-date=30 September 2017|url-status=live}}&lt;/ref&gt;
+## 
+## The ''Associazione Verace Pizza Napoletana'' (lit. True Neapolitan Pizza Association) is a [[non-profit organization]] founded in 1984 with headquarters in Naples that aims to promote traditional Neapolitan pizza.&lt;ref name=AVPN&gt;{{cite web |title=Associazione Verace Pizza Napoletana (AVPN) |url=http://www.pizzanapoletana.org/eng_chisiamo.php |archive-url=https://web.archive.org/web/20170709015157/http://www.pizzanapoletana.org/eng_chisiamo.php |archive-date=9 July 2017 |url-status=live |access-date=11 July 2017}}&lt;/ref&gt; In 2009, upon Italy's request, [[Neapolitan pizza]] was registered with the [[European Union]] as a [[Traditional Speciality Guaranteed]] dish,&lt;ref&gt;Official Journal of the European Union, [http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2010:034:0007:0016:EN:PDF Commission regulation (EU) No 97/2010] {{Web archive |url=https://web.archive.org/web/20130603155915/http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2010:034:0007:0016:EN:PDF |date=2013-06-03 }}, 5 February 2010&lt;/ref&gt;&lt;ref&gt;International Trademark Association, [http://www.inta.org/INTABulletin/Pages/EUROPEANUNIONPIZZANAPOLETANAObtainsTraditionalSpecialityGuaranteedStatus.aspx European Union: Pizza napoletana obtains "Traditional Speciality Guaranteed" status] {{Web archive |url=https://web.archive.org/web/20140819084957/http://www.inta.org/INTABulletin/Pages/EUROPEANUNIONPIZZANAPOLETANAObtainsTraditionalSpecialityGuaranteedStatus.aspx |date=2014-08-19 }}, 1 April 2010&lt;/ref&gt; and in 2017 the art of its making was included on [[UNESCO]]'s list of [[intangible cultural heritage]].&lt;ref&gt;{{Cite news |url=https://www.theguardian.com/world/2017/dec/07/naples-pizza-twirling-wins-unesco-intangible-status |title=Naples' pizza twirling wins Unesco 'intangible' status |agency=Agence France-Presse|date=2017-12-07|work=The Guardian |location=London |access-date=2017-12-07|language=en-GB|issn=0261-3077|archive-url=https://web.archive.org/web/20171207084312/https://www.theguardian.com/world/2017/dec/07/naples-pizza-twirling-wins-unesco-intangible-status |archive-date=2017-12-07 |url-status=live}}&lt;/ref&gt;
+## 
+## [[Raffaele Esposito]] is often considered to be the father of modern pizza.&lt;ref name="Schwartz"&gt;Arthur Schwartz, ''Naples at Table: Cooking in Campania'' (1998), p. 68. {{ISBN|9780060182618}}.&lt;/ref&gt;&lt;ref name="Dickie"&gt;John Dickie, ''Delizia!: The Epic History of the Italians and Their Food'' (2008), p. 186.&lt;/ref&gt;&lt;ref name="Orsini"&gt;Father Giuseppe Orsini, Joseph E. Orsini, ''Italian Baking Secrets'' (2007), p. 99.&lt;/ref&gt;&lt;ref&gt;{{cite magazine |url=http://www.italymag.co.uk/italy-featured/recipes/pizza-margherita-history-and-recipe |title=Pizza Margherita: History and Recipe |magazine=ITALY Magazine |date=14 March 2011 |access-date=2022-02-21 |archive-url=https://web.archive.org/web/20130207192931/http://www.italymag.co.uk/italy-featured/recipes/pizza-margherita-history-and-recipe |archive-date=7 February 2013 |url-status=dead}}&lt;/ref&gt;
+```
+
+---
+
+# API import (using a package)
+
+
+```r
+library(tidyverse)
+
+# This package provides an interface to the Project Gutenberg
+library(gutenbergr)
+
+## This won't download the actual book but the metadata
+res &lt;-
+  gutenberg_works(author == "Dick, Philip K.")
+
+## This will download the book data
+g_books &lt;-
+  gutenberg_download(res$gutenberg_id, meta_fields = 'title')
+
+## Let's download two books we will use later
+titles &lt;- c("Twenty Thousand Leagues under the Sea", 
+            "Frankenstein; Or, The Modern Prometheus",
+            "Alice's Adventures in Wonderland",
+            "Pride and Prejudice")
+g_books &lt;-
+  gutenberg_works(title %in% titles) %&gt;%
+  gutenberg_download(meta_fields = "title")
+
+save(g_books, file = 'data/rdata/g_books.RData')
+```
+
+---
+
+class: inverse, middle, center
+
+# Tidying
+
+
+---
+
+# Tidying (from PDF documents...)
+
+
+
+
+
+
+```r
+library(tidyverse)
+library(tidytext)
+
+class(texts_by_document)
+```
+
+```
+## [1] "character"
+```
+
+```r
+length(texts_by_document)
+```
+
+```
+## [1] 4
+```
+
+```r
+# Tidy text (from PDFs)
+tidy_df &lt;- 
+  tibble(doc = names(texts_by_document),
+         text = texts_by_document) %&gt;%
+  tidytext::unnest_tokens(word, text) %&gt;%
+  dplyr::filter(str_detect(word, "[a-z]+")) %&gt;%
+  dplyr::count(word, sort = TRUE)
+
+# Code modified from Julia Silge &amp; Robinson, 2017.
+```
+
+---
+
+# Tidying
+
+
+
+
+
+
+```r
+# Gutenberg Project books
+kable(table(g_books$title), format = 'html')
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Var1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Freq &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Alice's Adventures in Wonderland &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3339 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Frankenstein; Or, The Modern Prometheus &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7244 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Pride and Prejudice &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13030 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Twenty Thousand Leagues under the Sea &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12135 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+
+## Tidying
+
+
+```r
+library(tidytext)
+library(stringr)
+
+# divide into documents, each representing one chapter
+reg &lt;- regex("^chapter ", ignore_case = TRUE)
+by_chapter &lt;- g_books %&gt;%
+  dplyr::group_by(title) %&gt;%
+  dplyr::mutate(chapter = cumsum(str_detect(text, reg))) %&gt;%
+  dplyr::filter(chapter &gt; 0) %&gt;%
+  dplyr::ungroup() %&gt;%
+  dplyr::group_by(gutenberg_id, title, chapter) %&gt;%
+  dplyr::summarize(text = paste(text, collapse = " "))
+```
+
+---
+
+## Tidying
+
+
+```r
+reg &lt;- "\\S+" # counting all sequences on non-space characters
+by_chapter %&gt;% 
+  dplyr::group_by(title, chapter) %&gt;%
+  dplyr::summarize(words_by_chapter = 
+                     stringr::str_count(paste(text, 
+                                              collapse = " "), reg)) %&gt;%
+  dplyr::ungroup() %&gt;%
+  dplyr::group_by(title) %&gt;%
+  dplyr::summarize(n_chapters = n(),
+            avg_words_by_chapter = mean(words_by_chapter))
+```
+
+```
+## # A tibble: 4 × 3
+##   title                                   n_chapters avg_words_by_chapter
+##   &lt;chr&gt;                                        &lt;int&gt;                &lt;dbl&gt;
+## 1 Alice's Adventures in Wonderland                12                2203.
+## 2 Frankenstein; Or, The Modern Prometheus         24                2892.
+## 3 Pride and Prejudice                             61                1993.
+## 4 Twenty Thousand Leagues under the Sea           46                2239
+```
+
+---
+
+## Tidying
+
+
+```r
+# split into words
+by_chapter_word &lt;- by_chapter %&gt;%
+  tidytext::unnest_tokens(word, text)
+
+by_chapter_bigram &lt;- by_chapter %&gt;%
+  tidytext::unnest_tokens(bigram, text, 
+                token = "ngrams", n = 2)
+```
+
+---
+
+## Summarising 
+
+
+```r
+# find document-word counts
+word_counts &lt;- by_chapter_word %&gt;%
+  dplyr::anti_join(stop_words) %&gt;%
+  dplyr::mutate(word = str_extract(word, "[a-z']+")) %&gt;%
+  dplyr::filter(!is.na(word)) %&gt;%
+  dplyr::count(title, word, sort = TRUE) %&gt;%
+  dplyr::ungroup()
+```
+
+---
+
+## Summarising
+
+
+```r
+word_counts %&gt;% 
+  dplyr::group_by(title) %&gt;%
+  dplyr::top_n(10, n) %&gt;%
+  dplyr::ungroup() %&gt;%
+  dplyr::mutate(word = reorder(word, n)) %&gt;%
+  ggplot(aes(word, n, fill=title)) +
+  ggplot2::geom_col(show.legend = FALSE) +
+  ggplot2::facet_wrap(~title, scales = "free") +
+  ggplot2::labs(y = "10 most frequent words",
+       x = NULL) +
+  ggplot2::coord_flip()
+```
+
+&lt;img src="week-13_files/figure-html/tidy_df7-1.svg" width="45%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Summarising
+
+
+```r
+by_chapter_bigram$bigram &lt;- 
+  stringr::str_replace_all(by_chapter_bigram$bigram, "_|'s", "")
+bigram_counts &lt;- by_chapter_bigram %&gt;%
+  dplyr::count(title, bigram, sort = TRUE) %&gt;%
+  dplyr::ungroup()
+
+# Some extra cleaning
+by_chapter_bigram_sep &lt;- 
+  by_chapter_bigram %&gt;%
+  tidyr::separate(bigram, c("word1", "word2"), sep = " ") %&gt;%
+  dplyr::filter(!word1 %in% stop_words$word &amp;
+           !str_detect(word1, "[0-9]")) %&gt;%
+  dplyr::filter(!word2 %in% stop_words$word &amp;
+           !str_detect(word2, "[0-9]"))
+
+
+bigram_counts &lt;- by_chapter_bigram_sep %&gt;%
+  dplyr::count(word1, word2, sort = TRUE)
+
+bigram_counts &lt;- bigram_counts %&gt;%
+  tidyr::unite(bigram, word1, word2, sep = " ")
+```
+
+---
+
+## Summarising
+
+
+```r
+bigram_counts %&gt;% 
+  dplyr::group_by(title) %&gt;%
+  dplyr::top_n(10, n) %&gt;%
+  dplyr::ungroup() %&gt;%
+  dplyr::mutate(bigram = reorder(bigram, n)) %&gt;%
+  ggplot(aes(bigram, n, fill=title)) +
+  ggplot2::geom_col(show.legend = FALSE) +
+  ggplot2::facet_wrap(~title, scales = "free") +
+  ggplot2::labs(y = "10 most frequent bigrams by book",
+       x = NULL) +
+  ggplot2::coord_flip()
+```
+
+&lt;img src="week-13_files/figure-html/tidy_df10-1.svg" width="45%" style="display: block; margin: auto;" /&gt;
+
+```r
+# Code modified from Julia Silge &amp; Robinson, 2017.
+```
+
+---
+class: inverse, middle, center
+# Document-term matrix
+
+---
+
+# Document-term matrix
+
+The document-term matrix (dtm) is way to store information from a corpus where rows represent documents, columns tokens, while cells indicates the frequency of each token in the document. 
+ 
+
+```r
+data &lt;- 
+  tibble(text = c(  
+    "pollution water environment jobs","healthcare doctors hospitals pollution",
+    "smog environment water doctors","unemployment jobs wages immigration", 
+    "hospitals drugs doctors visa","healthcare drugs doctors wages",
+    "jobs wages unemployment healthcare","hospitals drugs doctors citizenship",
+    "environment smog water economy", "foreigners immigration citizenship doctors",
+    "immigration visa foreigners jobs", "economy wages jobs healthcare",
+    "citizenship immigration foreigners drugs"),
+    author = c("Sam", "Rosy", "Tom", "Alice", "Bob", "Carol", "Diana", 
+               "Zach", "Yolie","Xavi", "Ahmad", "Ali", "Nemat")) 
+dfm &lt;- 
+  data %&gt;%
+  tidytext::unnest_tokens(word, text) %&gt;%
+  dplyr::count(author, word, sort = TRUE) %&gt;%
+* tidytext::cast_dfm(author, word, n)
+```
+
+---
+
+# Document-term matrix
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; doc_id &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; foreigners &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; immigration &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; jobs &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; visa &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; economy &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; healthcare &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; wages &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; unemployment &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Ahmad &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Ali &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Alice &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Bob &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Carol &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Diana &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Nemat &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Rosy &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Sam &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Tom &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Xavi &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Yolie &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Zach &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+class: inverse, middle, center
+
+# Topic models
+
+---
+
+# Topic models
+
+&gt; A **topic** is defined as a mixture over words where each word has a probability of belonging to a topic.
+
+&gt; A **document** is a mixture over topics, meaning that a single document can be composed of multiple topics. 
+
+&gt; As such, the sum of the topic proportions across all topics for a document is one, and the sum word probabilities for a given topic is one (Roberts, Stewart, &amp; Tingley, forthcoming).
+
+---
+
+## Topic models: Prepare some data
+
+
+```r
+load('../data/text-analysis/rdata/g_books.RData')
+
+reg &lt;- regex("^chapter ", ignore_case = TRUE)
+by_chapter &lt;- g_books %&gt;%
+  dplyr::group_by(title) %&gt;%
+  dplyr::mutate(chapter = cumsum(str_detect(text, reg))) %&gt;%
+  dplyr::filter(chapter &gt; 0) %&gt;%
+  dplyr::ungroup() %&gt;%
+  dplyr::group_by(gutenberg_id, title, chapter) %&gt;%
+  dplyr::summarize(text = paste(text, collapse = " ")) %&gt;%
+  tidyr::unite(title_chapter, title, chapter, sep = " # ")
+```
+
+
+## Topic models: Cast the document-term matrix (with `cast_dfm()`)
+
+
+```r
+tidy_books &lt;- 
+  by_chapter %&gt;%
+  dplyr::group_by(title_chapter) %&gt;%
+  tidytext::unnest_tokens(word, text) %&gt;%
+  dplyr::ungroup() %&gt;%
+  dplyr::mutate(word = str_extract(word, "[a-zA-Z]+")) %&gt;%
+  dplyr::anti_join(stop_words, by = 'word')
+nrow(tidy_books)
+```
+
+```
+## [1] 109285
+```
+
+```r
+books_dfm &lt;- tidy_books %&gt;%
+  dplyr::count(title_chapter, word, sort = TRUE) %&gt;%
+  tidytext::cast_dfm(title_chapter, word, n)
+```
+
+---
+
+## Let's topic model!
+
+
+```r
+library(stm)
+
+# This will take a few seconds
+model &lt;- 
+  stm::stm(books_dfm, K = 4, 
+      verbose = FALSE, init.type = "Spectral")
+```
+
+We use the [stm](https://www.structuraltopicmodel.com/) (structural topic model) package
+
+---
+
+## Topic modelling: Show most significant words by topic
+
+
+
+
+```r
+stm::labelTopics(model, 1:4)
+```
+
+```
+## Topic 1 Top Words:
+##  	 Highest Prob: alice, queen, time, king, don, turtle, mock 
+##  	 FREX: alice, hatter, gryphon, rabbit, mouse, dormouse, caterpillar 
+##  	 Lift: eggs, waving, ache, ada, adjourn, adoption, afore 
+##  	 Score: alice, hatter, rabbit, mouse, gryphon, dormouse, caterpillar 
+## Topic 2 Top Words:
+##  	 Highest Prob: father, life, eyes, night, time, elizabeth, death 
+##  	 FREX: clerval, justine, felix, geneva, fiend, victor, murderer 
+##  	 Lift: ernest, fiend, geneva, kirwin, murdered, protectors, abbey 
+##  	 Score: elizabeth, felix, justine, clerval, misery, cottage, fiend 
+## Topic 3 Top Words:
+##  	 Highest Prob: elizabeth, darcy, bennet, bingley, jane, miss, sister 
+##  	 FREX: darcy, bennet, bingley, jane, wickham, collins, lydia 
+##  	 Lift: abilities, abominable, abruptness, abusing, acknowledgment, addresses, adds 
+##  	 Score: darcy, elizabeth, bingley, bennet, jane, wickham, collins 
+## Topic 4 Top Words:
+##  	 Highest Prob: captain, nautilus, nemo, sea, ned, NA, conseil 
+##  	 FREX: nautilus, nemo, ned, conseil, canadian, platform, submarine 
+##  	 Lift: battle, bullets, canoes, civilised, declivity, eatable, fleshy 
+##  	 Score: nautilus, nemo, ned, conseil, captain, canadian, surface
+```
+
+---
+
+## Topic modelling: Plot proportion by topic
+
+
+```r
+plot(model, type = "summary")
+```
+
+&lt;img src="week-13_files/figure-html/fig.-1.svg" width="45%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Topic modelling: Cloud for a topic
+
+Word size depends on the importance of that word in the topic
+
+
+```r
+stm::cloud(model, topic = 1)
+```
+
+&lt;img src="week-13_files/figure-html/unnamed-chunk-31-1.svg" width="45%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Topic modelling: Beta identifies the importance of the topic-word pair
+
+A relatively high beta indicates that the word is important in defying the topic.
+
+You can use betas to help labelling the topic. (Yes, labelling is up to you!)
+
+
+```r
+tidy_topics_word_topic &lt;-
+  tidytext::tidy(model)
+
+head(tidy_topics_word_topic)
+```
+
+```
+## # A tibble: 6 × 3
+##   topic term           beta
+##   &lt;int&gt; &lt;chr&gt;         &lt;dbl&gt;
+## 1     1 abandon   8.24e- 92
+## 2     2 abandon   8.19e-  5
+## 3     3 abandon   8.58e-105
+## 4     4 abandon   1.02e-  4
+## 5     1 abandoned 5.03e- 81
+## 6     2 abandoned 8.23e-  5
+```
+
+---
+
+## Topic modelling: Gamma identifies the importance of the topic-document pair
+
+
+```r
+tidy_topics_doc_topic &lt;- 
+  tidytext::tidy(model, matrix = "gamma",                    
+                 document_names = rownames(books_dfm))
+
+tidy_topics_doc_topic &lt;-
+  tidy_topics_doc_topic %&gt;%
+  tidyr::separate(document, c("title", "chapter"), 
+                  sep = " # ", convert = TRUE)
+
+head(tidy_topics_doc_topic)
+```
+
+```
+## # A tibble: 6 × 4
+##   title                            chapter topic     gamma
+##   &lt;chr&gt;                              &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;
+## 1 Alice's Adventures in Wonderland       9     1 0.999    
+## 2 Alice's Adventures in Wonderland       7     1 0.999    
+## 3 Alice's Adventures in Wonderland       6     1 0.999    
+## 4 Pride and Prejudice                   18     1 0.0000663
+## 5 Pride and Prejudice                   43     1 0.000158 
+## 6 Alice's Adventures in Wonderland       8     1 0.999
+```
+
+---
+
+
+```r
+ggplot(tidy_topics_doc_topic,
+       aes(y = gamma, x=factor(topic))) +
+  geom_boxplot() + 
+  facet_wrap(~title)
+```
+
+&lt;img src="week-13_files/figure-html/unnamed-chunk-34-1.svg" width="60%" style="display: block; margin: auto;" /&gt;
+
+Documents are chapters not books. Still the topic modelling is effective in clustering by the corresponding book (of course, authors have different styles!).
+
+---
+
+## Finally, using t-SNE, a dimensionality reduction technique, to plot our chapters
+
+
+```r
+library(tsne)
+tidy_topics_doc_topic$document &lt;- 
+  paste0(tidy_topics_doc_topic$title, " # ", tidy_topics_doc_topic$chapter)
+spread_topics_doc_topic &lt;-
+  tidy_topics_doc_topic %&gt;%
+  tidyr::pivot_wider(id_cols = c("title", "chapter", "document"), 
+                     names_from = topic,
+                     values_from = gamma)
+
+res &lt;- tsne(spread_topics_doc_topic[,4:7], k=2)
+spread_topics_doc_topic$x &lt;- res[,1]
+spread_topics_doc_topic$y &lt;- res[,2]
+```
+
+
+---
+
+## Finally, using t-SNE, a dimensionality reduction technique, to plot our chapters
+
+
+```r
+ggplot(spread_topics_doc_topic, aes(x=x,y=y,colour=title)) +
+  geom_point()
+```
+
+&lt;img src="week-13_files/figure-html/unnamed-chunk-36-1.svg" width="85%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+class: middle, inverse, center
+
+# Wrapping up SSPS4102 
+
+## Let's workshop A3 in the remaiming of the seminar!
+
+---
+
+## Very keen to receive your feedback on (if you have time)
+
+#### Very keen to receive your feedback on:
+
+* What you enjoyed / found useful in your learning
+
+* Any constructive feedback as to areas that could have been improved
+
+* Some specific areas you may wish to comment on:
+
+    * Overall design of the course and coverage of topics
+    * Assessment items
+    * Pace and level of the class
+
+---
+
+## Wrapping up
+
+* Thank you everyone for your participation and engagement in this course!
+
+* Congratulations on making it through this far in the course and all the best with your degree!
+
+* Stay in touch!
+
+.center[&lt;img src = 'https://media.giphy.com/media/ZfK4cXKJTTay1Ava29/giphy.gif' eidth = '60%'&gt;&lt;img&gt;]
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
