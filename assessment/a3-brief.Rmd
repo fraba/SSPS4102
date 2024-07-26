@@ -18,7 +18,7 @@ In your report, you should discuss
 
 1. **Justification**: What are you studying? Why is relevant? 
 
-2. **Research question**: Formulate a clear, single research question that you can answer through *hypothesis testing* (see Llaudet & Imai, 2022, Ch 7.3). Your research question should ideally begin with a Who, What, When or Where and not with a Why or How (you can discuss Whys and Hows in your concluding section, though).
+2. **Research question**: Formulate a clear, single research question that you can answer through *hypothesis testing* (see Llaudet & Imai, 2022, Ch 7.3 or Imai, 2007, Ch 7.2). Your research question should ideally begin with a Who, What, When or Where and not with a Why or How (you can discuss Whys and Hows in your concluding section, though).
 
 3. **Data collection**: How was the data collected? Since you are not expected to collect the data yourself, explain how others collected the data and whether that particular data collection process can introduce in terms of the validity of your results (remember: no data is perfect).
 
