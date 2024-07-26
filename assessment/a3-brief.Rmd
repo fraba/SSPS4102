@@ -1,5 +1,5 @@
 ---
-title: "Big data analysis exercise"
+title: "Data analysis exercise"
 output:
   html_document:
     toc: true
