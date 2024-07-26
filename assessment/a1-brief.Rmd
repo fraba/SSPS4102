@@ -30,25 +30,19 @@ For each index,
 
 * (If necessary) recode the variable before creating your indices.
 
-* Construct two different versions of the indices by 
-
-    * averaging your variables (in your code `support_demo_index.avg` and `confidence_govt_index.avg`); and
-    
-    * applying PCA to the same variables (in your code `support_demo_index.pca` and `confidence_govt_index.pca`).
+* Construct the indices by averaging your variables (in your code `support_demo_index` and `confidence_govt_index`).
 
 ## Report
 
 1. Describe  the source variables  used  for  making  your indices  using  appropriate  descriptive  statistics  (min, mean, median, st.deviation, max, number of observations) and graphs
 
-2. Briefly  discuss  the  ideas  behind  the  two  approaches  (averaging  and  PCA)  to  index  construction. What do they have in common? How are they different?
+2. Discuss the types of the variables you are using in your indices (e.g. binary, categorical, continuous) and discuss any transformation you applied to the variables while constructing your indices.
 
-3. Discuss the types of the variables you are using in your indices (e.g. binary, categorical, continuous) and discuss any transformation you applied to the variables while constructing your indices.
+3. Describe (using visuals and words) the distribution of 
 
-4. Describe (using visuals and words) the distribution of 
-
-    4.1 `support_demo_index` and 
+    3.1 `support_demo_index` and 
     
-    4.2 `confidence_govt_index`  –  for selected (3+) countries  separately.  
+    3.2 `confidence_govt_index`  –  for selected (3+) countries  separately.  
     
     Do  they  look  the  same  across countries? 
 
