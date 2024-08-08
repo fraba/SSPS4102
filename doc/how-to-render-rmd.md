@@ -1,11 +1,9 @@
 With RStudio, you can quickly produce high-quality PDF documents based on your R code.
 
-Before you can do this you need to install two R packages with this code:
+Before you can do this you need to install two R packages and LaTeX with this code:
 
 ```{r}
 install.packages('rmarkdown')
-
-install.packages('bookdown')
 
 install.packages('tinytex')
 
