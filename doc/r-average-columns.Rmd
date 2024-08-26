@@ -1,0 +1,150 @@
+---
+title: "Average two or more columns from a data frame"
+author: "Francesco Bailo"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(knitr)
+require(tidyverse)
+```
+
+Let's say that I have some survey data, where each row defines the responses from a single respondent. This is of course a very common way to share survey data. 
+
+Let's also say that I have two or more continuous variables in the data **that I want to average** to create a new composite variable.
+
+## Get some data
+
+We first create a data frame with some random data simulating four survey responses on a value from 1 to 5 from 10 different *respondents*.
+
+```{r}
+survey_data <- data.frame(
+  respondent_id = 1:10,  # 10 respondents
+  question_1 = sample(1:5, 10, replace = TRUE),
+  question_2 = sample(1:5, 10, replace = TRUE),
+  question_3 = sample(1:5, 10, replace = TRUE),
+  question_4 = sample(1:5, 10, replace = TRUE)
+)
+```
+
+In case you are interested, let's break down the functions we are using here:
+
+- `data.frame()` create a data frame object in R, where each attribute `name = c(..values..)` is going to be a column. 
+- `1:10` Simply create a vector of numbers from 1 to 10. You can of course, use different combinations (e.g, `-1:42`)
+- `sample()` with randomly sample from a vector. In this case, we pass three attributes:
+  1. `1:5` define the vector (or population) from which to choose. In this case is the vector `c(1, 2, 3, 4, 5)` because we want to simulate a common situation where survey answers are given using a [Likert-type scale](https://en.wikipedia.org/wiki/Likert_scale) (e.g., 1 = Strongly disagree; 2 = Disagree; 3 = Neither agree nor disagree; 4 = Agree; 5 = Strongly agree).
+  2. `10` defined how many "individuals" to sample from our "population". In this case we decided we wanted 10 respondents and so we we will need to set a response to each question for each respondent.
+  3. `replace = TRUE` means that after we sample the first value (either, 1, 2, 3, 4 or 5) we put the value back into the population so that can be re-sampled again. This is sometimes called "sampling with replacement". 
+
+## Average columns
+
+Now that we have some data, we can average existing variables (i.e. columns) into new variables (i.e. columns).
+
+Let's say I want to create a new variable as the average responses of `question_2` and `question_4`:
+
+```{r}
+survey_data$new_variable_1 <- # Create new variable and `<-` assign some value
+  (survey_data$question_2 + survey_data$question_4) / 2 # Sum columns and divide
+```
+
+Or let's say I want to average the responses from question 1, 3, and 4:
+
+```{r}
+survey_data$new_variable_2 <-
+  (survey_data$question_1 + survey_data$question_3 + survey_data$question_4) / 3
+```
+
+(Note that this time we divide by 3 since we have three variables)
+
+Let's now see the results (note that if you replicate this you will have different numbers has `sample()` produces each time a *random* sample!)
+
+```{r eval = FALSE}
+head(survey_data)
+```
+
+```{r echo = FALSE}
+survey_data %>%
+  kable()
+```
+
+
+
+## Issue 1: What if we have missing values?
+
+If you have missing value in your responses, some of your composite value are also going to be missing (NA).
+
+For example let's say that the first respondent didn't respond to question 1. 
+
+We can replace the current value of the answer with a `NA` to reflect this
+
+```{r}
+survey_data$question_1[1] <- NA
+```
+
+```{r echo = FALSE}
+survey_data %>%
+  kable()
+```
+
+## Issue 2: What if the scales of the responses are different?
+
+So far we have considered responses with the same scale (1-to-5). Let's say one of the questions implied a different scale (e.g, 1-to-10). Let's consider a different data frame
+
+```{r}
+survey_data <- data.frame(
+  respondent_id = 1:100,  # 100 respondents
+  question_1 = sample(1:5, 100, replace = TRUE), # Note the 1-to-5 scale
+  question_2 = sample(1:10, 100, replace = TRUE) # Note the 1-to-10 scale
+)
+```
+
+Can we still average them all together? Well, no. That is probably not appropriate as the wider scale is going to average out the scale with the narrower scale. 
+
+- We need to rescale! How do we do it?
+
+The easiest is probably to rescale everything to a common scale - 0 to 1 (which of course can be easily converted to a 0 to 100 scale multiplying by 100...) -  before averaging.
+
+In order to rescale a value from a known scale into a 0-to-1 scale, we can do this
+
+```{r eval = F}
+min_val <- 1 # Minimum value of the original scale
+max_val <- 5 # Maximum value of the original scale
+old_val <- 4 # Let's say for example the value to rescale is `4`
+
+# Formula   
+(old_val - min_val) / (max_val - min_val)
+```
+
+Let's rescale both variables
+
+```{r}
+min_val <- 1 # Minimum value of the original scale
+max_val <- 5 # Maximum value of the original scale
+survey_data$question_1_rescaled <- 
+  (survey_data$question_1 - min_val) / (max_val - min_val)
+```
+
+and
+
+```{r}
+min_val <- 1 # Minimum value of the original scale
+max_val <- 10 # Maximum value of the original scale
+survey_data$question_2_rescaled <- 
+  (survey_data$question_2 - min_val) / (max_val - min_val)
+```
+
+Let's compare the distributions to see if everything is in order!
+
+```{r}
+ggplot(survey_data, aes(x = question_1)) +
+  geom_histogram()
+```
+
+which should have the exact same distribution of
+
+```{r}
+ggplot(survey_data, aes(x = question_1_rescaled)) +
+  geom_histogram()
+```
